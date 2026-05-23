@@ -35,7 +35,10 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/the_godfather/";
-            },},{id: "news-personal-academic-homepage-is-now-live",
+            },},{id: "news-awarded-the-zhejiang-provincial-scholarship",
+          title: 'Awarded the Zhejiang Provincial Scholarship.',
+          description: "",
+          section: "News",},{id: "news-personal-academic-homepage-is-now-live",
           title: 'Personal academic homepage is now live!',
           description: "",
           section: "News",},{id: "teachings-data-science-fundamentals",
