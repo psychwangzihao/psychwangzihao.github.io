@@ -1,5 +1,5 @@
 # Social media links
-cv_pdf: /assets/pdf/CV_WangZihao_ZJU.docx
+cv_pdf: /assets/pdf/CV_WangZihao_ZJU.pdf
 email: psychwangzihao@zju.edu.cn
-rss_icon: false
-github_username: Zwang414
+# rss_icon: true # comment this line to hide the RSS icon
+github_username: 2534Henry
