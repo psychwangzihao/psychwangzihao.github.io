@@ -35,16 +35,7 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/the_godfather/";
-            },},{id: "news-awarded-the-zhejiang-provincial-scholarship",
-          title: 'Awarded the Zhejiang Provincial Scholarship.',
-          description: "",
-          section: "News",},{id: "news-awarded-the-chu-kochen-honors-college-scholarship",
-          title: 'Awarded the Chu Kochen Honors College Scholarship.',
-          description: "",
-          section: "News",},{id: "news-realign-efficient-knowledge-unlearning-in-llms-via-rl-for-safer-adaptation-submitted-to-acl-2026",
-          title: 'ReAlign: Efficient Knowledge Unlearning in LLMs via RL for Safer Adaptation submitted to...',
-          description: "",
-          section: "News",},{id: "news-personal-academic-homepage-is-now-live",
+            },},{id: "news-personal-academic-homepage-is-now-live",
           title: 'Personal academic homepage is now live!',
           description: "",
           section: "News",},{id: "teachings-data-science-fundamentals",
@@ -62,14 +53,14 @@ ninja.data = [{
         title: 'CV',
         section: 'Socials',
         handler: () => {
-          window.open("/assets/pdf/CV_WangZihao_ZJU.pdf", "_blank");
+          window.open("/assets/pdf/CV_WangZihao_ZJU.docx", "_blank");
         },
       },{
         id: 'social-email',
         title: 'email',
         section: 'Socials',
         handler: () => {
-          window.open("mailto:%7A%69%68%61%6F.%77%61%6E%67@%7A%6A%75.%65%64%75.%63%6E", "_blank");
+          window.open("mailto:%70%73%79%63%68%77%61%6E%67%7A%69%68%61%6F@%7A%6A%75.%65%64%75.%63%6E", "_blank");
         },
       },{
         id: 'social-rss',
