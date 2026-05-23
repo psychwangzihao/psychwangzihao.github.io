@@ -2,20 +2,22 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+This is a personal academic homepage hosted via GitHub Pages. The `main` branch is the only actively maintained version.
 
-| Version | Supported          |
+| Branch  | Supported          |
 | ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+| main    | :white_check_mark: |
+| gh-pages| :white_check_mark: (auto-deployed) |
 
 ## Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
+If you discover a security vulnerability on this site, please **do not** open a public issue. Instead, email me directly:
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+**psychwangzihao@zju.edu.cn**
+
+Please include:
+- A description of the vulnerability
+- Steps to reproduce
+- Any relevant screenshots or logs
+
+You can expect a response within **7 days**. If the vulnerability is confirmed, I will address it promptly. Thank you for helping keep this site secure.
