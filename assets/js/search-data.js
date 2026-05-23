@@ -35,7 +35,10 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/the_godfather/";
-            },},{id: "news-completed-the-oxford-prospects-winter-visit-in-psychology-receiving-the-best-presentation-award-and-best-film-award",
+            },},{id: "news-joined-liangzhu-laboratory-as-research-assistant-working-on-brain-plasticity-after-spinal-cord-stimulation-therapy-advisor-dr-dian-lyu",
+          title: 'Joined Liangzhu Laboratory as Research Assistant, working on brain plasticity after spinal-cord-stimulation therapy...',
+          description: "",
+          section: "News",},{id: "news-completed-the-oxford-prospects-winter-visit-in-psychology-receiving-the-best-presentation-award-and-best-film-award",
           title: 'Completed the Oxford Prospects Winter Visit in Psychology, receiving the Best Presentation Award...',
           description: "",
           section: "News",},{id: "news-won-the-excellent-poster-award-at-the-psychology-honor-s-program-research-exhibition-zhejiang-university",
@@ -43,9 +46,6 @@ ninja.data = [{
           description: "",
           section: "News",},{id: "news-led-the-psychology-outreach-series-at-the-2050-2026-global-youth-gathering-as-lead-organizer-amp-amp-initiator",
           title: 'Led the Psychology Outreach Series at the 2050@2026 Global Youth Gathering as Lead...',
-          description: "",
-          section: "News",},{id: "news-personal-academic-homepage-is-now-live",
-          title: 'Personal academic homepage is now live!',
           description: "",
           section: "News",},{id: "teachings-data-science-fundamentals",
           title: 'Data Science Fundamentals',
