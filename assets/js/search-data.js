@@ -18,7 +18,7 @@ ninja.data = [{
           },
         },{id: "nav-group",
           title: "group",
-          description: "Consciousness Lab at Zhejiang University",
+          description: "",
           section: "Navigation",
           handler: () => {
             window.location.href = "/group/";
