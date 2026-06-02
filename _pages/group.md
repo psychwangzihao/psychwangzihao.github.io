@@ -22,17 +22,9 @@ Welcome to the **Consciousness Lab at Zhejiang University**. We are a student-le
 {% include team_members.liquid %}
 
 <!--
-  To add a team member, create a file in _group_members/ with the following format:
-  ---
-  name: Your Name
-  role: PhD Student / Postdoc / PI / Undergraduate Researcher
-  image: member_name.jpg  (place image in assets/img/)
-  research: Your research focus in one sentence
-  contact: your.email@example.com
-  website: https://your-website.com  (optional)
-  ---
-  Brief biography and research description.
-  The file will be automatically picked up and displayed here.
+  To add a team member, append a new entry to _data/group_members.yml.
+  See that file for field descriptions and format.
+  Photos go in assets/img/.
 -->
 
 ---
