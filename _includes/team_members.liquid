@@ -6,10 +6,20 @@
       <!-- Left: Photo -->
       <div class="col-md-3 text-center mb-3 mb-md-0">
         {% if member.image %}
-          {% assign member_image = member.image | prepend: 'assets/img/' %}
-          <img src="{{ member_image | relative_url }}" alt="{{ member.name }}"
-               style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;"
-               loading="lazy">
+          {% assign member_image_path = member.image | prepend: 'assets/img/' %}
+          {% assign img_path_no_ext = member_image_path | remove: '.jpg' | remove: '.jpeg' | remove: '.png' | remove: '.tiff' | remove: '.gif' %}
+          <picture>
+            {% if site.imagemagick.enabled %}
+              <source
+                srcset="{% for i in site.imagemagick.widths %}{{ img_path_no_ext | relative_url }}-{{ i }}.webp {{ i }}w,{% endfor %}"
+                type="image/webp"
+                sizes="150px"
+              >
+            {% endif %}
+            <img src="{{ member_image_path | relative_url }}" alt="{{ member.name }}"
+                 style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;"
+                 loading="lazy">
+          </picture>
         {% else %}
           <div style="width: 150px; height: 150px; border-radius: 50%; background: var(--global-divider-color); display: inline-flex; align-items: center; justify-content: center; font-size: 2.5rem; color: var(--global-text-color-light);">
             {{ member.name | slice: 0, 1 }}
