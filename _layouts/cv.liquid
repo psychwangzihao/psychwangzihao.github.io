@@ -199,6 +199,46 @@ layout: default
       {% elsif render_jsonresume and site.data.resume %}
         {% comment %} JSONResume format {% endcomment %}
 
+        <!-- Contact Information -->
+        {% if site.data.resume.basics %}
+          <div class="card mt-3 p-3">
+            <h3 class="card-title font-weight-medium">Contact Information</h3>
+            {% assign basics = site.data.resume.basics %}
+            <table class="table table-cv table-sm table-borderless">
+              {% if basics.name %}
+                <tr>
+                  <td class="p-1 pr-2 font-weight-bold"><b>Name</b></td>
+                  <td class="p-1 pl-2 font-weight-light">{{ basics.name }}</td>
+                </tr>
+              {% endif %}
+              {% if basics.institution %}
+                <tr>
+                  <td class="p-1 pr-2 font-weight-bold"><b>Institution</b></td>
+                  <td class="p-1 pl-2 font-weight-light">{{ basics.institution }}</td>
+                </tr>
+              {% endif %}
+              {% if basics.email %}
+                <tr>
+                  <td class="p-1 pr-2 font-weight-bold"><b>Email</b></td>
+                  <td class="p-1 pl-2 font-weight-light">{{ basics.email }}</td>
+                </tr>
+              {% endif %}
+              {% if basics.phone %}
+                <tr>
+                  <td class="p-1 pr-2 font-weight-bold"><b>Phone</b></td>
+                  <td class="p-1 pl-2 font-weight-light">{{ basics.phone }}</td>
+                </tr>
+              {% endif %}
+              {% if basics.location.address %}
+                <tr>
+                  <td class="p-1 pr-2 font-weight-bold"><b>Address</b></td>
+                  <td class="p-1 pl-2 font-weight-light">{{ basics.location.address }}</td>
+                </tr>
+              {% endif %}
+            </table>
+          </div>
+        {% endif %}
+
         <!-- Interests -->
         {% if site.data.resume.interests.size > 0 %}
           <a class="anchor" id="interests"></a>
