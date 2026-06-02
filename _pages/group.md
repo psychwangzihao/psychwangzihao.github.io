@@ -15,8 +15,6 @@ nav_order: 2
 
 Welcome to the **Consciousness Lab at Zhejiang University**. We are a student-led research group, united by curiosity across disciplines, working together to explore the mysteries of consciousness. We host regular journal clubs and seminars to spark interdisciplinary dialogue and collaboration. If you are fascinated by consciousness, we would love to hear from you.
 
-Students from Zhejiang University are especially encouraged to join — being on campus means you can take part in our in-person gatherings — but everyone is welcome to participate in our online discussions. We conduct our discussions in English so that recorded sessions can reach a broader audience, and we hope participants are comfortable communicating in English.
-
 ---
 
 ## Team Members
