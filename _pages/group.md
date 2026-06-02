@@ -1,7 +1,7 @@
 ---
 layout: page
 permalink: /group/
-title: Group
+title: group
 description: Consciousness Lab at Zhejiang University
 nav: true
 nav_order: 2
