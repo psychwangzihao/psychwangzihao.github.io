@@ -12,6 +12,7 @@ profile:
     <p>psychwangzihao@zju.edu.cn</p>
     <p>+86 139-5729-1709</p>
     <p>866 Yuhangtang Road, Hangzhou 310058, China</p>
+  group: Consciousness Lab at Zhejiang University
 
 selected_papers: false
 social: true
