@@ -11,6 +11,7 @@
           <picture>
             {% if site.imagemagick.enabled %}
               <source
+                class="responsive-img-srcset"
                 srcset="{% for i in site.imagemagick.widths %}{{ img_path_no_ext | relative_url }}-{{ i }}.webp {{ i }}w,{% endfor %}"
                 type="image/webp"
                 sizes="150px"
@@ -18,7 +19,8 @@
             {% endif %}
             <img src="{{ member_image_path | relative_url }}" alt="{{ member.name }}"
                  style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;"
-                 loading="lazy">
+                 loading="eager"
+                 onerror="this.onerror=null; this.parentElement.querySelector('source.responsive-img-srcset').remove();">
           </picture>
         {% else %}
           <div style="width: 150px; height: 150px; border-radius: 50%; background: var(--global-divider-color); display: inline-flex; align-items: center; justify-content: center; font-size: 2.5rem; color: var(--global-text-color-light);">
