@@ -2,9 +2,12 @@
   "basics": {
     "name": "Zihao Wang",
     "label": "Undergraduate Student",
+    "institution": "Zhejiang University",
     "email": "psychwangzihao@zju.edu.cn",
+    "phone": "+86 139-5729-1709",
     "summary": "B.Sc. candidate in Psychology (Qiushi Honor's Program) at Zhejiang University, with research interests in consciousness, mental imagery, and aphantasia. Visiting student at Pembroke College, University of Oxford.",
     "location": {
+      "address": "866 Yuhangtang Road, Hangzhou 310058, China",
       "city": "Hangzhou",
       "countryCode": "CN",
       "region": "Zhejiang"
