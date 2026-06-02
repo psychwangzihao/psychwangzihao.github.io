@@ -2,7 +2,7 @@
 <div class="team-members">
   {% for member in site.data.group_members %}
   <div class="team-member" style="margin-bottom: 2rem; padding: 1.5rem; border: 1px solid var(--global-divider-color); border-radius: 8px; background: var(--global-card-bg-color);">
-    <div class="row">
+    <div class="row align-items-center">
       <div class="col-md-3 text-center">
         {% if member.image %}
           {% assign member_image = member.image | prepend: 'assets/img/' %}
