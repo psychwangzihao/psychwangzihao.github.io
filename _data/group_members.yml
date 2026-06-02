@@ -1,0 +1,23 @@
+# Group Members Data
+# Add a new entry for each team member. The order here defines display order.
+# Images should be placed in assets/img/
+
+- name: Zihao Wang
+  role: Lab Coordinator / Undergraduate Researcher
+  image: prof_pic.jpg
+  research: Consciousness, mental imagery, and aphantasia
+  contact: psychwangzihao@zju.edu.cn
+  website: https://psychwangzihao.github.io
+  bio: >
+    B.Sc. candidate in Psychology, Qiushi Honor's Program, Chu Kochen Honors College,
+    Zhejiang University. Visiting student at Pembroke College, University of Oxford (2026–2027).
+    Research interests include consciousness (self-model; absence), mental imagery, and aphantasia.
+
+# Add more members below:
+# - name:
+#   role:
+#   image:
+#   research:
+#   contact:
+#   website:
+#   bio: >
