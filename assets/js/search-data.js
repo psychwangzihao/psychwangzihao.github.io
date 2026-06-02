@@ -17,7 +17,7 @@ ninja.data = [{
             window.location.href = "/news/";
           },
         },{id: "nav-group",
-          title: "Group",
+          title: "group",
           description: "Consciousness Lab at Zhejiang University",
           section: "Navigation",
           handler: () => {
