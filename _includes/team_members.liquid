@@ -34,6 +34,9 @@
         <!-- Name -->
         <p style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.3rem;">
           {{ member.name }}
+          {% if member.role %}
+            <span style="font-size: 0.7rem; color: var(--global-theme-color); opacity: 0.65; margin-left: 0.35rem; font-weight: 400;">· {{ member.role }}</span>
+          {% endif %}
         </p>
 
         <!-- Background -->
@@ -61,6 +64,13 @@
         {% if member.research_focus %}
           <p style="font-weight: 600; font-size: 0.95rem; margin-bottom: 0; padding: 0.4rem 0 0.4rem 0.85rem; border-left: 3px solid var(--global-theme-color);">
             {{ member.research_focus }}
+          </p>
+        {% endif %}
+
+        <!-- Personal Statement (subtle, smaller text) -->
+        {% if member.statement %}
+          <p style="font-size: 0.85rem; margin-top: 0.5rem; margin-bottom: 0; color: var(--global-text-color-light); padding: 0.3rem 0 0.3rem 0.7rem; border-left: 2px solid var(--global-divider-color);">
+            {{ member.statement }}
           </p>
         {% endif %}
       </div>
