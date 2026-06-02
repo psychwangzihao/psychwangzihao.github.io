@@ -7,19 +7,19 @@ first_name: Zihao
 middle_name: # leave blank if not applicable
 last_name: Wang
 contact_note: >
-  Feel free to reach out via email for collaboration or questions.
+  Best way to reach me is via email.
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
-  Personal academic website of Zihao Wang.
+  Zihao Wang is a psychology undergraduate at Zhejiang University, researching consciousness, mental imagery, and aphantasia.
 footer_text: >
-  © Copyright 2026 Zihao Wang. Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
+  Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
   Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
-keywords: zihao-wang, academic-website, personal-homepage
+keywords: zihao-wang, psychology, consciousness, mental-imagery, aphantasia, cognitive-neuroscience, zhejiang-university
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
 icon: 🧠 # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
 
 url: https://2534Henry.github.io # the base hostname & protocol for your site
 baseurl: # the subpath of your site, e.g. /blog/. Leave blank for root
-last_updated: false # set to true if you want to display last updated in the footer
+last_updated: true # set to true if you want to display last updated in the footer
 impressum_path: # set to path to include impressum link in the footer, use the same path as permalink in a page, helps to conform with EU GDPR
 back_to_top: true # set to false to disable the back to top button
 
