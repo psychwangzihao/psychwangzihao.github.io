@@ -46,6 +46,9 @@ ninja.data = [{
           section: "News",},{id: "news-led-the-psychology-outreach-series-at-the-2050-2026-global-youth-gathering-as-lead-organizer-amp-amp-initiator",
           title: 'Led the Psychology Outreach Series at the 2050@2026 Global Youth Gathering as Lead...',
           description: "",
+          section: "News",},{id: "news-launched-consciousness-observers-co-lab-an-interdisciplinary-platform-for-consciousness-research-based-at-zhejiang-university",
+          title: 'Launched Consciousness Observers (CO-LAB), an interdisciplinary platform for consciousness research based at Zhejiang...',
+          description: "",
           section: "News",},{
         id: 'social-cv',
         title: 'CV',
