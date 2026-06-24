@@ -26,6 +26,8 @@ I am a **B.Sc. candidate in Psychology** in the **Qiushi Honor's Program** at <a
 
 My research interests lie in **consciousness** (self-model; absence); **mental imagery** and **aphantasia**. I aim to understand the cognitive and neural mechanisms underlying conscious experience, using approaches from cognitive neuroscience.
 
+I initiated <a href='https://consciousness-observers.github.io'>Consciousness Observers (CO-LAB)</a>, an interdisciplinary platform for consciousness research based at Zhejiang University.
+
 Currently, I conduct research under the joint mentorship of **Dr. Yuzheng Hu** at the <a href='http://www.psych.zju.edu.cn/psychen/main.htm'>Department of Psychology and Behavioral Sciences, Zhejiang University</a> and **Dr. Dian Lyu** at the <a href='http://www.bbmi.zju.edu.cn/bbmi/main.htm'>MOE Frontier Science Center for Brain Science and Brain-Machine Integration</a>. I am also a member of the <a href='https://jianghao-liu.github.io/irca/'>Interdisciplinary Reading Club of Aphantasia (IRCA)</a>.
 
 You're welcome to check out my <a href='/cv/'>CV</a> for more details. I'm always open to collaboration and discussion — **feel free to reach out!**
