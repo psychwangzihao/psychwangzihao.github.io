@@ -18,10 +18,10 @@ ninja.data = [{
           },
         },{id: "nav-group",
           title: "group",
-          description: "",
+          description: "Consciousness Observers — CO-LAB",
           section: "Navigation",
           handler: () => {
-            window.location.href = "/group/";
+            window.location.href = "/https:/consciousness-observers.github.io";
           },
         },{id: "nav-publications",
           title: "publications",
