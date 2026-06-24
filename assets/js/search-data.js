@@ -16,13 +16,6 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/news/";
           },
-        },{id: "nav-group",
-          title: "group",
-          description: "Consciousness Observers — CO-LAB",
-          section: "Navigation",
-          handler: () => {
-            window.location.href = "/https:/consciousness-observers.github.io";
-          },
         },{id: "nav-publications",
           title: "publications",
           description: "Peer-reviewed publications and preprints.",
