@@ -42,6 +42,9 @@ ninja.data = [{
           section: "News",},{id: "news-launched-consciousness-observers-co-lab-an-interdisciplinary-platform-for-consciousness-research-based-at-zhejiang-university",
           title: 'Launched Consciousness Observers (CO-LAB), an interdisciplinary platform for consciousness research based at Zhejiang...',
           description: "",
+          section: "News",},{id: "news-invited-by-westlake-university-and-the-joint-academy-on-future-humanity-to-participate-in-the-future-civilization-sandbox-as-a-theme-advocate-leading-the-discussion-topic-decoding-social-interaction-what-ai-can-and-cannot-replace",
+          title: 'Invited by Westlake University and the Joint Academy on Future Humanity to participate...',
+          description: "",
           section: "News",},{
         id: 'social-cv',
         title: 'CV',
