@@ -8,7 +8,7 @@ nav: false
 <a href="/playground/" style="font-size: 0.9rem; color: var(--global-theme-color);">← Back to Playground</a>
 
 <div style="margin-bottom: 0.5rem; margin-top: 1rem;">
-  <span style="font-size: 0.75rem; background: #d9a400; color: #fff; padding: 0.15rem 0.5rem; border-radius: 12px;">In development</span>
+  <span style="font-size: 0.75rem; background: var(--global-theme-color); color: #fff; padding: 0.15rem 0.5rem; border-radius: 12px;">Active</span>
   <span style="font-size: 0.85rem; color: var(--global-text-color-light); margin-left: 0.5rem;">Reading & Language</span>
 </div>
 
@@ -17,7 +17,8 @@ nav: false
 **Interface language:** Chinese (Y/N responses)<br>
 
 <div style="margin: 1.2rem 0;">
-  <span style="font-size: 0.82rem; color: var(--global-text-color-light);">An interactive browser version is in development and will be published on this page when ready.</span>
+  <a href="/assets/playground/coconnect/" target="_blank" style="display: inline-block; padding: 0.65rem 1.8rem; font-size: 0.95rem; font-weight: 600; background: var(--global-theme-color); color: #fff; border-radius: 7px; text-decoration: none;">Launch experiment →</a>
+  <span style="font-size: 0.82rem; color: var(--global-text-color-light); margin-left: 0.6rem;">Runs entirely in the browser · results download locally</span>
 </div>
 
 ---
@@ -50,4 +51,9 @@ Images are drawn from the **Microsoft COCO 2017** dataset, a large, publicly ava
 
 ## Status
 
-**In development.** The experiment is built with PsychoPy and is currently being validated. When ready, an interactive version will run entirely in the browser — no server, no account — and participants will be able to download their own results locally (CSV/JSON). No personal information is collected.
+**Active — browser version available.** The experiment runs entirely in the browser: no server, no account, no data leaves your machine. Two experiments are included:
+
+- **Exp 1 — fine reading-ability curve** (no assist): accuracy by text length across 19 levels, run in two rounds.
+- **Exp 2 — rhythmic-assist test** (single length): control, simple RSVP, Ding-style RSVP, and auditory metronome conditions (Session 1), plus an ABAB crossover (Session 2).
+
+Results download locally as CSV. No personal information is collected. The experiment is also implemented in PsychoPy for the laboratory version.
