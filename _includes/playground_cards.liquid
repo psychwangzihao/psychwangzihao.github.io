@@ -1,0 +1,40 @@
+{% if site.data.playground %}
+{% assign categories = site.data.playground | map: "category" | uniq %}
+{% for category in categories %}
+<h3 id="{{ category | slugify }}" style="margin-top: 2rem; margin-bottom: 1rem;">{{ category }}</h3>
+{% assign has_project = false %}
+{% for project in site.data.playground %}
+{% if project.category == category %}
+{% assign has_project = true %}
+{% assign status_label = project.status %}
+{% if status_label == "in development" %}{% assign status_label = "In development" %}{% elsif status_label == "active" %}{% assign status_label = "Active" %}{% elsif status_label == "archived" %}{% assign status_label = "Archived" %}{% endif %}
+{% assign status_color = "var(--global-theme-color)" %}
+{% if project.status == "in development" %}{% assign status_color = "#d9a400" %}{% endif %}
+<div class="playground-card" style="margin-bottom: 1.5rem; padding: 1.25rem 1.5rem; border: 1px solid var(--global-divider-color); border-radius: 8px; background: var(--global-card-bg-color); cursor: pointer;" onclick="location.href='/playground/{{ project.slug }}/'">
+<p style="font-size: 1.1rem; font-weight: 600; margin-bottom: 0.3rem;">
+{{ project.title }}
+{% if project.title_en %}
+<span style="font-size: 0.85rem; font-weight: 400; color: var(--global-text-color-light);">· {{ project.title_en }}</span>
+{% endif %}
+{% if project.status %}
+<span style="font-size: 0.7rem; background: {{ status_color }}; color: #fff; padding: 0.15rem 0.5rem; border-radius: 12px; margin-left: 0.5rem; vertical-align: middle;">{{ status_label }}</span>
+{% endif %}
+</p>
+{% if project.summary %}
+<p style="font-size: 0.9rem; margin-bottom: 0.65rem; color: var(--global-text-color);">{{ project.summary }}</p>
+{% endif %}
+{% if project.run_url %}
+<a href="{{ project.run_url }}" style="font-size: 0.85rem; font-weight: 500; color: var(--global-theme-color);" onclick="event.stopPropagation()">Run experiment →</a>
+{% else %}
+<a href="/playground/{{ project.slug }}/" style="font-size: 0.85rem; font-weight: 500; color: var(--global-theme-color);">View details →</a>
+{% endif %}
+</div>
+{% endif %}
+{% endfor %}
+{% if has_project == false %}
+<p style="color: var(--global-text-color-light); font-style: italic;">Nothing here yet — check back soon.</p>
+{% endif %}
+{% endfor %}
+{% else %}
+<p><em>No playground experiments listed yet.</em></p>
+{% endif %}

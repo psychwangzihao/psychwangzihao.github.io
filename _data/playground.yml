@@ -1,0 +1,29 @@
+# Playground experiments
+# Each entry is one self-made psychological experiment.
+#
+# Fields:
+#   title:       Display title
+#   title_en:    (optional) secondary title, shown as "· <title_en>"
+#   slug:        URL-safe lowercase slug, used for /playground/<slug>/ and assets/playground/<slug>/
+#   category:    Free-form group label; cards are grouped by this on the listing page
+#   status:      in development | active | archived
+#   summary:     One-to-two sentence card blurb (keep short)
+#   contacts:    List of people to contact about this experiment
+#   run_url:     Path to the runnable browser version, e.g. /assets/playground/<slug>/.
+#                Leave empty while the interactive version is not yet published
+#                (the card then links to the detail page instead).
+#   date_added:  YYYY-MM-DD
+
+- title: COCOnnect
+  title_en: Picture–Text Matching
+  slug: coconnect
+  category: Reading & Language
+  status: in development
+  summary: >
+    A picture–text matching experiment: view a natural-scene image, read a short
+    Chinese description, and judge whether it matches. Measures how silent-reading
+    accuracy scales with text length (1–40 characters, 19 levels).
+  contacts:
+    - Zihao Wang
+  run_url:
+  date_added: 2026-08-08
