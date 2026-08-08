@@ -22,7 +22,7 @@ latest_posts:
 
 **Welcome!** I am Zihao Wang, an undergraduate student at <a href='https://www.zju.edu.cn/english/'>Zhejiang University</a>.
 
-I am a **B.Sc. candidate in Psychology** in the **Qiushi Honor's Program** at <a href='http://ckc.zju.edu.cn/ckcen/'>Chu Kochen Honors College, Zhejiang University</a> (expected June 2029), and a visiting student in Experimental Psychology at <a href='https://www.pmb.ox.ac.uk'>Pembroke College, University of Oxford</a> (2026–2027).
+I am a **B.Sc. candidate in Psychology** in the **Qiushi Honor's Program** at <a href='http://ckc.zju.edu.cn/ckcen/'>Chu Kochen Honors College, Zhejiang University</a> (expected June 2029).
 
 My research interests lie in **consciousness** (self-model; absence); **mental imagery** and **aphantasia**. I aim to understand the cognitive and neural mechanisms underlying conscious experience, using approaches from cognitive neuroscience.
 

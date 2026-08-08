@@ -5,7 +5,7 @@
     "institution": "Zhejiang University",
     "email": "psychwangzihao@zju.edu.cn",
     "phone": "+86 139-5729-1709",
-    "summary": "B.Sc. candidate in Psychology (Qiushi Honor's Program) at Zhejiang University, with research interests in consciousness, mental imagery, and aphantasia. Visiting student at Pembroke College, University of Oxford.",
+    "summary": "B.Sc. candidate in Psychology (Qiushi Honor's Program) at Zhejiang University, with research interests in consciousness, mental imagery, and aphantasia.",
     "location": {
       "address": "866 Yuhangtang Road, Hangzhou 310058, China",
       "city": "Hangzhou",
@@ -15,18 +15,18 @@
   },
   "education": [
     {
-      "institution": "University of Oxford, Pembroke College",
-      "studyType": "Visiting Student",
-      "area": "Experimental Psychology",
-      "startDate": "2026-10-01",
-      "endDate": "2027-06-01"
-    },
-    {
       "institution": "Zhejiang University, Qiushi Honor's Program",
       "studyType": "B.Sc.",
       "area": "Psychology",
       "startDate": "2025-09-01",
       "endDate": "2029-06-01"
+    },
+    {
+      "institution": "Oxford Prospects Winter Visit",
+      "studyType": "Winter Short-term Program (Jan–Feb 2026)",
+      "area": "Psychology: Interdisciplinary Frontiers of Behaviour and Mind in the Age of AI",
+      "startDate": "2026-01-01",
+      "endDate": "2026-02-01"
     }
   ],
   "awards": [
