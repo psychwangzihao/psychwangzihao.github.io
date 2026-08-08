@@ -18,12 +18,13 @@
   title_en: Picture–Text Matching
   slug: coconnect
   category: Reading & Language
-  status: in development
+  status: active
   summary: >
     A picture–text matching experiment: view a natural-scene image, read a short
     Chinese description, and judge whether it matches. Measures how silent-reading
-    accuracy scales with text length (1–40 characters, 19 levels).
+    accuracy scales with text length (1–40 characters, 19 levels), and whether
+    rhythmic auditory support changes that curve.
   contacts:
     - Zihao Wang
-  run_url:
+  run_url: /assets/playground/coconnect/
   date_added: 2026-08-08
