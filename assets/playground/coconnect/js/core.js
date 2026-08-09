@@ -274,61 +274,90 @@ async function showInstruction(title, body, extra) {
     <div class="instr-title">${escHtml(title)}</div>
     <div class="instr-body">${body.replace(/\n/g, '<br>')}</div>
     ${extra ? `<div class="instr-extra">${escHtml(extra)}</div>` : ''}
-    <div class="instr-continue">按空格键继续</div>
+    <div class="instr-continue">按空格 / 回车，或点击屏幕继续</div>
   </div>`);
   return await waitForSpace();
 }
 
 async function waitForSpace() {
-  const start = performance.now();
-  while (true) {
-    const keys = KeyBuf.take();
-    if (keys.includes(CONFIG.KEY_QUIT)) return 'quit';
-    if (keys.includes(CONFIG.KEY_CONTINUE) || keys.includes('Enter')) return 'done';
-    if (performance.now() - start > 3600000) return 'timeout';
-    await sleep(20);
+  KeyBuf.clear();
+  const stage = Stage.el();
+  let clicked = false;
+  const onClick = () => { clicked = true; };
+  stage.addEventListener('click', onClick);
+  try {
+    const start = performance.now();
+    while (true) {
+      if (clicked) return 'done';                 // 鼠标点击继续（不受输入法影响）
+      const keys = KeyBuf.take();
+      if (keys.includes(CONFIG.KEY_QUIT)) return 'quit';
+      if (keys.includes(CONFIG.KEY_CONTINUE) || keys.includes('Enter')) return 'done';
+      if (performance.now() - start > 3600000) return 'timeout';
+      await sleep(20);
+    }
+  } finally {
+    stage.removeEventListener('click', onClick);
   }
 }
 
 async function showCountdownBreak(durationS, label, skippable) {
   const end = performance.now() + durationS * 1000;
-  while (performance.now() < end) {
-    const remain = Math.max(0, Math.ceil((end - performance.now()) / 1000));
-    Stage.show(`<div class="screen center panel">
-      <div class="instr-title">${escHtml(label || '休息一下')}</div>
-      <div class="instr-extra">${remain} 秒</div>
-      ${skippable ? '<div class="instr-continue">按空格键跳过</div>' : ''}
-    </div>`);
-    const keys = KeyBuf.take();
-    if (skippable && keys.includes(CONFIG.KEY_CONTINUE)) return 'done';
-    if (keys.includes(CONFIG.KEY_QUIT)) return 'quit';
-    await sleep(250);
+  const stage = Stage.el();
+  let clicked = false;
+  const onClick = () => { clicked = true; };
+  if (skippable) stage.addEventListener('click', onClick);
+  try {
+    while (performance.now() < end) {
+      const remain = Math.max(0, Math.ceil((end - performance.now()) / 1000));
+      Stage.show(`<div class="screen center panel">
+        <div class="instr-title">${escHtml(label || '休息一下')}</div>
+        <div class="instr-extra">${remain} 秒</div>
+        ${skippable ? '<div class="instr-continue">按空格 / 点击跳过</div>' : ''}
+      </div>`);
+      if (skippable && clicked) return 'done';
+      const keys = KeyBuf.take();
+      if (skippable && keys.includes(CONFIG.KEY_CONTINUE)) return 'done';
+      if (keys.includes(CONFIG.KEY_QUIT)) return 'quit';
+      await sleep(250);
+    }
+  } finally {
+    stage.removeEventListener('click', onClick);
   }
   return 'done';
 }
 
 async function showInBlockBreak(doneCount, total) {
   KeyBuf.clear();
+  const stage = Stage.el();
+  let clicked = false;
+  const onClick = () => { clicked = true; };
+  stage.addEventListener('click', onClick);
   Stage.show(`<div class="screen center panel">
     <div class="instr-title">已完成 ${doneCount} / ${total}</div>
     <div class="instr-body">需要休息一下吗？</div>
-    <div class="instr-continue">按空格键继续 · 按 Q 暂停 2 分钟</div>
+    <div class="instr-continue">按空格 / 点击继续 · 按 Q 暂停 2 分钟</div>
   </div>`);
-  while (true) {
-    const keys = KeyBuf.take();
-    if (keys.includes(CONFIG.KEY_QUIT)) return 'quit';
-    if (keys.includes(CONFIG.KEY_CONTINUE)) return 'done';
-    if (keys.includes(CONFIG.KEY_PAUSE)) {
-      const r = await showCountdownBreak(CONFIG.BREAK_DURATION, '暂停中', false);
-      if (r === 'quit') return 'quit';
-      Stage.show(`<div class="screen center panel">
-        <div class="instr-title">休息结束</div>
-        <div class="instr-continue">按空格键继续</div>
-      </div>`);
-      if (await waitForSpace() === 'quit') return 'quit';
-      return 'done';
+  try {
+    while (true) {
+      if (clicked) return 'done';
+      const keys = KeyBuf.take();
+      if (keys.includes(CONFIG.KEY_QUIT)) return 'quit';
+      if (keys.includes(CONFIG.KEY_CONTINUE)) return 'done';
+      if (keys.includes(CONFIG.KEY_PAUSE)) {
+        stage.removeEventListener('click', onClick);
+        const r = await showCountdownBreak(CONFIG.BREAK_DURATION, '暂停中', false);
+        if (r === 'quit') return 'quit';
+        Stage.show(`<div class="screen center panel">
+          <div class="instr-title">休息结束</div>
+          <div class="instr-continue">按空格 / 点击继续</div>
+        </div>`);
+        if (await waitForSpace() === 'quit') return 'quit';
+        return 'done';
+      }
+      await sleep(20);
     }
-    await sleep(20);
+  } finally {
+    stage.removeEventListener('click', onClick);
   }
 }
 

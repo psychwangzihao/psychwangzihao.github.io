@@ -39,25 +39,38 @@ const App = {
   },
 
   async start() {
-    const subject = document.getElementById('f-subject').value.trim();
-    if (!subject) { alert('请填写被试编号'); return; }
-    const task = document.getElementById('f-task').value;
-    const level = document.getElementById('f-level').value.trim() || CONFIG.EXP2_TARGET_LEVEL;
-    try { await document.documentElement.requestFullscreen(); } catch (e) { /* 非全屏也可运行 */ }
-    KeyBuf.clear();
+    try {
+      const subject = document.getElementById('f-subject').value.trim();
+      if (!subject) { alert('请填写被试编号'); return; }
+      const task = document.getElementById('f-task').value;
+      const level = document.getElementById('f-level').value.trim() || CONFIG.EXP2_TARGET_LEVEL;
+      try { await document.documentElement.requestFullscreen(); } catch (e) { /* 非全屏也可运行 */ }
+      KeyBuf.clear();
 
-    const cfg = { subject };
-    if (task.startsWith('exp1.')) {
-      cfg.run = task;
-      await runExp1(cfg);
-    } else if (task.startsWith('exp2.')) {
-      cfg.session = parseInt(task.split('.')[1], 10);
-      cfg.targetLevel = level;
-      await runExp2(cfg);
-    }
+      const cfg = { subject };
+      if (task.startsWith('exp1.')) {
+        cfg.run = task;
+        await runExp1(cfg);
+      } else if (task.startsWith('exp2.')) {
+        cfg.session = parseInt(task.split('.')[1], 10);
+        cfg.targetLevel = level;
+        await runExp2(cfg);
+      }
 
-    if (document.fullscreenElement) {
-      try { await document.exitFullscreen(); } catch (e) { /* ignore */ }
+      if (document.fullscreenElement) {
+        try { await document.exitFullscreen(); } catch (e) { /* ignore */ }
+      }
+    } catch (err) {
+      console.error('[COCOnnect] 运行出错:', err);
+      const msg = String((err && err.message) || err);
+      Stage.show(`<div class="screen center panel">
+        <div class="instr-title no">出错了</div>
+        <div class="instr-body">${escHtml(msg)}</div>
+        <div class="instr-continue">点击屏幕返回主页</div>
+      </div>`);
+      const stage = Stage.el();
+      const onClick = () => { stage.removeEventListener('click', onClick); App.showStart(); };
+      stage.addEventListener('click', onClick);
     }
   },
 };
