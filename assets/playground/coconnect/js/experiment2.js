@@ -8,8 +8,7 @@
 const EXP2_COLUMNS = [
   'participant', 'date', 'session', 'condition', 'assist', 'freq', 'segment',
   'family', 'trial', 'image_id', 'text_level', 'text_nchar', 'text',
-  'text_duration', 'swap_pos', 'ding_veracity', 'correct_answer', 'subject_key',
-  'accuracy', 'rt',
+  'text_duration', 'swap_pos', 'correct_answer', 'subject_key', 'accuracy', 'rt',
 ];
 
 function exp2ConditionSequence(session) {
@@ -22,7 +21,6 @@ function exp2ConditionSequence(session) {
     for (const f of CONFIG.EXP2_FREQS) {
       seq.push(c('rsvp_simple', f, `呈现速率 ${f}g Hz`, 'rsvp', 'rsvp_simple'));
     }
-    seq.push(c('rsvp_ding', CONFIG.EXP2_DING_CHAR_RATE, '丁鼐RSVP 4/2/1Hz', 'rsvp', 'rsvp_ding'));
     for (const f of CONFIG.EXP2_FREQS) {
       seq.push(c('auditory', f, `听觉节拍 ${f}g Hz`, 'auditory', 'auditory'));
     }
@@ -30,14 +28,12 @@ function exp2ConditionSequence(session) {
     const fams = [
       ['auditory', '听觉', 'auditory'],
       ['rsvp_simple', '呈现速率', 'rsvp_simple'],
-      ['rsvp_ding', '丁鼐RSVP', 'rsvp_ding'],
     ];
     for (const [assist, label, pres] of fams) {
-      const freqB = (pres === 'rsvp_ding' ? CONFIG.EXP2_DING_CHAR_RATE : CONFIG.EXP2_ABAB_B_FREQ);
       seq.push(c('abab_a', null, `ABAB-${label} A1`, 'none', 'whole', 'A1', pres));
-      seq.push(c('abab_b', freqB, `ABAB-${label} B1`, assist, pres, 'B1', pres));
+      seq.push(c('abab_b', CONFIG.EXP2_ABAB_B_FREQ, `ABAB-${label} B1`, assist, pres, 'B1', pres));
       seq.push(c('abab_a', null, `ABAB-${label} A2`, 'none', 'whole', 'A2', pres));
-      seq.push(c('abab_b', freqB, `ABAB-${label} B2`, assist, pres, 'B2', pres));
+      seq.push(c('abab_b', CONFIG.EXP2_ABAB_B_FREQ, `ABAB-${label} B2`, assist, pres, 'B2', pres));
     }
   }
   return seq;
@@ -49,7 +45,6 @@ function exp2Hint(spec) {
   if (t === 'abab_a') return '这一部分没有辅助，整句出现，按你自己的节奏读';
   const pres = spec.presentation || t;
   if (pres === 'rsvp_simple') return `这一部分文字会逐字出现（${spec.freq} Hz 节奏）<br>看着字蹦出来，能判断就按`;
-  if (pres === 'rsvp_ding') return '这一部分文字逐字出现（4Hz），词和短语处有标记<br>看着字蹦出来，能判断就按';
   if (pres === 'auditory') return `这一部分整句出现，同时有节拍器声音（${spec.freq} Hz）<br>声音只在读文字时有，边听边读`;
   return `这一部分有辅助（${spec.label}），读完后判断`;
 }

@@ -127,9 +127,8 @@ async function pollYN(windowMs, onsetT, endEarly) {
 // RSVP 逐字呈现（早按允许）
 // =====================================================================
 async function rsvpPresent(text, periodMs, textOnset) {
-  const marks = dingMarks(text);
   for (let i = 0; i < text.length; i++) {
-    Stage.char(text[i], marks.word.has(i), marks.phrase.has(i));
+    Stage.char(text[i], false, false);
     const t0 = performance.now();
     while (performance.now() - t0 < periodMs) {
       const keys = KeyBuf.take();
@@ -141,13 +140,6 @@ async function rsvpPresent(text, periodMs, textOnset) {
     }
   }
   return { key: null, rt: null, early: false };
-}
-
-function dingMarks(text) {
-  const word = new Set(), phrase = new Set();
-  for (let i = 0; i < text.length; i += CONFIG.EXP2_DING_WORD_LEN) word.add(i);
-  for (let i = 0; i < text.length; i += CONFIG.EXP2_DING_PHRASE_LEN) phrase.add(i);
-  return { word, phrase };
 }
 
 // =====================================================================
@@ -239,19 +231,6 @@ async function runConditionTrial(opts) {
     } else {
       rt = r.rt;
     }
-  } else if (pres === 'rsvp_ding') {
-    // 丁鼐：字固定 4Hz + 词/短语界标记
-    const r = await rsvpPresent(opts.text, 1000 / CONFIG.EXP2_DING_CHAR_RATE, performance.now());
-    if (r.key === 'quit') return { row: baseRow(opts.im, opts.text, opts.answer, 'quit', null), resp: 'quit' };
-    respKey = r.key;
-    if (respKey == null) {
-      Stage.question();
-      const qOnset = performance.now();
-      const q = await pollYN(CONFIG.RSVP_RESPONSE_WINDOW * 1000, qOnset, true);
-      respKey = q.key; rt = q.rt;
-    } else {
-      rt = r.rt;
-    }
   } else {
     // 整句：对照 / ABAB-A（无辅助）、听觉（预备拍锁相 + 节拍器仅文字期）
     const isAud = (opts.spec.assist === 'auditory' || pres === 'auditory');
@@ -280,11 +259,9 @@ async function runConditionTrial(opts) {
   }
 
   const row = baseRow(opts.im, opts.text, opts.answer, respKey, rt);
-  const rateWhole = (pres === 'rsvp_simple') ? opts.spec.freq
-    : (pres === 'rsvp_ding') ? CONFIG.EXP2_DING_CHAR_RATE : CONFIG.EXP2_WHOLE_CHAR_RATE;
-  row.text_duration = Math.round(textDuration(opts.text.length, rateWhole, pres !== 'whole' && pres !== 'auditory') * 1000) / 1000;
+  const rateWhole = (pres === 'rsvp_simple') ? opts.spec.freq : CONFIG.EXP2_WHOLE_CHAR_RATE;
+  row.text_duration = Math.round(textDuration(opts.text.length, rateWhole, pres === 'rsvp_simple') * 1000) / 1000;
   row.swap_pos = (opts.swapPos == null ? '' : opts.swapPos);
-  row.ding_veracity = (pres === 'rsvp_ding' ? '' : '');   // 浏览器无 jieba，词界真伪留空
   return { row, resp: respKey };
 }
 
