@@ -32,9 +32,10 @@ html, body {
 
 .center { text-align: center; }
 
-/* ---- 注视点 / 图 / 文字 / RSVP ---- */
+/* ---- 注视点 / 图 / 文字 / RSVP ----
+   字号用屏高比例（对齐 config FONT_SIZE_TEXT=0.07 / FONT_SIZE_LARGE=0.12） */
 .fix {
-  font-size: 18vmin;
+  font-size: 12vh;                 /* FONT_SIZE_LARGE 0.12 */
   font-weight: 300;
   color: #333333;
 }
@@ -49,7 +50,7 @@ html, body {
 .text-block { gap: 1.2vmin; }
 
 .text-line {
-  font-size: 6.2vmin;                  /* ~30pt 的缩放等效 */
+  font-size: 7vh;                      /* FONT_SIZE_TEXT 0.07 屏高 */
   font-weight: 400;
   color: #333333;
   line-height: 1.35;
@@ -57,7 +58,7 @@ html, body {
 }
 
 .rsvp-char {
-  font-size: 14vmin;
+  font-size: 7vh;                      /* 逐字也用 FONT_SIZE_TEXT 0.07 */
   font-weight: 400;
   color: #333333;
   position: relative;
@@ -76,7 +77,7 @@ html, body {
 }
 
 .q {
-  font-size: 18vmin;
+  font-size: 7vh;                      /* "?" 提示同 FONT_SIZE_TEXT */
   font-weight: 700;
   color: #333333;
 }
@@ -87,7 +88,7 @@ html, body {
   left: 0;
   width: 100%;
   text-align: center;
-  font-size: 3.4vmin;
+  font-size: 3.2vh;                    /* FONT_SIZE_HINT 0.032 */
   color: #666666;
 }
 

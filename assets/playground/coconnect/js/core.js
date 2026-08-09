@@ -1,17 +1,17 @@
-/* COCOnnect — core: key handling, display, timing, trial runners.
-   Ported faithfully from experiment.py / exp2.py (v4.0).
+/* COCOnnect — core: keys, display, timing, trial runners (v4, 2026-08-10).
+   exp1 whole-sentence: text stays full duration (RT recorded at keypress).
+   exp2 whole-sentence: keypress ENDS trial (H7); auditory has prep-beat lock.
 */
 'use strict';
 
 // =====================================================================
-// 全局按键缓冲（keydown → 队列；peek/take/clear）
+// 全局按键缓冲
 // =====================================================================
 const KeyBuf = {
   _buf: [],
   init() {
     window.addEventListener('keydown', (e) => {
       const k = e.key;
-      // 避免浏览器默认行为干扰全屏/空格滚动
       if (k === CONFIG.KEY_QUIT) e.preventDefault();
       if (k === CONFIG.KEY_CONTINUE) e.preventDefault();
       this._buf.push(k);
@@ -28,21 +28,26 @@ function randDur(base, jitter) {
   return (base + (Math.random() * 2 - 1) * jitter) * 1000;   // ms
 }
 
+/** 1/2 → y/n（备用键，防中文输入法拦截） */
+function normalizeKey(k) {
+  if (k === CONFIG.KEY_YES_ALT) return CONFIG.KEY_YES;
+  if (k === CONFIG.KEY_NO_ALT) return CONFIG.KEY_NO;
+  return k;
+}
+
+function isYN(k) {
+  const n = normalizeKey(k);
+  return n === CONFIG.KEY_YES || n === CONFIG.KEY_NO;
+}
+
 // =====================================================================
-// 显示层（#stage 内）
+// 显示层
 // =====================================================================
 const Stage = {
   el() { return document.getElementById('stage'); },
+  clear() { this.el().innerHTML = ''; },
+  show(html) { this.el().innerHTML = html; },
 
-  clear() {
-    this.el().innerHTML = '';
-  },
-
-  show(html) {
-    this.el().innerHTML = html;
-  },
-
-  /** 固定显示：给一段时间，期间轮询 Esc。返回 'quit' 或 'done'。 */
   async hold(durationMs) {
     const start = performance.now();
     while (performance.now() - start < durationMs) {
@@ -79,7 +84,7 @@ const Stage = {
 };
 
 function hintHtml() {
-  return `<div class="hint">按 Y=是, N=否</div>`;
+  return `<div class="hint">${escHtml(CONFIG.HINT)}</div>`;
 }
 
 function escHtml(s) {
@@ -87,48 +92,50 @@ function escHtml(s) {
 }
 
 // =====================================================================
-// 响应收集（§5.2：文字不提前消失，首键记录 RT；20ms 轮询）
+// 响应收集
 // =====================================================================
-/** 在 windowMs 内收集 Y/N。onsetT 为 RT 起点（performance.now 时间戳）。
-    Returns {key: 'y'|'n'|null|'quit', rt: ms|null} */
-async function pollYN(windowMs, onsetT) {
+/**
+ * 收集 Y/N（y/n/1/2，归一化为 y/n）。
+ * @param windowMs 窗口时长
+ * @param onsetT   RT 起点（performance.now 时间戳）
+ * @param endEarly 为 true 时按键即结束（exp2 整句，H7）；为 false 时
+ *                 记录首键 RT 但文字显示到窗口结束（exp1）。
+ * @returns {key:'y'|'n'|null|'quit', rt:ms|null}
+ */
+async function pollYN(windowMs, onsetT, endEarly) {
   const start = performance.now();
-  let resp = null;
+  let resp = null, rt = null;
   while (performance.now() - start < windowMs) {
     const keys = KeyBuf.take();
     if (keys.includes(CONFIG.KEY_QUIT)) return { key: 'quit', rt: null };
     if (resp == null) {
       for (const k of keys) {
-        if (k === CONFIG.KEY_YES || k === CONFIG.KEY_NO) {
-          resp = k;
-          return { key: resp, rt: performance.now() - onsetT };
+        if (isYN(k)) {
+          resp = normalizeKey(k);
+          rt = performance.now() - onsetT;
+          if (endEarly) return { key: resp, rt };
+          break;
         }
       }
     }
     await sleep(20);
   }
-  return { key: resp, rt: null };
+  return { key: resp, rt };
 }
 
 // =====================================================================
-// RSVP 逐字呈现（§7.3 + v3.1 §F：允许早按）
+// RSVP 逐字呈现（早按允许）
 // =====================================================================
-/** 逐字显示 text，每字 periodMs。word/phrase 起始下标加标记。
-    Returns {key:'y'|'n'|null|'quit', rt, early}. rt 自 textOnset 起。 */
 async function rsvpPresent(text, periodMs, textOnset) {
   const marks = dingMarks(text);
   for (let i = 0; i < text.length; i++) {
-    const marked = marks.word.has(i);
-    const phrase = marks.phrase.has(i);
-    Stage.char(text[i], marked, phrase);
+    Stage.char(text[i], marks.word.has(i), marks.phrase.has(i));
     const t0 = performance.now();
     while (performance.now() - t0 < periodMs) {
       const keys = KeyBuf.take();
       if (keys.includes(CONFIG.KEY_QUIT)) return { key: 'quit', rt: null, early: true };
       for (const k of keys) {
-        if (k === CONFIG.KEY_YES || k === CONFIG.KEY_NO) {
-          return { key: k, rt: performance.now() - textOnset, early: true };
-        }
+        if (isYN(k)) return { key: normalizeKey(k), rt: performance.now() - textOnset, early: true };
       }
       await sleep(20);
     }
@@ -144,7 +151,7 @@ function dingMarks(text) {
 }
 
 // =====================================================================
-// 数据行组装（§9.1 / exp2 _row）
+// 数据行组装
 // =====================================================================
 function expectedKey(answer) {
   return answer === 'yes' ? CONFIG.KEY_YES : CONFIG.KEY_NO;
@@ -159,7 +166,7 @@ function baseRow(im, text, answer, respKey, rt) {
   } else if (respKey === 'quit') {
     acc = ''; sk = 'quit';
   } else {
-    acc = 0; sk = 'timeout';
+    acc = 0; sk = 'timeout';   // 未作答（非答错）
   }
   return {
     image_id: im.id,
@@ -168,15 +175,20 @@ function baseRow(im, text, answer, respKey, rt) {
     correct_answer: answer,
     subject_key: sk,
     accuracy: acc,
-    rt: (rt == null ? '' : Math.round(rt) / 1000),   // 秒，3位小数
+    rt: (rt == null ? '' : Math.round(rt) / 1000),
   };
 }
 
+async function showPhase(renderFn, durationMs) {
+  renderFn();
+  return await Stage.hold(durationMs);
+}
+
 // =====================================================================
-// Exp1 精细曲线试次（§5.1/§5.2：非 RSVP 整句；可选 rsvp 备用）
+// Exp1 试次（整句，非 RSVP；文字不提前消失）
 // =====================================================================
 async function runMatchTrial(opts) {
-  // opts: { im, text, answer, freq, rsvp }
+  // opts: { im, text, answer, swapPos }
   if (await showPhase(() => Stage.fixation(), randDur(CONFIG.FIX1_DURATION, CONFIG.FIX1_JITTER))) {
     return baseRow(opts.im, opts.text, opts.answer, 'quit', null);
   }
@@ -186,44 +198,21 @@ async function runMatchTrial(opts) {
   if (await showPhase(() => Stage.fixation(), randDur(CONFIG.FIX2_DURATION, CONFIG.FIX2_JITTER))) {
     return baseRow(opts.im, opts.text, opts.answer, 'quit', null);
   }
-  // 文字
+  // 整句文字：固定 3 字/秒（max(2, nchar/3)），文字不提前消失
+  const durMs = textDuration(opts.text.length, CONFIG.EXP2_WHOLE_CHAR_RATE, false) * 1000;
   const textOnset = performance.now();
-  let respKey = null, rt = null;
-  if (opts.rsvp) {
-    Stage.text(''); // fallback
-    const r = await rsvpPresent(opts.text, 1000 / opts.freq, textOnset);
-    if (r.key === 'quit') return baseRow(opts.im, opts.text, opts.answer, 'quit', null);
-    respKey = r.key;
-    if (respKey == null) {
-      Stage.question();
-      const qOnset = performance.now();
-      const q = await pollYN(CONFIG.RSVP_RESPONSE_WINDOW * 1000, qOnset);
-      respKey = q.key; rt = q.rt;
-    } else {
-      rt = r.rt;
-    }
-  } else {
-    Stage.text(opts.text);
-    const dur = textDuration(opts.text.length, opts.freq, false) * 1000;
-    const r = await pollYN(dur, textOnset);
-    respKey = r.key; rt = r.rt;
-  }
-  const row = baseRow(opts.im, opts.text, opts.answer, respKey, rt);
-  row.text_duration = Math.round(textDuration(opts.text.length, opts.freq, !!opts.rsvp) * 1000) / 1000;
+  Stage.text(opts.text);
+  const r = await pollYN(durMs, textOnset, false);
+  const row = baseRow(opts.im, opts.text, opts.answer, r.key, r.rt);
+  row.text_duration = Math.round(textDuration(opts.text.length, CONFIG.EXP2_WHOLE_CHAR_RATE, false) * 1000) / 1000;
   return row;
-}
-
-/** 显示一个阶段并持续 hold；Esc 返回 'quit'。 */
-async function showPhase(renderFn, durationMs) {
-  renderFn();
-  return await Stage.hold(durationMs);
 }
 
 // =====================================================================
 // Exp2 条件试次（presentation: whole / rsvp_simple / rsvp_ding / auditory）
 // =====================================================================
 async function runConditionTrial(opts) {
-  // opts: { im, text, answer, spec, session, blockTimer? }
+  // opts: { im, text, answer, spec, swapPos }
   if (await showPhase(() => Stage.fixation(), randDur(CONFIG.FIX1_DURATION, CONFIG.FIX1_JITTER))) {
     return { row: baseRow(opts.im, opts.text, opts.answer, 'quit', null), resp: 'quit' };
   }
@@ -235,52 +224,72 @@ async function runConditionTrial(opts) {
   }
 
   const pres = opts.spec.presentation || opts.spec.type;
-  const textOnset = performance.now();
   let respKey = null, rt = null;
 
   if (pres === 'rsvp_simple') {
-    const r = await rsvpPresent(opts.text, 1000 / opts.spec.freq, textOnset);
+    // 呈现速率：字率 = 频率；'?' 窗口按键即结束
+    const r = await rsvpPresent(opts.text, 1000 / opts.spec.freq, performance.now());
     if (r.key === 'quit') return { row: baseRow(opts.im, opts.text, opts.answer, 'quit', null), resp: 'quit' };
     respKey = r.key;
     if (respKey == null) {
       Stage.question();
       const qOnset = performance.now();
-      const q = await pollYN(CONFIG.RSVP_RESPONSE_WINDOW * 1000, qOnset);
+      const q = await pollYN(CONFIG.RSVP_RESPONSE_WINDOW * 1000, qOnset, true);
       respKey = q.key; rt = q.rt;
     } else {
       rt = r.rt;
     }
   } else if (pres === 'rsvp_ding') {
-    const r = await rsvpPresent(opts.text, 1000 / CONFIG.EXP2_DING_CHAR_RATE, textOnset);
+    // 丁鼐：字固定 4Hz + 词/短语界标记
+    const r = await rsvpPresent(opts.text, 1000 / CONFIG.EXP2_DING_CHAR_RATE, performance.now());
     if (r.key === 'quit') return { row: baseRow(opts.im, opts.text, opts.answer, 'quit', null), resp: 'quit' };
     respKey = r.key;
     if (respKey == null) {
       Stage.question();
       const qOnset = performance.now();
-      const q = await pollYN(CONFIG.RSVP_RESPONSE_WINDOW * 1000, qOnset);
+      const q = await pollYN(CONFIG.RSVP_RESPONSE_WINDOW * 1000, qOnset, true);
       respKey = q.key; rt = q.rt;
     } else {
       rt = r.rt;
     }
   } else {
-    // 整句：对照 / ABAB-A（无辅助）/ 听觉（节拍器仅文字期）
+    // 整句：对照 / ABAB-A（无辅助）、听觉（预备拍锁相 + 节拍器仅文字期）
     const isAud = (opts.spec.assist === 'auditory' || pres === 'auditory');
     const rate = opts.spec.freq || CONFIG.DEFAULT_METRONOME_FREQ;
-    if (isAud) Metronome.start(rate);
+    if (isAud) {
+      const beats = Math.random() < 0.5 ? 2 : 3;
+      const period = 1 / rate;
+      const nowSec = performance.now() / 1000;
+      const tText = nowSec + beats * period;
+      Metronome.start(rate, undefined, { alignTo: tText - beats * period });
+      // 等待到 tText（文字在第 beats+1 声出现），2ms 轮询
+      while (performance.now() / 1000 < tText) {
+        if (KeyBuf.take().includes(CONFIG.KEY_QUIT)) {
+          Metronome.stop();
+          return { row: baseRow(opts.im, opts.text, opts.answer, 'quit', null), resp: 'quit' };
+        }
+        await sleep(2);
+      }
+    }
+    const textOnset = performance.now();   // RT 从文字实际出现起算
     Stage.text(opts.text);
-    const dur = textDuration(opts.text.length, rate, false) * 1000;
-    const r = await pollYN(dur, textOnset);
+    const durMs = textDuration(opts.text.length, CONFIG.EXP2_WHOLE_CHAR_RATE, false) * 1000;
+    const r = await pollYN(durMs, textOnset, true);   // 按键即结束
     if (isAud) Metronome.stop();
     respKey = r.key; rt = r.rt;
   }
 
   const row = baseRow(opts.im, opts.text, opts.answer, respKey, rt);
-  row.text_duration = Math.round(textDuration(opts.text.length, (opts.spec.freq || CONFIG.DEFAULT_METRONOME_FREQ), false) * 1000) / 1000;
+  const rateWhole = (pres === 'rsvp_simple') ? opts.spec.freq
+    : (pres === 'rsvp_ding') ? CONFIG.EXP2_DING_CHAR_RATE : CONFIG.EXP2_WHOLE_CHAR_RATE;
+  row.text_duration = Math.round(textDuration(opts.text.length, rateWhole, pres !== 'whole' && pres !== 'auditory') * 1000) / 1000;
+  row.swap_pos = (opts.swapPos == null ? '' : opts.swapPos);
+  row.ding_veracity = (pres === 'rsvp_ding' ? '' : '');   // 浏览器无 jieba，词界真伪留空
   return { row, resp: respKey };
 }
 
 // =====================================================================
-// 通用屏（引导 / 休息 / 完成 / VAS）
+// 通用屏
 // =====================================================================
 async function showInstruction(title, body, extra) {
   KeyBuf.clear();
@@ -295,14 +304,11 @@ async function showInstruction(title, body, extra) {
 
 async function waitForSpace() {
   const start = performance.now();
-  // 等待空格或 Esc
   while (true) {
     const keys = KeyBuf.take();
     if (keys.includes(CONFIG.KEY_QUIT)) return 'quit';
-    if (keys.includes(CONFIG.KEY_CONTINUE)) return 'done';
-    // 也接受回车
-    if (keys.includes('Enter')) return 'done';
-    if (performance.now() - start > 3600000) return 'timeout'; // 1h 兜底
+    if (keys.includes(CONFIG.KEY_CONTINUE) || keys.includes('Enter')) return 'done';
+    if (performance.now() - start > 3600000) return 'timeout';
     await sleep(20);
   }
 }
@@ -324,7 +330,6 @@ async function showCountdownBreak(durationS, label, skippable) {
   return 'done';
 }
 
-/** Block 内可选休息：空格继续 / Q 暂停 2 分钟。 */
 async function showInBlockBreak(doneCount, total) {
   KeyBuf.clear();
   Stage.show(`<div class="screen center panel">
@@ -343,8 +348,7 @@ async function showInBlockBreak(doneCount, total) {
         <div class="instr-title">休息结束</div>
         <div class="instr-continue">按空格键继续</div>
       </div>`);
-      const c = await waitForSpace();
-      if (c === 'quit') return 'quit';
+      if (await waitForSpace() === 'quit') return 'quit';
       return 'done';
     }
     await sleep(20);
@@ -352,7 +356,6 @@ async function showInBlockBreak(doneCount, total) {
 }
 
 async function showVas(prompt, range, labels) {
-  // 简化的 0-10（或 -5..5）滑杆：用 ← → 调整、空格确认
   KeyBuf.clear();
   const min = range ? range[0] : 0, max = range ? range[1] : 10;
   let val = Math.floor((min + max) / 2);
@@ -387,7 +390,6 @@ async function showCompletion(title, body) {
   return await waitForSpace();
 }
 
-/** 结束屏：显示结果 + 数据下载按钮 + 返回主页。 */
 function showDoneScreen(title, body, downloadFilename, summaryHtml) {
   KeyBuf.clear();
   Stage.show(`<div class="screen center panel">
@@ -400,6 +402,27 @@ function showDoneScreen(title, body, downloadFilename, summaryHtml) {
     </div>
     <div class="instr-hint">数据已保存在本机浏览器中（localStorage 备份），也可随时下载。</div>
   </div>`);
+}
+
+/** 练习：4 试次（2 正 2 误，真实池图 L12），温和反馈（v4.2）。不记录数据。 */
+async function runPractice(subject) {
+  let trials;
+  try { trials = SessionPool.practiceTrials(subject); }
+  catch (e) { return; }   // 池子不足则跳过练习
+  if (await showInstruction('先来练习一下',
+      '看图片 → 记在心里 → 看文字 → 判断是否一致<br>' +
+      '一致按 Y（或 1），不一致按 N（或 2）<br>' +
+      '练习阶段会有反馈，正式部分就没有了')) return;
+  for (const t of trials) {
+    const row = await runMatchTrial({ im: t.im, text: t.text, answer: t.answer });
+    if (row.subject_key === 'quit') return;
+    if (row.subject_key === 'timeout') {
+      await showPracticeFeedback(false, '这一题没有来得及回答，再来看看：要记住图片，再仔细比较文字哦。');
+    } else {
+      await showPracticeFeedback(row.accuracy === 1);
+    }
+  }
+  await showInstruction('练习结束', '正式部分没有反馈了，按你自己的节奏来');
 }
 
 async function showPracticeFeedback(correct, wrongText) {

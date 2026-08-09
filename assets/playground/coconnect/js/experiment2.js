@@ -1,13 +1,15 @@
-/* COCOnnect — Exp 2: 单长度节律辅助测试（v4.0 K2）
-   会话 1：对照 → 简单RSVP(0.5-8Hz) → 丁鼐RSVP(4/2/1Hz) → 听觉节拍(0.5-8Hz)
-   会话 2：听觉/简单RSVP/丁鼐RSVP 各 ABAB（A1-B1-A2-B2）
+/* COCOnnect — Exp 2: 单长度节律辅助测试（v4.0 K2，2026-08-10）
+   会话 1：对照 → 呈现速率(0.5/1/2/4/6Hz) → 丁鼐RSVP(4/2/1Hz) → 听觉节拍(0.5/1/2/4/6Hz)
+   会话 2：听觉/呈现速率/丁鼐RSVP 各 ABAB（A1-B1-A2-B2）
+   整句固定 3 字/秒、按键即结束；听觉预备拍锁相；动态试次 n。
 */
 'use strict';
 
 const EXP2_COLUMNS = [
   'participant', 'date', 'session', 'condition', 'assist', 'freq', 'segment',
   'family', 'trial', 'image_id', 'text_level', 'text_nchar', 'text',
-  'correct_answer', 'subject_key', 'accuracy', 'rt',
+  'text_duration', 'swap_pos', 'ding_veracity', 'correct_answer', 'subject_key',
+  'accuracy', 'rt',
 ];
 
 function exp2ConditionSequence(session) {
@@ -18,7 +20,7 @@ function exp2ConditionSequence(session) {
   if (session === 1) {
     seq.push(c('control', null, '无辅助对照', 'none', 'whole'));
     for (const f of CONFIG.EXP2_FREQS) {
-      seq.push(c('rsvp_simple', f, `简单RSVP ${f}g Hz`, 'rsvp', 'rsvp_simple'));
+      seq.push(c('rsvp_simple', f, `呈现速率 ${f}g Hz`, 'rsvp', 'rsvp_simple'));
     }
     seq.push(c('rsvp_ding', CONFIG.EXP2_DING_CHAR_RATE, '丁鼐RSVP 4/2/1Hz', 'rsvp', 'rsvp_ding'));
     for (const f of CONFIG.EXP2_FREQS) {
@@ -27,11 +29,11 @@ function exp2ConditionSequence(session) {
   } else {
     const fams = [
       ['auditory', '听觉', 'auditory'],
-      ['rsvp_simple', '简单RSVP', 'rsvp_simple'],
+      ['rsvp_simple', '呈现速率', 'rsvp_simple'],
       ['rsvp_ding', '丁鼐RSVP', 'rsvp_ding'],
     ];
     for (const [assist, label, pres] of fams) {
-      const freqB = (pres === 'rsvp_ding' ? CONFIG.EXP2_DING_CHAR_RATE : 4.0);
+      const freqB = (pres === 'rsvp_ding' ? CONFIG.EXP2_DING_CHAR_RATE : CONFIG.EXP2_ABAB_B_FREQ);
       seq.push(c('abab_a', null, `ABAB-${label} A1`, 'none', 'whole', 'A1', pres));
       seq.push(c('abab_b', freqB, `ABAB-${label} B1`, assist, pres, 'B1', pres));
       seq.push(c('abab_a', null, `ABAB-${label} A2`, 'none', 'whole', 'A2', pres));
@@ -57,36 +59,69 @@ async function runExp2(cfg) {
   const subject = cfg.subject;
   const session = cfg.session || 1;
   const level = cfg.targetLevel || CONFIG.EXP2_TARGET_LEVEL;
-  const n = CONFIG.EXP2_TRIALS_PER_CONDITION;
 
-  if (await showInstruction(`实验二（会话 ${session}）`,
-      '和之前一样：看图 → 记住 → 判断文字是否一致<br>' +
-      '一致按 Y，不一致按 N<br><br>' +
-      '有的部分会有节拍器声音，有的部分文字会逐字出现<br>' +
-      '读到能判断就按，尽力就好')) return;
-
+  // 主引导 + VAS 前测 + 练习
+  if (await showInstruction('图文匹配实验',
+      '屏幕上先出现一张图片，请记住它<br>' +
+      '接着出现一段文字，请判断文字描述与图片是否一致<br>' +
+      '一致按 Y（或 1），不一致按 N（或 2）<br><br>' +
+      '文字按固定时长显示，读到能判断就按<br>' +
+      '过程中有任何不舒服，随时可以按 Esc 暂停')) return;
   if (CONFIG.ENABLE_VAS && CONFIG.VAS_PRE) {
-    const vas = await showVas('开始前，你平时默读时，头脑里会有"声音"吗？', [0, 10], ['没有声音', '很清楚']);
-    if (vas.quit) return;
+    if ((await showVas('开始前，你平时默读时，头脑里会有"声音"吗？', [0, 10], ['没有声音', '很清楚'])).quit) return;
   }
+  await runPractice(subject);
 
   try { await SessionPool.load(); } catch (e) {
     await showCompletion('数据加载失败', e.message);
     return;
   }
 
+  if (await showInstruction(`实验二（会话 ${session}）`,
+      '和之前一样：看图 → 记住 → 判断文字是否一致<br>' +
+      '一致按 Y（或 1），不一致按 N（或 2）<br><br>' +
+      '有的部分会有节拍器声音，有的部分文字会逐字出现<br>' +
+      '读到能判断就按，尽力就好')) return;
+
   const seq = exp2ConditionSequence(session);
+  const nTotal = exp2ConditionSequence(1).length + exp2ConditionSequence(2).length;  // 24
+  let n;
+  try {
+    n = SessionPool.computeDynamicN(subject, level, nTotal);
+  } catch (e) {
+    await showCompletion('无法计算试次数', e.message);
+    return;
+  }
+
   const stem = `${subject}_EXP2_S${session}_b00_${level}_${timestamp()}`;
   DataLog.reset(stem, EXP2_COLUMNS);
   const date = dateStr();
   let aborted = false;
+  let famShown = [];
 
   for (let ci = 0; ci < seq.length; ci++) {
     const spec = seq[ci];
-    // 每条件间休息
+
+    // RSVP 熟悉练习：会话1 首次 rsvp_simple 前，3 个 4Hz 热身（不记录）
+    if (session === 1 && spec.presentation === 'rsvp_simple' && !aborted
+        && !seq.slice(0, ci).some((s) => s.presentation === 'rsvp_simple')) {
+      if (await showInstruction('先熟悉一下逐字呈现',
+          '接下来文字会逐字出现。先练习 3 个题：<br>' +
+          '看着字蹦出来，能判断就按（Y/N 或 1/2）')) { aborted = true; break; }
+      const warm = SessionPool.exp2Trials(subject, level, 3, 999);
+      const warmShown = [];
+      for (const t of warm) {
+        const r = await runConditionTrial({ im: t.im, text: t.text, answer: t.answer, spec: { type: 'rsvp_simple', freq: 4.0, presentation: 'rsvp_simple', assist: 'rsvp' } });
+        if (r.resp !== 'quit' && r.row.image_id) warmShown.push(r.row.image_id);
+        if (r.resp === 'quit') { aborted = true; break; }
+      }
+      SessionPool.markShown(subject, warmShown);
+      if (aborted) break;
+    }
+
+    // 条件间休息
     if (ci > 0) {
-      const br = await showInBlockBreak(ci, seq.length);
-      if (br === 'quit') { aborted = true; break; }
+      if (await showInBlockBreak(ci, seq.length) === 'quit') { aborted = true; break; }
     }
     if (await showInstruction(spec.label,
         exp2Hint(spec) + '<br><br>按空格键开始这一部分',
@@ -96,16 +131,16 @@ async function runExp2(cfg) {
     try {
       trials = SessionPool.exp2Trials(subject, level, n, 1000 + ci + session * 100);
     } catch (e) {
-      await showCompletion('无法开始这一部分', e.message);
+      await showCompletion('图片不够了', e.message);
       aborted = true;
       break;
     }
 
-    const drawn = [];
+    const shownHere = [];
     for (let ti = 0; ti < trials.length; ti++) {
       const t = trials[ti];
       const tn = ci * n + ti + 1;
-      const r = await runConditionTrial({ im: t.im, text: t.text, answer: t.answer, spec, session });
+      const r = await runConditionTrial({ im: t.im, text: t.text, answer: t.answer, spec });
       const row = r.row;
       row.participant = subject;
       row.date = date;
@@ -117,23 +152,33 @@ async function runExp2(cfg) {
       row.family = spec.family;
       row.trial = tn;
       row.text_level = level;
+      row.swap_pos = (t.swapPos == null ? '' : t.swapPos);
       DataLog.add(row);
-      if (row.image_id) drawn.push(row.image_id);
+      if (r.resp !== 'quit' && row.image_id) shownHere.push(row.image_id);
       if (r.resp === 'quit') { aborted = true; break; }
     }
-    SessionPool.markShown(subject, drawn);
+    SessionPool.markShown(subject, shownHere);
     if (aborted) break;
+
+    // 每条件 VAS：听觉/ABAB-B → Q3（节拍器作用），否则 Q1（内语感）
+    if (CONFIG.ENABLE_VAS && CONFIG.VAS_PER_BLOCK) {
+      const isAudCond = (spec.assist === 'auditory' || spec.type === 'abab_b');
+      if (isAudCond) {
+        await showVas('Q3 · 刚才的节拍器声音，你觉得是帮你、干扰你，还是没感觉？', [-5, 5], ['很干扰', '很有帮助']);
+      } else {
+        await showVas('Q1 · 刚才默读的时候，头脑里有"声音"在帮你读吗？', [0, 10], ['没有声音', '很清楚']);
+      }
+    }
   }
 
   if (CONFIG.ENABLE_VAS && CONFIG.VAS_POST) {
-    const vas = await showVas('结束后回想：刚才这些部分，头脑里有"声音"在帮你吗？', [0, 10], ['没有声音', '很清楚']);
-    if (vas.quit) return;
+    await showVas('结束后回想：刚才这些部分，头脑里有"声音"在帮你吗？', [0, 10], ['没有声音', '很清楚']);
   }
 
   showDoneScreen(
     `实验二·会话 ${session} ${aborted ? '（提前结束）' : '完成'}`,
     `共完成 ${DataLog.count()} 试次。`,
     stem + '.csv',
-    `<div class="done-summary">完成 ${DataLog.count()} 试次</div>`,
+    `<div class="done-summary">完成 ${DataLog.count()} 试次 · 目标等级 ${level}</div>`,
   );
 }

@@ -10,12 +10,15 @@ const CONFIG = {
   FONT_FAMILY: '"PingFang SC","Songti SC","Heiti SC","STHeiti","Hiragino Sans GB","Microsoft YaHei","SimHei","SimSun",sans-serif',
   FONT_SIZE_TEXT_PT: 30,
 
-  // ---- 按键 ----
+  // ---- 按键（Y/N 优先；数字键 1/2 备用，防中文输入法拦截字母键） ----
   KEY_YES: 'y',
   KEY_NO: 'n',
+  KEY_YES_ALT: '1',
+  KEY_NO_ALT: '2',
   KEY_CONTINUE: ' ',
   KEY_QUIT: 'Escape',
   KEY_PAUSE: 'q',
+  HINT: '是=Y(1) 否=N(2)',
 
   // ---- 试次时序（§5.1/§5.2） ----
   FIX1_DURATION: 1.0,
@@ -35,12 +38,14 @@ const CONFIG = {
   LEVELS: ['L1','L2','L3','L4','L5','L6','L7','L8','L9','L10',
            'L11','L12','L13','L14','L15','L16','L17','L18','L19'],
 
-  // ---- 节拍器（§7.1） ----
-  METRONOME_PRESETS: [0.5, 1.0, 2.0, 4.0, 8.0],
+  // ---- 节拍器（§7.1；v4 改 660Hz 钟形叮） ----
+  METRONOME_PRESETS: [0.5, 1.0, 2.0, 4.0, 6.0],
   DEFAULT_METRONOME_FREQ: 4.0,
-  METRONOME_VOLUME: 0.6,
-  METRONOME_TONE_HZ: 1000.0,
-  METRONOME_TICK_S: 0.05,
+  METRONOME_VOLUME: 0.9,
+  METRONOME_TONE_HZ: 660.0,
+  METRONOME_TICK_S: 0.35,           // 每拍 350ms 钟形衰减；高频时自动缩短
+  METRONOME_DECAY_TAU: 0.09,        // 指数衰减时间常数（s）
+  METRONOME_ATTACK_S: 0.002,        // 2ms 线性起音
   METRONOME_SAMPLE_RATE: 44100,
   FREQ_MIN: 0.25,
   FREQ_MAX: 12.0,
@@ -49,22 +54,28 @@ const CONFIG = {
   TRIALS_PER_LENGTH: 10,          // 每级试次数（正误各半）
   FINE_CURVE_RUNS: ['exp1.1', 'exp1.2'],
   IN_BLOCK_BREAK_EVERY: 38,       // 每 38 试次可选休息
-  FINE_CURVE_FREQ: 4.0,           // Exp1 固定 4Hz 计时（无节拍器）
+  FINE_CURVE_FREQ: 4.0,           // Exp1 无节拍器（freq 仅占位）
 
   // ---- Exp 2 单长度节律测试（v4.0 K2） ----
-  EXP2_TRIALS_PER_CONDITION: 25,
+  EXP2_TRIALS_PER_CONDITION: 25,  // 每条件上限
   EXP2_TARGET_LEVEL: 'L13',
-  EXP2_FREQS: [0.5, 1.0, 2.0, 4.0, 8.0],
-  EXP2_DING_CHAR_RATE: 4.0,
+  EXP2_FREQS: [0.5, 1.0, 2.0, 4.0, 6.0],
+  EXP2_DING_CHAR_RATE: 4.0,       // 丁鼐版字率固定 4Hz
   EXP2_DING_WORD_LEN: 2,
   EXP2_DING_PHRASE_LEN: 4,
+  EXP2_WHOLE_CHAR_RATE: 3.0,      // 整句条件固定 3 字/秒（max(2, nchar/3)）
+  EXP2_SWAP_TOLERANCE: 3,         // 错误试次：|swap_pos+1-目标| ≤ 3
+  EXP2_LEN_TOLERANCE: 4,          // 正确试次：|文本长度-目标| ≤ 4
+  EXP2_DYNAMIC_MARGIN: 0.95,      // 动态试次余量（5% 缓冲）
+  EXP2_ABAB_B_FREQ: 4.0,          // 会话2 ABAB-B 段频率（rsvp_ding 恒用 DING_CHAR_RATE）
 
-  // ---- 休息 / VAS ----
+  // ---- 休息 / VAS / 练习 ----
   BREAK_DURATION: 120.0,
   BREAK_AFTER_BASELINE: 300.0,
   ENABLE_VAS: true,
   VAS_PRE: true,
   VAS_POST: true,
+  PRACTICE_TRIALS: 4,             // 练习 4 试次（2 正 2 误，真实池图 L12）
 
   // ---- 图片 ----
   IMG_W: 800,

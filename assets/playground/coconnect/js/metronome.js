@@ -1,14 +1,17 @@
-/* COCOnnect — metronome (ported from common/metronome.py)
-   1000Hz sine click, 50ms, with 2ms attack + 10ms decay envelope.
-   Web Audio lookahead scheduler keeps steady tempo via the audio clock.
+/* COCOnnect — metronome (ported from common/metronome.py, v4)
+   660Hz sine "ding": 2ms linear attack + exponential decay (tau 0.09s),
+   total tick 0.35s (shortened at high freq), volume 0.9.
+   Supports alignTo (wall-clock seconds) for auditory prep-beat lock-phase.
 */
 'use strict';
 
 const Metronome = {
   _ctx: null,
   _timer: null,
-  _nextT: 0,
+  _nextWall: 0,
   _freq: 0,
+  _volume: 0.9,
+  _tickS: 0.35,
   running: false,
 
   _ensureCtx() {
@@ -20,45 +23,62 @@ const Metronome = {
     return this._ctx;
   },
 
-  _scheduleTick(t, volume) {
+  /** tick 时长：min(0.35, max(0.01, period-0.03)) —— 高频自动缩短（同 metronome.py） */
+  _computeTickS(freq) {
+    const period = 1 / freq;
+    return Math.min(CONFIG.METRONOME_TICK_S, Math.max(0.01, period - 0.03));
+  },
+
+  /** 在 ctx 时钟时间 ctxTime 处播一个 660Hz 钟形叮。 */
+  _scheduleTick(ctxTime, vol) {
     const ctx = this._ctx;
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
     osc.type = 'sine';
-    osc.frequency.value = CONFIG.METRONOME_TONE_HZ;   // 1000 Hz
-    const dur = CONFIG.METRONOME_TICK_S;              // 50 ms
-    const attack = 0.002;                             // 2ms attack
-    const decay = 0.010;                              // 10ms decay
-    gain.gain.setValueAtTime(0, t);
-    gain.gain.linearRampToValueAtTime(volume, t + attack);
-    gain.gain.setValueAtTime(volume, t + dur - decay);
-    gain.gain.linearRampToValueAtTime(0.0001, t + dur);
+    osc.frequency.value = CONFIG.METRONOME_TONE_HZ;   // 660 Hz
+    const dur = this._tickS;
+    const attack = CONFIG.METRONOME_ATTACK_S;         // 2 ms 线性起音
+    gain.gain.setValueAtTime(0, ctxTime);
+    gain.gain.linearRampToValueAtTime(vol, ctxTime + attack);
+    // 指数衰减（tau=0.09s）→ 0.001
+    gain.gain.setValueAtTime(vol, ctxTime + attack);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctxTime + dur);
     osc.connect(gain);
     gain.connect(ctx.destination);
-    osc.start(t);
-    osc.stop(t + dur + 0.01);
+    osc.start(ctxTime);
+    osc.stop(ctxTime + dur + 0.01);
   },
 
+  /** 前瞻调度：把未来 120ms 内的 tick 全部排进音频时钟。 */
   _loop() {
-    // lookahead: keep scheduling ticks up to ~120ms ahead
     const ctx = this._ctx;
-    const ahead = 0.12;
+    const nowWall = performance.now() / 1000;
+    const offset = ctx.currentTime - nowWall;          // ctx时间 = 墙钟时间 + offset
     const period = 1 / this._freq;
-    while (this._nextT < ctx.currentTime + ahead) {
-      this._scheduleTick(this._nextT, this._volume);
-      this._nextT += period;
+    while (this._nextWall < nowWall + 0.12) {
+      this._scheduleTick(this._nextWall + offset, this._volume);
+      this._nextWall += period;
     }
   },
 
-  /** 连续节拍器：从 start() 起持续到 stop()。 */
-  start(freq, volume) {
+  /**
+   * 启动节拍器。
+   * @param freq    Hz
+   * @param volume  0..1
+   * @param opts    {alignTo: 墙钟秒} —— 若给定，首个 tick 排在该时刻
+   *                （用于听觉预备拍锁相：text 在 alignTo+beats*period 出现）。
+   */
+  start(freq, volume, opts) {
     const ctx = this._ensureCtx();
     this.stop();
     this._freq = freq;
     this._volume = (volume == null ? CONFIG.METRONOME_VOLUME : volume);
-    this._nextT = ctx.currentTime + 0.05;
+    this._tickS = this._computeTickS(freq);
+    const nowWall = performance.now() / 1000;
+    const alignTo = (opts && opts.alignTo != null) ? opts.alignTo : null;
+    this._nextWall = (alignTo != null && alignTo > nowWall) ? alignTo : nowWall + 0.05;
     this.running = true;
-    this._timer = setInterval(() => { if (this.running) this._loop(); }, 60);
+    this._timer = setInterval(() => { if (this.running) this._loop(); }, 50);
     this._loop();
   },
 

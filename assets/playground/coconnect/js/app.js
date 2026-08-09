@@ -7,7 +7,7 @@ const App = {
     const levelOpts = CONFIG.LEVELS.map((L) => `<option>${L}</option>`).join('');
     Stage.show(`<div class="screen center panel start-panel">
       <div class="instr-title">COCOnnect · 图文匹配实验</div>
-      <div class="instr-sub">看图 → 记图 → 读文字 → 判断一致（Y=是 / N=否）</div>
+      <div class="instr-sub">看图 → 记图 → 读文字 → 判断一致（Y(1)=是 / N(2)=否）</div>
       <form class="start-form" onsubmit="App.start(); return false;">
         <div class="form-row">
           <label for="f-subject">被试编号</label>
