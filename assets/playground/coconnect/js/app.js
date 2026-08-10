@@ -4,7 +4,7 @@
 */
 'use strict';
 
-const APP_VERSION = 'v4.0.3';
+const APP_VERSION = 'v4.0.4';
 
 const App = {
   showStart() {
@@ -42,17 +42,10 @@ const App = {
       </form>
     </div>`);
 
-    // 用 addEventListener 绑定提交（避免内联 handler 的作用域/异常问题）
+    // 只绑定表单 submit 一个触发（点按钮/按回车都会触发 submit；避免重复启动）
     const form = document.getElementById('start-form');
     if (form) {
       form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        App.start();
-      });
-    }
-    const btn = document.getElementById('btn-start');
-    if (btn) {
-      btn.addEventListener('click', (e) => {
         e.preventDefault();
         App.start();
       });
@@ -68,6 +61,8 @@ const App = {
   },
 
   async start() {
+    if (App._starting) return;         // 防重复启动
+    App._starting = true;
     try {
       const subject = document.getElementById('f-subject').value.trim();
       if (!subject) { alert('请填写被试编号'); return; }
@@ -100,6 +95,8 @@ const App = {
       const stage = Stage.el();
       const onClick = () => { stage.removeEventListener('click', onClick); App.showStart(); };
       stage.addEventListener('click', onClick);
+    } finally {
+      App._starting = false;
     }
   },
 };

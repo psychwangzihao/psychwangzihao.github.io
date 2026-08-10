@@ -365,24 +365,33 @@ async function showVas(prompt, range, labels) {
   KeyBuf.clear();
   const min = range ? range[0] : 0, max = range ? range[1] : 10;
   let val = Math.floor((min + max) / 2);
+  const stage = Stage.el();
+  let clicked = false;
+  const onClick = () => { clicked = true; };
+  stage.addEventListener('click', onClick);
   Stage.show(`<div class="screen center panel">
     <div class="instr-title">主观评价</div>
     <div class="instr-body">${escHtml(prompt)}</div>
     <div class="vas-line">${escHtml(labels ? labels[0] : min)} — ${escHtml(labels ? labels[1] : max)}</div>
     <div class="vas-score">${val}</div>
-    <div class="instr-continue">← → 调整 · 空格确认</div>
+    <div class="instr-continue">← → 调整 · 空格 / 点击确认</div>
   </div>`);
-  while (true) {
-    const keys = KeyBuf.take();
-    for (const k of keys) {
-      if (k === 'Escape') return { val: null, quit: true };
-      if (k === 'ArrowLeft') val = Math.max(min, val - 1);
-      if (k === 'ArrowRight') val = Math.min(max, val + 1);
-      if (k === CONFIG.KEY_CONTINUE || k === 'Enter') return { val, quit: false };
+  try {
+    while (true) {
+      if (clicked) return { val, quit: false };
+      const keys = KeyBuf.take();
+      for (const k of keys) {
+        if (k === 'Escape') return { val: null, quit: true };
+        if (k === 'ArrowLeft') val = Math.max(min, val - 1);
+        if (k === 'ArrowRight') val = Math.min(max, val + 1);
+        if (k === CONFIG.KEY_CONTINUE || k === 'Enter') return { val, quit: false };
+      }
+      const scoreEl = document.querySelector('.vas-score');
+      if (scoreEl) scoreEl.textContent = val;
+      await sleep(20);
     }
-    const scoreEl = document.querySelector('.vas-score');
-    if (scoreEl) scoreEl.textContent = val;
-    await sleep(20);
+  } finally {
+    stage.removeEventListener('click', onClick);
   }
 }
 
