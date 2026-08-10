@@ -10,8 +10,11 @@
 const KeyBuf = {
   _buf: [],
   init() {
+    window.__KEYLOG = [];
     window.addEventListener('keydown', (e) => {
       const k = e.key;
+      window.__KEYLOG.push(k);
+      if (window.__KEYLOG.length > 50) window.__KEYLOG.shift();
       if (k === CONFIG.KEY_QUIT) e.preventDefault();
       if (k === CONFIG.KEY_CONTINUE) e.preventDefault();
       this._buf.push(k);
@@ -187,12 +190,15 @@ async function showPhase(renderFn, durationMs) {
 async function runMatchTrial(opts) {
   // opts: { im, text, answer, swapPos }
   if (await showPhase(() => Stage.fixation(), randDur(CONFIG.FIX1_DURATION, CONFIG.FIX1_JITTER))) {
+    window.__QUITREASON = '退出@注视1(Esc?)';
     return baseRow(opts.im, opts.text, opts.answer, 'quit', null);
   }
   if (await showPhase(() => Stage.image(opts.im.path), CONFIG.IMAGE_DURATION * 1000)) {
+    window.__QUITREASON = '退出@图片阶段(Esc?)';
     return baseRow(opts.im, opts.text, opts.answer, 'quit', null);
   }
   if (await showPhase(() => Stage.fixation(), randDur(CONFIG.FIX2_DURATION, CONFIG.FIX2_JITTER))) {
+    window.__QUITREASON = '退出@注视2(Esc?)';
     return baseRow(opts.im, opts.text, opts.answer, 'quit', null);
   }
   // 整句文字：固定 3 字/秒（max(2, nchar/3)），文字不提前消失
@@ -200,6 +206,7 @@ async function runMatchTrial(opts) {
   const textOnset = performance.now();
   Stage.text(opts.text);
   const r = await pollYN(durMs, textOnset, false);
+  if (r.key === 'quit') window.__QUITREASON = '退出@文字阶段(Esc?)';
   const row = baseRow(opts.im, opts.text, opts.answer, r.key, r.rt);
   row.text_duration = Math.round(textDuration(opts.text.length, CONFIG.EXP2_WHOLE_CHAR_RATE, false) * 1000) / 1000;
   return row;

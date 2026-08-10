@@ -89,8 +89,12 @@ async function runExp1(cfg) {
   }
 
   const meanAcc = accs.length ? ((accs.reduce((a, b) => a + b, 0) / accs.length) * 100).toFixed(1) : null;
-  const summary = meanAcc != null
+  let summary = meanAcc != null
     ? `<div class="done-summary">完成 ${n} 试次 · 总正确率 <b>${meanAcc}%</b></div>`
     : `<div class="done-summary">完成 ${n} 试次</div>`;
+  if (n < trials.length) {
+    summary += `<div class="done-summary no" style="color:#8a1f1f">⚠ 提前结束（${n}/${trials.length}）</div>`
+      + `<div class="instr-hint" style="color:#8a1f1f">退出原因: ${window.__QUITREASON || '未知'} | 按键记录: ${(window.__KEYLOG || []).join(' ')}</div>`;
+  }
   showDoneScreen(`实验一${runTxt}完成`, `这一轮共 ${n} 试次。`, stem + '.csv', summary);
 }

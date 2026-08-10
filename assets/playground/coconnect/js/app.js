@@ -4,7 +4,7 @@
 */
 'use strict';
 
-const APP_VERSION = 'v4.0.7';
+const APP_VERSION = 'v4.0.8';
 
 const App = {
   showStart() {
