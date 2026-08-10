@@ -1,14 +1,14 @@
-/* COCOnnect — Exp 2: 单长度节律辅助测试（v4.0 K2，2026-08-10）
-   会话 1：对照 → 呈现速率(0.5/1/2/4/6Hz) → 丁鼐RSVP(4/2/1Hz) → 听觉节拍(0.5/1/2/4/6Hz)
-   会话 2：听觉/呈现速率/丁鼐RSVP 各 ABAB（A1-B1-A2-B2）
-   整句固定 3 字/秒、按键即结束；听觉预备拍锁相；动态试次 n。
+/* COCOnnect — Exp 2: 单长度节律辅助测试（2026-08-10）
+   会话 1：对照 → 呈现速率(0.5/1/2/4/6Hz) → 听觉节拍(0.5/1/2/4/6Hz)
+   会话 2：听觉/呈现速率 各 ABAB；整句 3 字/秒、作答即结束；图片自翻页。
 */
 'use strict';
 
 const EXP2_COLUMNS = [
   'participant', 'date', 'session', 'condition', 'assist', 'freq', 'segment',
-  'family', 'trial', 'image_id', 'text_level', 'text_nchar', 'text',
-  'text_duration', 'swap_pos', 'correct_answer', 'subject_key', 'accuracy', 'rt',
+  'family', 'trial', 'image_id', 'image_duration', 'text_level', 'text_nchar',
+  'text', 'text_duration', 'swap_pos', 'correct_answer', 'subject_key',
+  'accuracy', 'rt',
 ];
 
 function exp2ConditionSequence(session) {
@@ -41,11 +41,11 @@ function exp2ConditionSequence(session) {
 
 function exp2Hint(spec) {
   const t = spec.type;
-  if (t === 'control') return '这一部分没有声音、文字整句出现，按你自己的节奏默读';
+  if (t === 'control') return '没有声音，文字整句出现。能判断就按';
   if (t === 'abab_a') return '这一部分没有辅助，整句出现，按你自己的节奏读';
   const pres = spec.presentation || t;
-  if (pres === 'rsvp_simple') return `这一部分文字会逐字出现（${spec.freq} Hz 节奏）<br>看着字蹦出来，能判断就按`;
-  if (pres === 'auditory') return `这一部分整句出现，同时有节拍器声音（${spec.freq} Hz）<br>声音只在读文字时有，边听边读`;
+  if (pres === 'rsvp_simple') return `文字会逐字出现（${spec.freq} Hz 节奏）。看着它，能判断就按`;
+  if (pres === 'auditory') return `整句出现，同时有节拍器声音（${spec.freq} Hz）。能判断就按`;
   return `这一部分有辅助（${spec.label}），读完后判断`;
 }
 
@@ -55,31 +55,25 @@ async function runExp2(cfg) {
   const session = cfg.session || 1;
   const level = cfg.targetLevel || CONFIG.EXP2_TARGET_LEVEL;
 
-  // 主引导 + VAS 前测 + 练习
-  if (await showInstruction('图文匹配实验',
-      '屏幕上先出现一张图片，请记住它<br>' +
-      '接着出现一段文字，请判断文字描述与图片是否一致<br>' +
-      '一致按 Y（或 1），不一致按 N（或 2）<br><br>' +
-      '文字按固定时长显示，读到能判断就按<br>' +
-      '过程中有任何不舒服，随时可以按 Esc 暂停')) return;
-  Stage.show(`<div class="screen center panel"><div class="instr-title">正在加载素材…</div><div class="instr-extra">首次约需几秒，请稍候</div></div>`, '加载素材');
+  // VAS_PRE"平时"只问一遍
+  if (CONFIG.ENABLE_VAS && CONFIG.VAS_PRE) {
+    if ((await showVas('开始前，你平时默读时，头脑里会有"声音"吗？', [0, 10], ['没有声音', '很清楚'])).quit) return;
+  }
+  Stage.show(`<div class="screen center panel"><div class="instr-title">正在加载素材…</div><div class="instr-extra">首次约需几秒，请稍候</div></div>`);
   try { await SessionPool.load(); } catch (e) {
     await showCompletion('数据加载失败', e.message);
     return;
   }
-  if (CONFIG.ENABLE_VAS && CONFIG.VAS_PRE) {
-    if ((await showVas('开始前，你平时默读时，头脑里会有"声音"吗？', [0, 10], ['没有声音', '很清楚'])).quit) return;
-  }
   await runPractice(subject);
 
   if (await showInstruction(`实验二（会话 ${session}）`,
-      '和之前一样：看图 → 记住 → 判断文字是否一致<br>' +
+      '和之前一样：看图、记住、判断是否一致<br>' +
       '一致按 Y（或 1），不一致按 N（或 2）<br><br>' +
-      '有的部分会有节拍器声音，有的部分文字会逐字出现<br>' +
-      '读到能判断就按，尽力就好')) return;
+      '有的部分有声音，有的部分文字逐字出现<br>' +
+      '能判断就按，慢慢来')) return;
 
   const seq = exp2ConditionSequence(session);
-  const nTotal = exp2ConditionSequence(1).length + exp2ConditionSequence(2).length;  // 24
+  const nTotal = exp2ConditionSequence(1).length + exp2ConditionSequence(2).length;
   let n;
   try {
     n = SessionPool.computeDynamicN(subject, level, nTotal);
@@ -92,7 +86,6 @@ async function runExp2(cfg) {
   DataLog.reset(stem, EXP2_COLUMNS);
   const date = dateStr();
   let aborted = false;
-  let famShown = [];
 
   for (let ci = 0; ci < seq.length; ci++) {
     const spec = seq[ci];
@@ -161,7 +154,7 @@ async function runExp2(cfg) {
       if (isAudCond) {
         await showVas('Q3 · 刚才的节拍器声音，你觉得是帮你、干扰你，还是没感觉？', [-5, 5], ['很干扰', '很有帮助']);
       } else {
-        await showVas('Q1 · 刚才默读的时候，头脑里有"声音"在帮你读吗？', [0, 10], ['没有声音', '很清楚']);
+        await showVas('Q1 · 刚才做题读文字时，头脑里有"声音"在帮你读吗？', [0, 10], ['没有声音', '很清楚']);
       }
     }
   }

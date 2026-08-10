@@ -1,17 +1,14 @@
-/* COCOnnect — app: start screen, fullscreen, task dispatch (v4.0.3)
-   用 addEventListener 绑定事件（避免内联 handler 作用域问题）；
-   全局错误横幅显示任何未捕获错误，便于诊断。
+/* COCOnnect — app: start screen, fullscreen, task dispatch
+   用 addEventListener 绑定事件；防重复启动守卫。
 */
 'use strict';
-
-const APP_VERSION = 'v4.0.10';
 
 const App = {
   showStart() {
     KeyBuf.clear();
     const levelOpts = CONFIG.LEVELS.map((L) => `<option>${L}</option>`).join('');
     Stage.show(`<div class="screen center panel start-panel">
-      <div class="instr-title">COCOnnect · 图文匹配实验 <span class="version-badge">${APP_VERSION}</span></div>
+      <div class="instr-title">COCOnnect · 图文匹配实验</div>
       <div class="instr-sub">看图 → 记图 → 读文字 → 判断一致（Y(1)=是 / N(2)=否）</div>
       <form id="start-form" class="start-form">
         <div class="form-row">
@@ -42,7 +39,6 @@ const App = {
       </form>
     </div>`);
 
-    // 只绑定表单 submit 一个触发（点按钮/按回车都会触发 submit；避免重复启动）
     const form = document.getElementById('start-form');
     if (form) {
       form.addEventListener('submit', (e) => {
@@ -50,18 +46,10 @@ const App = {
         App.start();
       });
     }
-    // 回车/空格在输入框外时也能启动
-    const stage = Stage.el();
-    stage.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && document.activeElement && document.activeElement.id !== 'f-subject'
-          && document.activeElement.tagName !== 'INPUT') {
-        App.start();
-      }
-    });
   },
 
   async start() {
-    if (App._starting) return;         // 防重复启动
+    if (App._starting) return;
     App._starting = true;
     try {
       const subject = document.getElementById('f-subject').value.trim();
@@ -101,24 +89,7 @@ const App = {
   },
 };
 
-// 全局错误横幅：任何未捕获错误都显示出来（诊断用）
-function initErrorBanner() {
-  window.addEventListener('error', (e) => {
-    const msg = String((e && e.message) || e);
-    console.error('[COCOnnect] 未捕获错误:', e);
-    let banner = document.getElementById('err-banner');
-    if (!banner) {
-      banner = document.createElement('div');
-      banner.id = 'err-banner';
-      banner.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#8a1f1f;color:#fff;padding:8px 12px;z-index:99999;font-size:14px;font-family:sans-serif;white-space:pre-wrap;';
-      document.body.appendChild(banner);
-    }
-    banner.textContent = '⚠ 错误: ' + msg + ' （复制此信息发给开发者）';
-  });
-}
-
 window.addEventListener('DOMContentLoaded', () => {
   KeyBuf.init();
-  initErrorBanner();
   App.showStart();
 });

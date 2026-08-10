@@ -1,13 +1,13 @@
-/* COCOnnect — Exp 1: 精细阅读能力曲线（v4.0 K1，2026-08-10）
-   无辅助、整句、3 字/秒、两轮 exp1.1/exp1.2；每级 10 试次（5 正 5 误，等级保真过滤）。
+/* COCOnnect — Exp 1: 精细阅读能力曲线（2026-08-10）
+   无辅助、整句、作答即结束、图片自翻页；两轮 exp1.1/exp1.2。
 */
 'use strict';
 
 const EXP1_COLUMNS = [
   'participant', 'date', 'mode', 'subset_id', 'block_type', 'rhythm_freq',
-  'rsvp', 'block_num', 'trial', 'image_id', 'text_level', 'text_nchar',
-  'text', 'text_duration', 'correct_answer', 'subject_key', 'accuracy', 'rt',
-  'run', 'swap_pos', 'trial_type',
+  'rsvp', 'block_num', 'trial', 'image_id', 'image_duration', 'text_level',
+  'text_nchar', 'text', 'text_duration', 'correct_answer', 'subject_key',
+  'accuracy', 'rt', 'run', 'swap_pos', 'trial_type',
 ];
 
 async function runExp1(cfg) {
@@ -16,29 +16,24 @@ async function runExp1(cfg) {
   const runLabel = cfg.run || 'exp1.1';
   const runTxt = { 'exp1.1': '第一轮', 'exp1.2': '第二轮' }[runLabel] || '';
 
-  // 主引导 + VAS 前测 + 练习
-  if (await showInstruction('图文匹配实验',
-      '屏幕上先出现一张图片，请记住它<br>' +
-      '接着出现一段文字，请判断文字描述与图片是否一致<br>' +
-      '一致按 Y（或 1），不一致按 N（或 2）<br><br>' +
-      '文字按固定时长显示，读到能判断就按<br>' +
-      '过程中有任何不舒服，随时可以按 Esc 暂停')) return;
-  Stage.show(`<div class="screen center panel"><div class="instr-title">正在加载素材…</div><div class="instr-extra">首次约需几秒，请稍候</div></div>`, '加载素材');
+  // VAS_PRE"平时"只问一遍（最开头）
+  if (CONFIG.ENABLE_VAS && CONFIG.VAS_PRE) {
+    if ((await showVas('开始前，你平时默读时，头脑里会有"声音"吗？', [0, 10], ['没有声音', '很清楚'])).quit) return;
+  }
   try { await SessionPool.load(); } catch (e) {
     await showCompletion('数据加载失败', e.message);
     return;
   }
-  if (CONFIG.ENABLE_VAS && CONFIG.VAS_PRE) {
-    if ((await showVas('开始前，你平时默读时，头脑里会有"声音"吗？', [0, 10], ['没有声音', '很清楚'])).quit) return;
-  }
   await runPractice(subject);
 
-  // Exp1 轮次引导
-  if (await showInstruction(`实验一：阅读能力测试${runTxt}`,
-      '看图 → 记住 → 读文字 → 判断是否一致<br>一致按 Y（或 1），不一致按 N（或 2）<br><br>' +
-      '文字按固定时长显示，读到能判断就按<br>不用着急，尽力就好')) return;
+  // Exp1 轮次引导（含"请你尽快作答"）
+  if (await showInstruction(`实验一${runTxt}`,
+      '看图，记住它，看完按空格继续<br>' +
+      '看文字，判断和图片是否一致<br>' +
+      '一致按 Y（或 1），不一致按 N（或 2）<br><br>' +
+      '请你尽快作答，答完马上进入下一题')) return;
 
-  const seed = 4000;                       // 移植 int(freq*1000)，freq=4（无节拍器，仅占位）
+  const seed = 4000;
   let trials;
   try {
     trials = SessionPool.fineCurveTrials(subject, CONFIG.TRIALS_PER_LENGTH, seed);
@@ -74,27 +69,22 @@ async function runExp1(cfg) {
     if (row.image_id) shown.push(row.image_id);
     if (row.accuracy !== '') accs.push(row.accuracy);
     if (row.subject_key === 'quit') break;
-    if (n % 38 === 0 && n < trials.length) {          // 每 38 试次可选休息
-      const br = await showInBlockBreak(n, trials.length);
-      if (br === 'quit') break;
+    if (n % 38 === 0 && n < trials.length) {
+      if (await showInBlockBreak(n, trials.length) === 'quit') break;
     }
   }
 
   SessionPool.markShown(subject, shown);
 
-  // VAS 每轮（Q1 内语感 + Q2 费力）
+  // 每轮 VAS：Q1 内语感 + Q2 费力
   if (CONFIG.ENABLE_VAS && CONFIG.VAS_PER_BLOCK) {
-    await showVas('Q1 · 刚才默读的时候，头脑里有"声音"在帮你读吗？', [0, 10], ['没有声音', '很清楚']);
-    await showVas('Q2 · 刚才读那些文字，你觉得费力吗？', [0, 10], ['毫不费力', '非常费力']);
+    await showVas('Q1 · 刚才做题读文字时，头脑里有"声音"在帮你读吗？', [0, 10], ['没有声音', '很清楚']);
+    await showVas('Q2 · 刚才做题时，你觉得费力吗？', [0, 10], ['毫不费力', '非常费力']);
   }
 
   const meanAcc = accs.length ? ((accs.reduce((a, b) => a + b, 0) / accs.length) * 100).toFixed(1) : null;
-  let summary = meanAcc != null
+  const summary = meanAcc != null
     ? `<div class="done-summary">完成 ${n} 试次 · 总正确率 <b>${meanAcc}%</b></div>`
     : `<div class="done-summary">完成 ${n} 试次</div>`;
-  if (n < trials.length) {
-    summary += `<div class="done-summary no" style="color:#8a1f1f">⚠ 提前结束（${n}/${trials.length}）</div>`
-      + `<div class="instr-hint" style="color:#8a1f1f">退出原因: ${window.__QUITREASON || '未知'} | 按键记录: ${(window.__KEYLOG || []).join(' ')}</div>`;
-  }
   showDoneScreen(`实验一${runTxt}完成`, `这一轮共 ${n} 试次。`, stem + '.csv', summary);
 }

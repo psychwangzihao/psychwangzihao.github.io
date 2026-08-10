@@ -1,6 +1,6 @@
-/* COCOnnect — core: keys, display, timing, trial runners (v4, 2026-08-10).
-   exp1 whole-sentence: text stays full duration (RT recorded at keypress).
-   exp2 whole-sentence: keypress ENDS trial (H7); auditory has prep-beat lock.
+/* COCOnnect — core: keys, display, timing, trial runners (v5, 2026-08-10)
+   图片自翻页（空格继续，记 image_duration）；作答即结束（按键立即消失）；
+   text_duration 语义：exp1=实际显示时长，exp2=完整公式时长。
 */
 'use strict';
 
@@ -10,11 +10,8 @@
 const KeyBuf = {
   _buf: [],
   init() {
-    window.__KEYLOG = [];
     window.addEventListener('keydown', (e) => {
       const k = e.key;
-      window.__KEYLOG.push(k);
-      if (window.__KEYLOG.length > 50) window.__KEYLOG.shift();
       if (k === CONFIG.KEY_QUIT) e.preventDefault();
       if (k === CONFIG.KEY_CONTINUE) e.preventDefault();
       this._buf.push(k);
@@ -47,14 +44,9 @@ function isYN(k) {
 // 显示层
 // =====================================================================
 const Stage = {
-  _phase: '',
   el() { return document.getElementById('stage'); },
   clear() { this.el().innerHTML = ''; },
-  show(html, phase) {
-    if (phase) this._phase = phase;
-    this.el().innerHTML = `<div class="dbg">${escHtml(this._phase)}</div>` + html;
-  },
-  setPhase(p) { this._phase = p; },
+  show(html) { this.el().innerHTML = html; },
 
   async hold(durationMs) {
     const start = performance.now();
@@ -66,28 +58,29 @@ const Stage = {
   },
 
   fixation() {
-    this.show(`<div class="screen center"><div class="fix">+</div>${hintHtml()}</div>`, '注视点');
+    this.show(`<div class="screen center"><div class="fix">+</div>${hintHtml()}</div>`);
   },
 
   image(path) {
-    this.show(`<div class="screen center"><img class="stim-img" src="${path}" alt=""></div>${hintHtml()}`, `图片 ${path}`);
+    this.show(`<div class="screen center"><img class="stim-img" src="${path}" alt="">
+      <div class="img-hint">记住图片，看完按空格继续</div></div>${hintHtml()}`);
   },
 
   text(text) {
     const lines = wrapTextLines(text, 20);
     const html = lines.map((ln) => `<div class="text-line">${escHtml(ln)}</div>`).join('');
-    this.show(`<div class="screen center text-block">${html}</div>${hintHtml()}`, `文字 ${escHtml(String(text).slice(0, 12))}`);
+    this.show(`<div class="screen center text-block">${html}</div>${hintHtml()}`);
   },
 
   char(ch, marked, phraseMarked) {
     let cls = 'rsvp-char';
     if (marked) cls += ' word-mark';
     const mark = phraseMarked ? '<div class="phrase-mark"></div>' : '';
-    this.show(`<div class="screen center">${mark}<div class="${cls}">${escHtml(ch)}</div></div>${hintHtml()}`, '逐字');
+    this.show(`<div class="screen center">${mark}<div class="${cls}">${escHtml(ch)}</div></div>${hintHtml()}`);
   },
 
   question() {
-    this.show(`<div class="screen center"><div class="q">?</div></div>${hintHtml()}`, '响应');
+    this.show(`<div class="screen center"><div class="q">?</div></div>${hintHtml()}`);
   },
 };
 
@@ -100,30 +93,34 @@ function escHtml(s) {
 }
 
 // =====================================================================
-// 响应收集
+// 图片自翻页：看完按空格继续（Esc 退出），记录观看时长
 // =====================================================================
-/**
- * 收集 Y/N（y/n/1/2，归一化为 y/n）。
- * @param windowMs 窗口时长
- * @param onsetT   RT 起点（performance.now 时间戳）
- * @param endEarly 为 true 时按键即结束（exp2 整句，H7）；为 false 时
- *                 记录首键 RT 但文字显示到窗口结束（exp1）。
- * @returns {key:'y'|'n'|null|'quit', rt:ms|null}
- */
+async function imagePhase(path) {
+  Stage.image(path);
+  const onset = performance.now();
+  while (true) {
+    const keys = KeyBuf.take();
+    if (keys.includes(CONFIG.KEY_QUIT)) return { duration: (performance.now() - onset) / 1000, quit: true };
+    if (keys.includes(CONFIG.KEY_CONTINUE)) return { duration: (performance.now() - onset) / 1000, quit: false };
+    await sleep(20);
+  }
+}
+
+// =====================================================================
+// 响应收集：作答即结束（按键立即返回，文字消失）
+// =====================================================================
 async function pollYN(windowMs, onsetT, endEarly) {
   const start = performance.now();
   let resp = null, rt = null;
   while (performance.now() - start < windowMs) {
     const keys = KeyBuf.take();
     if (keys.includes(CONFIG.KEY_QUIT)) return { key: 'quit', rt: null };
-    if (resp == null) {
-      for (const k of keys) {
-        if (isYN(k)) {
-          resp = normalizeKey(k);
-          rt = performance.now() - onsetT;
-          if (endEarly) return { key: resp, rt };
-          break;
-        }
+    for (const k of keys) {
+      if (isYN(k)) {
+        resp = normalizeKey(k);
+        rt = performance.now() - onsetT;
+        if (endEarly) return { key: resp, rt };
+        break;
       }
     }
     await sleep(20);
@@ -185,46 +182,44 @@ async function showPhase(renderFn, durationMs) {
 }
 
 // =====================================================================
-// Exp1 试次（整句，非 RSVP；文字不提前消失）
+// Exp1 试次（整句，非 RSVP；作答即结束）
 // =====================================================================
 async function runMatchTrial(opts) {
-  // opts: { im, text, answer, swapPos }
-  KeyBuf.clear();   // 防御：清除残留按键，避免上一屏的键误判本试次退出
+  // opts: { im, text, answer }
+  KeyBuf.clear();
   if ((await showPhase(() => Stage.fixation(), randDur(CONFIG.FIX1_DURATION, CONFIG.FIX1_JITTER))) === 'quit') {
-    window.__QUITREASON = '退出@注视1(Esc?)';
     return baseRow(opts.im, opts.text, opts.answer, 'quit', null);
   }
-  if ((await showPhase(() => Stage.image(opts.im.path), CONFIG.IMAGE_DURATION * 1000)) === 'quit') {
-    window.__QUITREASON = '退出@图片阶段(Esc?)';
-    return baseRow(opts.im, opts.text, opts.answer, 'quit', null);
-  }
+  const img = await imagePhase(opts.im.path);           // 图片自翻页
+  if (img.quit) return baseRow(opts.im, opts.text, opts.answer, 'quit', null);
   if ((await showPhase(() => Stage.fixation(), randDur(CONFIG.FIX2_DURATION, CONFIG.FIX2_JITTER))) === 'quit') {
-    window.__QUITREASON = '退出@注视2(Esc?)';
     return baseRow(opts.im, opts.text, opts.answer, 'quit', null);
   }
-  // 整句文字：固定 3 字/秒（max(2, nchar/3)），文字不提前消失
+  // 整句文字：作答即结束（按键立即消失）；时长上限 max(2, nchar/3)
   const durMs = textDuration(opts.text.length, CONFIG.EXP2_WHOLE_CHAR_RATE, false) * 1000;
   const textOnset = performance.now();
   Stage.text(opts.text);
-  const r = await pollYN(durMs, textOnset, false);
-  if (r.key === 'quit') window.__QUITREASON = '退出@文字阶段(Esc?)';
+  const r = await pollYN(durMs, textOnset, true);
   const row = baseRow(opts.im, opts.text, opts.answer, r.key, r.rt);
-  row.text_duration = Math.round(textDuration(opts.text.length, CONFIG.EXP2_WHOLE_CHAR_RATE, false) * 1000) / 1000;
+  // exp1：image_duration = 实际观看时长；text_duration = 实际显示时长（按键 rt 或超时窗）
+  row.image_duration = Math.round(img.duration * 1000) / 1000;
+  row.text_duration = (r.rt != null)
+    ? Math.round(r.rt / 1000 * 1000) / 1000
+    : Math.round(durMs / 1000 * 1000) / 1000;
   return row;
 }
 
 // =====================================================================
-// Exp2 条件试次（presentation: whole / rsvp_simple / rsvp_ding / auditory）
+// Exp2 条件试次（presentation: whole / rsvp_simple；作答即结束）
 // =====================================================================
 async function runConditionTrial(opts) {
-  // opts: { im, text, answer, spec, swapPos }
-  KeyBuf.clear();   // 防御：清除残留按键
+  // opts: { im, text, answer, spec }
+  KeyBuf.clear();
   if ((await showPhase(() => Stage.fixation(), randDur(CONFIG.FIX1_DURATION, CONFIG.FIX1_JITTER))) === 'quit') {
     return { row: baseRow(opts.im, opts.text, opts.answer, 'quit', null), resp: 'quit' };
   }
-  if ((await showPhase(() => Stage.image(opts.im.path), CONFIG.IMAGE_DURATION * 1000)) === 'quit') {
-    return { row: baseRow(opts.im, opts.text, opts.answer, 'quit', null), resp: 'quit' };
-  }
+  const img = await imagePhase(opts.im.path);           // 图片自翻页
+  if (img.quit) return { row: baseRow(opts.im, opts.text, opts.answer, 'quit', null), resp: 'quit' };
   if ((await showPhase(() => Stage.fixation(), randDur(CONFIG.FIX2_DURATION, CONFIG.FIX2_JITTER))) === 'quit') {
     return { row: baseRow(opts.im, opts.text, opts.answer, 'quit', null), resp: 'quit' };
   }
@@ -233,7 +228,7 @@ async function runConditionTrial(opts) {
   let respKey = null, rt = null;
 
   if (pres === 'rsvp_simple') {
-    // 呈现速率：字率 = 频率；'?' 窗口按键即结束
+    // 呈现速率：字率 = 频率；'?' 窗口作答即结束
     const r = await rsvpPresent(opts.text, 1000 / opts.spec.freq, performance.now());
     if (r.key === 'quit') return { row: baseRow(opts.im, opts.text, opts.answer, 'quit', null), resp: 'quit' };
     respKey = r.key;
@@ -255,7 +250,6 @@ async function runConditionTrial(opts) {
       const nowSec = performance.now() / 1000;
       const tText = nowSec + beats * period;
       Metronome.start(rate, undefined, { alignTo: tText - beats * period });
-      // 等待到 tText（文字在第 beats+1 声出现），2ms 轮询
       while (performance.now() / 1000 < tText) {
         if (KeyBuf.take().includes(CONFIG.KEY_QUIT)) {
           Metronome.stop();
@@ -264,15 +258,17 @@ async function runConditionTrial(opts) {
         await sleep(2);
       }
     }
-    const textOnset = performance.now();   // RT 从文字实际出现起算
+    const textOnset = performance.now();
     Stage.text(opts.text);
     const durMs = textDuration(opts.text.length, CONFIG.EXP2_WHOLE_CHAR_RATE, false) * 1000;
-    const r = await pollYN(durMs, textOnset, true);   // 按键即结束
+    const r = await pollYN(durMs, textOnset, true);   // 作答即结束
     if (isAud) Metronome.stop();
     respKey = r.key; rt = r.rt;
   }
 
   const row = baseRow(opts.im, opts.text, opts.answer, respKey, rt);
+  // exp2：image_duration 实际观看；text_duration = 完整公式时长（不论何时按键）
+  row.image_duration = Math.round(img.duration * 1000) / 1000;
   const rateWhole = (pres === 'rsvp_simple') ? opts.spec.freq : CONFIG.EXP2_WHOLE_CHAR_RATE;
   row.text_duration = Math.round(textDuration(opts.text.length, rateWhole, pres === 'rsvp_simple') * 1000) / 1000;
   row.swap_pos = (opts.swapPos == null ? '' : opts.swapPos);
@@ -289,10 +285,8 @@ async function showInstruction(title, body, extra) {
     <div class="instr-body">${body.replace(/\n/g, '<br>')}</div>
     ${extra ? `<div class="instr-extra">${escHtml(extra)}</div>` : ''}
     <div class="instr-continue">按空格 / 回车，或点击屏幕继续</div>
-  </div>`, '引导');
+  </div>`);
   const r = await waitForSpace();
-  // 关键：成功返回 null（falsy），仅退出返回 'quit'——调用方用
-  // `if (await showInstruction(...)) return;` 判断，不能把成功('done')当退出。
   return (r === 'quit') ? 'quit' : null;
 }
 
@@ -305,7 +299,7 @@ async function waitForSpace() {
   try {
     const start = performance.now();
     while (true) {
-      if (clicked) return 'done';                 // 鼠标点击继续（不受输入法影响）
+      if (clicked) return 'done';
       const keys = KeyBuf.take();
       if (keys.includes(CONFIG.KEY_QUIT)) return 'quit';
       if (keys.includes(CONFIG.KEY_CONTINUE) || keys.includes('Enter')) return 'done';
@@ -392,7 +386,7 @@ async function showVas(prompt, range, labels) {
     <div class="vas-line">${escHtml(labels ? labels[0] : min)} — ${escHtml(labels ? labels[1] : max)}</div>
     <div class="vas-score">${val}</div>
     <div class="instr-continue">← → 调整 · 空格 / 点击确认</div>
-  </div>`, 'VAS');
+  </div>`);
   try {
     while (true) {
       if (clicked) return { val, quit: false };
@@ -436,15 +430,18 @@ function showDoneScreen(title, body, downloadFilename, summaryHtml) {
   </div>`);
 }
 
-/** 练习：4 试次（2 正 2 误，真实池图 L12），温和反馈（v4.2）。不记录数据。 */
+/** 练习：4 试次（2 正 2 误，真实池图 L12），温和反馈。不记录数据。 */
 async function runPractice(subject) {
   let trials;
   try { trials = SessionPool.practiceTrials(subject); }
   catch (e) { return; }   // 池子不足则跳过练习
-  if (await showInstruction('先来练习一下',
-      '看图片 → 记在心里 → 看文字 → 判断是否一致<br>' +
+  if (await showInstruction('先练习一下',
+      '看图，记住它，看完按空格继续<br>' +
+      '看文字，判断和图片是否一致<br>' +
       '一致按 Y（或 1），不一致按 N（或 2）<br>' +
-      '练习阶段会有反馈，正式部分就没有了')) return;
+      '答完马上进入下一题<br>' +
+      '练习有反馈，正式部分没有了<br><br>' +
+      '慢慢来，别紧张')) return;
   for (const t of trials) {
     const row = await runMatchTrial({ im: t.im, text: t.text, answer: t.answer });
     if (row.subject_key === 'quit') return;
