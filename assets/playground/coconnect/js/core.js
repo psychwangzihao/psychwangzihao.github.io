@@ -62,13 +62,13 @@ const Stage = {
   },
 
   image(path) {
-    this.show(`<div class="screen center"><img class="stim-img" src="${path}" alt=""></div>${hintHtml()}`);
+    this.show(`<div class="dbg">图 ${path}</div><div class="screen center"><img class="stim-img" src="${path}" alt=""></div>${hintHtml()}`);
   },
 
   text(text) {
     const lines = wrapTextLines(text, 20);
     const html = lines.map((ln) => `<div class="text-line">${escHtml(ln)}</div>`).join('');
-    this.show(`<div class="screen center text-block">${html}</div>${hintHtml()}`);
+    this.show(`<div class="dbg">文 ${escHtml(String(text).slice(0, 16))}…</div><div class="screen center text-block">${html}</div>${hintHtml()}`);
   },
 
   char(ch, marked, phraseMarked) {
