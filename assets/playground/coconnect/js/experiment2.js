@@ -62,15 +62,14 @@ async function runExp2(cfg) {
       '一致按 Y（或 1），不一致按 N（或 2）<br><br>' +
       '文字按固定时长显示，读到能判断就按<br>' +
       '过程中有任何不舒服，随时可以按 Esc 暂停')) return;
-  if (CONFIG.ENABLE_VAS && CONFIG.VAS_PRE) {
-    if ((await showVas('开始前，你平时默读时，头脑里会有"声音"吗？', [0, 10], ['没有声音', '很清楚'])).quit) return;
-  }
-  await runPractice(subject);
-
   try { await SessionPool.load(); } catch (e) {
     await showCompletion('数据加载失败', e.message);
     return;
   }
+  if (CONFIG.ENABLE_VAS && CONFIG.VAS_PRE) {
+    if ((await showVas('开始前，你平时默读时，头脑里会有"声音"吗？', [0, 10], ['没有声音', '很清楚'])).quit) return;
+  }
+  await runPractice(subject);
 
   if (await showInstruction(`实验二（会话 ${session}）`,
       '和之前一样：看图 → 记住 → 判断文字是否一致<br>' +

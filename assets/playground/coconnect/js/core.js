@@ -276,7 +276,10 @@ async function showInstruction(title, body, extra) {
     ${extra ? `<div class="instr-extra">${escHtml(extra)}</div>` : ''}
     <div class="instr-continue">按空格 / 回车，或点击屏幕继续</div>
   </div>`);
-  return await waitForSpace();
+  const r = await waitForSpace();
+  // 关键：成功返回 null（falsy），仅退出返回 'quit'——调用方用
+  // `if (await showInstruction(...)) return;` 判断，不能把成功('done')当退出。
+  return (r === 'quit') ? 'quit' : null;
 }
 
 async function waitForSpace() {

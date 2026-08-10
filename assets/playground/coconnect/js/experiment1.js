@@ -23,15 +23,14 @@ async function runExp1(cfg) {
       '一致按 Y（或 1），不一致按 N（或 2）<br><br>' +
       '文字按固定时长显示，读到能判断就按<br>' +
       '过程中有任何不舒服，随时可以按 Esc 暂停')) return;
-  if (CONFIG.ENABLE_VAS && CONFIG.VAS_PRE) {
-    if ((await showVas('开始前，你平时默读时，头脑里会有"声音"吗？', [0, 10], ['没有声音', '很清楚'])).quit) return;
-  }
-  await runPractice(subject);
-
   try { await SessionPool.load(); } catch (e) {
     await showCompletion('数据加载失败', e.message);
     return;
   }
+  if (CONFIG.ENABLE_VAS && CONFIG.VAS_PRE) {
+    if ((await showVas('开始前，你平时默读时，头脑里会有"声音"吗？', [0, 10], ['没有声音', '很清楚'])).quit) return;
+  }
+  await runPractice(subject);
 
   // Exp1 轮次引导
   if (await showInstruction(`实验一：阅读能力测试${runTxt}`,
