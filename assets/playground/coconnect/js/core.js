@@ -44,9 +44,14 @@ function isYN(k) {
 // 显示层
 // =====================================================================
 const Stage = {
+  _phase: '',
   el() { return document.getElementById('stage'); },
   clear() { this.el().innerHTML = ''; },
-  show(html) { this.el().innerHTML = html; },
+  show(html, phase) {
+    if (phase) this._phase = phase;
+    this.el().innerHTML = `<div class="dbg">${escHtml(this._phase)}</div>` + html;
+  },
+  setPhase(p) { this._phase = p; },
 
   async hold(durationMs) {
     const start = performance.now();
@@ -58,28 +63,28 @@ const Stage = {
   },
 
   fixation() {
-    this.show(`<div class="screen center"><div class="fix">+</div>${hintHtml()}</div>`);
+    this.show(`<div class="screen center"><div class="fix">+</div>${hintHtml()}</div>`, '注视点');
   },
 
   image(path) {
-    this.show(`<div class="dbg">图 ${path}</div><div class="screen center"><img class="stim-img" src="${path}" alt=""></div>${hintHtml()}`);
+    this.show(`<div class="screen center"><img class="stim-img" src="${path}" alt=""></div>${hintHtml()}`, `图片 ${path}`);
   },
 
   text(text) {
     const lines = wrapTextLines(text, 20);
     const html = lines.map((ln) => `<div class="text-line">${escHtml(ln)}</div>`).join('');
-    this.show(`<div class="dbg">文 ${escHtml(String(text).slice(0, 16))}…</div><div class="screen center text-block">${html}</div>${hintHtml()}`);
+    this.show(`<div class="screen center text-block">${html}</div>${hintHtml()}`, `文字 ${escHtml(String(text).slice(0, 12))}`);
   },
 
   char(ch, marked, phraseMarked) {
     let cls = 'rsvp-char';
     if (marked) cls += ' word-mark';
     const mark = phraseMarked ? '<div class="phrase-mark"></div>' : '';
-    this.show(`<div class="screen center">${mark}<div class="${cls}">${escHtml(ch)}</div></div>${hintHtml()}`);
+    this.show(`<div class="screen center">${mark}<div class="${cls}">${escHtml(ch)}</div></div>${hintHtml()}`, '逐字');
   },
 
   question() {
-    this.show(`<div class="screen center"><div class="q">?</div></div>${hintHtml()}`);
+    this.show(`<div class="screen center"><div class="q">?</div></div>${hintHtml()}`, '响应');
   },
 };
 
@@ -275,7 +280,7 @@ async function showInstruction(title, body, extra) {
     <div class="instr-body">${body.replace(/\n/g, '<br>')}</div>
     ${extra ? `<div class="instr-extra">${escHtml(extra)}</div>` : ''}
     <div class="instr-continue">按空格 / 回车，或点击屏幕继续</div>
-  </div>`);
+  </div>`, '引导');
   const r = await waitForSpace();
   // 关键：成功返回 null（falsy），仅退出返回 'quit'——调用方用
   // `if (await showInstruction(...)) return;` 判断，不能把成功('done')当退出。
@@ -378,7 +383,7 @@ async function showVas(prompt, range, labels) {
     <div class="vas-line">${escHtml(labels ? labels[0] : min)} — ${escHtml(labels ? labels[1] : max)}</div>
     <div class="vas-score">${val}</div>
     <div class="instr-continue">← → 调整 · 空格 / 点击确认</div>
-  </div>`);
+  </div>`, 'VAS');
   try {
     while (true) {
       if (clicked) return { val, quit: false };

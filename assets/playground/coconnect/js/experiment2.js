@@ -62,7 +62,7 @@ async function runExp2(cfg) {
       '一致按 Y（或 1），不一致按 N（或 2）<br><br>' +
       '文字按固定时长显示，读到能判断就按<br>' +
       '过程中有任何不舒服，随时可以按 Esc 暂停')) return;
-  Stage.show(`<div class="screen center panel"><div class="instr-title">正在加载素材…</div><div class="instr-extra">首次约需几秒，请稍候</div></div>`);
+  Stage.show(`<div class="screen center panel"><div class="instr-title">正在加载素材…</div><div class="instr-extra">首次约需几秒，请稍候</div></div>`, '加载素材');
   try { await SessionPool.load(); } catch (e) {
     await showCompletion('数据加载失败', e.message);
     return;
