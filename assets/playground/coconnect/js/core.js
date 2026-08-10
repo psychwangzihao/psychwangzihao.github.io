@@ -189,6 +189,7 @@ async function showPhase(renderFn, durationMs) {
 // =====================================================================
 async function runMatchTrial(opts) {
   // opts: { im, text, answer, swapPos }
+  KeyBuf.clear();   // 防御：清除残留按键，避免上一屏的键误判本试次退出
   if (await showPhase(() => Stage.fixation(), randDur(CONFIG.FIX1_DURATION, CONFIG.FIX1_JITTER))) {
     window.__QUITREASON = '退出@注视1(Esc?)';
     return baseRow(opts.im, opts.text, opts.answer, 'quit', null);
@@ -217,6 +218,7 @@ async function runMatchTrial(opts) {
 // =====================================================================
 async function runConditionTrial(opts) {
   // opts: { im, text, answer, spec, swapPos }
+  KeyBuf.clear();   // 防御：清除残留按键
   if (await showPhase(() => Stage.fixation(), randDur(CONFIG.FIX1_DURATION, CONFIG.FIX1_JITTER))) {
     return { row: baseRow(opts.im, opts.text, opts.answer, 'quit', null), resp: 'quit' };
   }
