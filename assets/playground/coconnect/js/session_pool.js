@@ -178,3 +178,17 @@ const SessionPool = {
     return shuffle(trials, rng);
   },
 };
+
+/** 固定序列清单（v5.1-B）：网页版消费预生成的清单（含图片路径）。 */
+const Manifest = {
+  async loadExp1(run) {
+    const res = await fetch(`data/manifests/exp1_${run}.json`, { cache: 'no-cache' });
+    if (!res.ok) throw new Error('清单加载失败: exp1_' + run);
+    return await res.json();
+  },
+  async loadExp2(level, session) {
+    const res = await fetch(`data/manifests/exp2_${level}_s${session}.json`, { cache: 'no-cache' });
+    if (!res.ok) throw new Error('清单加载失败: exp2_' + level + '_s' + session);
+    return await res.json();
+  },
+};

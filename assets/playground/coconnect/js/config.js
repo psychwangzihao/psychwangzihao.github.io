@@ -10,15 +10,18 @@ const CONFIG = {
   FONT_FAMILY: '"PingFang SC","Songti SC","Heiti SC","STHeiti","Hiragino Sans GB","Microsoft YaHei","SimHei","SimSun",sans-serif',
   FONT_SIZE_TEXT_PT: 30,
 
-  // ---- 按键（Y/N 优先；数字键 1/2 备用，防中文输入法拦截字母键） ----
+  // ---- 按键（Y/N/D 三选；数字键 1/2/3 备用，防中文输入法拦截字母键） ----
   KEY_YES: 'y',
   KEY_NO: 'n',
+  KEY_D: 'd',
   KEY_YES_ALT: '1',
   KEY_NO_ALT: '2',
+  KEY_D_ALT: '3',
   KEY_CONTINUE: ' ',
   KEY_QUIT: 'Escape',
   KEY_PAUSE: 'q',
-  HINT: '是=Y(1) 否=N(2)',
+  HINT: '是=Y(1) 否=N(2) 不知道=D(3)',
+  RESPONSE_SOFT_CAP: 60.0,           // v5.0-B：整句自定步调软上限（超时）
 
   // ---- 试次时序（§5.1/§5.2） ----
   FIX1_DURATION: 1.0,
@@ -50,14 +53,14 @@ const CONFIG = {
   FREQ_MIN: 0.25,
   FREQ_MAX: 12.0,
 
-  // ---- Exp 1 精细曲线（v4.0 K1） ----
-  TRIALS_PER_LENGTH: 10,          // 每级试次数（正误各半）
+  // ---- Exp 1 精细曲线（v5.4-B） ----
+  FINECURVE_TRIALS_PER_LEVEL: 8,  // 每级试次数（两轮 16/级合并；152/轮）
   FINE_CURVE_RUNS: ['exp1.1', 'exp1.2'],
   IN_BLOCK_BREAK_EVERY: 38,       // 每 38 试次可选休息
   FINE_CURVE_FREQ: 4.0,           // Exp1 无节拍器（freq 仅占位）
 
-  // ---- Exp 2 单长度节律测试（v4.0 K2） ----
-  EXP2_TRIALS_PER_CONDITION: 25,  // 每条件上限
+  // ---- Exp 2 单长度节律测试（v5.4-B） ----
+  EXP2_TRIALS_PER_CONDITION: 12,  // 每条件固定试次数（EEG ITPC 下限；动态 n 取消）
   EXP2_TARGET_LEVEL: 'L13',
   EXP2_FREQS: [0.5, 1.0, 2.0, 4.0, 6.0],
   EXP2_DING_CHAR_RATE: 4.0,       // 丁鼐版字率固定 4Hz

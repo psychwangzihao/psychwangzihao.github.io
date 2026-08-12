@@ -6,7 +6,9 @@
 const App = {
   showStart() {
     KeyBuf.clear();
-    const levelOpts = CONFIG.LEVELS.map((L) => `<option>${L}</option>`).join('');
+    // exp2 目标等级：只有 L1-L18 有固定清单（L19 容量不足，未生成）
+    const levelOpts = CONFIG.LEVELS.filter((L) => L !== 'L19')
+      .map((L) => `<option>${L}</option>`).join('');
     Stage.show(`<div class="screen center panel start-panel">
       <div class="instr-title">COCOnnect · 图文匹配实验</div>
       <div class="instr-sub">看图 → 记图 → 读文字 → 判断一致（Y(1)=是 / N(2)=否）</div>

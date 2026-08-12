@@ -28,16 +28,17 @@ function randDur(base, jitter) {
   return (base + (Math.random() * 2 - 1) * jitter) * 1000;   // ms
 }
 
-/** 1/2 → y/n（备用键，防中文输入法拦截） */
+/** 1/2/3 → y/n/d（备用键，防中文输入法拦截） */
 function normalizeKey(k) {
   if (k === CONFIG.KEY_YES_ALT) return CONFIG.KEY_YES;
   if (k === CONFIG.KEY_NO_ALT) return CONFIG.KEY_NO;
+  if (k === CONFIG.KEY_D_ALT) return CONFIG.KEY_D;
   return k;
 }
 
-function isYN(k) {
+function isResp(k) {
   const n = normalizeKey(k);
-  return n === CONFIG.KEY_YES || n === CONFIG.KEY_NO;
+  return n === CONFIG.KEY_YES || n === CONFIG.KEY_NO || n === CONFIG.KEY_D;
 }
 
 // =====================================================================
@@ -116,7 +117,7 @@ async function pollYN(windowMs, onsetT, endEarly) {
     const keys = KeyBuf.take();
     if (keys.includes(CONFIG.KEY_QUIT)) return { key: 'quit', rt: null };
     for (const k of keys) {
-      if (isYN(k)) {
+      if (isResp(k)) {
         resp = normalizeKey(k);
         rt = performance.now() - onsetT;
         if (endEarly) return { key: resp, rt };
@@ -139,7 +140,7 @@ async function rsvpPresent(text, periodMs, textOnset) {
       const keys = KeyBuf.take();
       if (keys.includes(CONFIG.KEY_QUIT)) return { key: 'quit', rt: null, early: true };
       for (const k of keys) {
-        if (isYN(k)) return { key: normalizeKey(k), rt: performance.now() - textOnset, early: true };
+        if (isResp(k)) return { key: normalizeKey(k), rt: performance.now() - textOnset, early: true };
       }
       await sleep(20);
     }
@@ -160,10 +161,12 @@ function baseRow(im, text, answer, respKey, rt) {
   if (respKey === CONFIG.KEY_YES || respKey === CONFIG.KEY_NO) {
     acc = (respKey === expected) ? 1 : 0;
     sk = respKey;
+  } else if (respKey === CONFIG.KEY_D) {
+    acc = 0; sk = CONFIG.KEY_D;        // D=不知道 → 答错，subject_key 区分
   } else if (respKey === 'quit') {
     acc = ''; sk = 'quit';
   } else {
-    acc = 0; sk = 'timeout';   // 未作答（非答错）
+    acc = 0; sk = 'timeout';           // 未作答（非答错）
   }
   return {
     image_id: im.id,
@@ -171,8 +174,10 @@ function baseRow(im, text, answer, respKey, rt) {
     text,
     correct_answer: answer,
     subject_key: sk,
+    response_type: sk,                 // v5.0-J：Y/N/D 独立列
     accuracy: acc,
     rt: (rt == null ? '' : Math.round(rt) / 1000),
+    time_on_task: (window.__taskStart ? Math.round((performance.now() - window.__taskStart) / 1000 * 1000) / 1000 : ''),
   };
 }
 
@@ -184,28 +189,31 @@ async function showPhase(renderFn, durationMs) {
 // =====================================================================
 // Exp1 试次（整句，非 RSVP；作答即结束）
 // =====================================================================
+/** opts.im 或 {id: image_id}（清单试次无 im，只用 image_id） */
+function imOf(opts) { return opts.im || { id: opts.image_id }; }
+
 async function runMatchTrial(opts) {
-  // opts: { im, text, answer }
+  // opts: { im|image_id, path, text, answer }
   KeyBuf.clear();
   if ((await showPhase(() => Stage.fixation(), randDur(CONFIG.FIX1_DURATION, CONFIG.FIX1_JITTER))) === 'quit') {
-    return baseRow(opts.im, opts.text, opts.answer, 'quit', null);
+    return baseRow(imOf(opts), opts.text, opts.answer, 'quit', null);
   }
-  const img = await imagePhase(opts.im.path);           // 图片自翻页
-  if (img.quit) return baseRow(opts.im, opts.text, opts.answer, 'quit', null);
+  const img = await imagePhase(opts.path || opts.im.path);   // 图片自翻页
+  if (img.quit) return baseRow(imOf(opts), opts.text, opts.answer, 'quit', null);
   if ((await showPhase(() => Stage.fixation(), randDur(CONFIG.FIX2_DURATION, CONFIG.FIX2_JITTER))) === 'quit') {
-    return baseRow(opts.im, opts.text, opts.answer, 'quit', null);
+    return baseRow(imOf(opts), opts.text, opts.answer, 'quit', null);
   }
-  // 整句文字：作答即结束（按键立即消失）；时长上限 max(2, nchar/3)
-  const durMs = textDuration(opts.text.length, CONFIG.EXP2_WHOLE_CHAR_RATE, false) * 1000;
+  // 整句文字：v5.0-B 自定步调——常显到按键（Y/N/D），软上限 60s → 超时
+  const durMs = CONFIG.RESPONSE_SOFT_CAP * 1000;
   const textOnset = performance.now();
   Stage.text(opts.text);
   const r = await pollYN(durMs, textOnset, true);
-  const row = baseRow(opts.im, opts.text, opts.answer, r.key, r.rt);
-  // exp1：image_duration = 实际观看时长；text_duration = 实际显示时长（按键 rt 或超时窗）
+  const row = baseRow(imOf(opts), opts.text, opts.answer, r.key, r.rt);
+  // exp1：image_duration = 实际观看时长；text_duration = 实际阅读时长（rt 或软上限）
   row.image_duration = Math.round(img.duration * 1000) / 1000;
   row.text_duration = (r.rt != null)
     ? Math.round(r.rt / 1000 * 1000) / 1000
-    : Math.round(durMs / 1000 * 1000) / 1000;
+    : CONFIG.RESPONSE_SOFT_CAP;
   return row;
 }
 
@@ -213,15 +221,15 @@ async function runMatchTrial(opts) {
 // Exp2 条件试次（presentation: whole / rsvp_simple；作答即结束）
 // =====================================================================
 async function runConditionTrial(opts) {
-  // opts: { im, text, answer, spec }
+  // opts: { im|image_id, path, text, answer, spec }
   KeyBuf.clear();
   if ((await showPhase(() => Stage.fixation(), randDur(CONFIG.FIX1_DURATION, CONFIG.FIX1_JITTER))) === 'quit') {
-    return { row: baseRow(opts.im, opts.text, opts.answer, 'quit', null), resp: 'quit' };
+    return { row: baseRow(imOf(opts), opts.text, opts.answer, 'quit', null), resp: 'quit' };
   }
-  const img = await imagePhase(opts.im.path);           // 图片自翻页
-  if (img.quit) return { row: baseRow(opts.im, opts.text, opts.answer, 'quit', null), resp: 'quit' };
+  const img = await imagePhase(opts.path || opts.im.path);   // 图片自翻页
+  if (img.quit) return { row: baseRow(imOf(opts), opts.text, opts.answer, 'quit', null), resp: 'quit' };
   if ((await showPhase(() => Stage.fixation(), randDur(CONFIG.FIX2_DURATION, CONFIG.FIX2_JITTER))) === 'quit') {
-    return { row: baseRow(opts.im, opts.text, opts.answer, 'quit', null), resp: 'quit' };
+    return { row: baseRow(imOf(opts), opts.text, opts.answer, 'quit', null), resp: 'quit' };
   }
 
   const pres = opts.spec.presentation || opts.spec.type;
@@ -230,7 +238,7 @@ async function runConditionTrial(opts) {
   if (pres === 'rsvp_simple') {
     // 呈现速率：字率 = 频率；'?' 窗口作答即结束
     const r = await rsvpPresent(opts.text, 1000 / opts.spec.freq, performance.now());
-    if (r.key === 'quit') return { row: baseRow(opts.im, opts.text, opts.answer, 'quit', null), resp: 'quit' };
+    if (r.key === 'quit') return { row: baseRow(imOf(opts), opts.text, opts.answer, 'quit', null), resp: 'quit' };
     respKey = r.key;
     if (respKey == null) {
       Stage.question();
@@ -253,24 +261,29 @@ async function runConditionTrial(opts) {
       while (performance.now() / 1000 < tText) {
         if (KeyBuf.take().includes(CONFIG.KEY_QUIT)) {
           Metronome.stop();
-          return { row: baseRow(opts.im, opts.text, opts.answer, 'quit', null), resp: 'quit' };
+          return { row: baseRow(imOf(opts), opts.text, opts.answer, 'quit', null), resp: 'quit' };
         }
         await sleep(2);
       }
     }
     const textOnset = performance.now();
     Stage.text(opts.text);
-    const durMs = textDuration(opts.text.length, CONFIG.EXP2_WHOLE_CHAR_RATE, false) * 1000;
-    const r = await pollYN(durMs, textOnset, true);   // 作答即结束
+    const durMs = CONFIG.RESPONSE_SOFT_CAP * 1000;      // 自定步调，软上限 60s
+    const r = await pollYN(durMs, textOnset, true);      // 作答即结束
     if (isAud) Metronome.stop();
     respKey = r.key; rt = r.rt;
   }
 
-  const row = baseRow(opts.im, opts.text, opts.answer, respKey, rt);
-  // exp2：image_duration 实际观看；text_duration = 完整公式时长（不论何时按键）
+  const row = baseRow(imOf(opts), opts.text, opts.answer, respKey, rt);
+  // exp2：image_duration 实际观看；text_duration = RSVP 完整呈现时长 / 整句实际阅读时长（rt 或 60）
   row.image_duration = Math.round(img.duration * 1000) / 1000;
-  const rateWhole = (pres === 'rsvp_simple') ? opts.spec.freq : CONFIG.EXP2_WHOLE_CHAR_RATE;
-  row.text_duration = Math.round(textDuration(opts.text.length, rateWhole, pres === 'rsvp_simple') * 1000) / 1000;
+  if (pres === 'rsvp_simple') {
+    row.text_duration = Math.round(textDuration(opts.text.length, opts.spec.freq, true) * 1000) / 1000;
+  } else {
+    row.text_duration = (rt != null)
+      ? Math.round(rt / 1000 * 1000) / 1000
+      : CONFIG.RESPONSE_SOFT_CAP;
+  }
   row.swap_pos = (opts.swapPos == null ? '' : opts.swapPos);
   return { row, resp: respKey };
 }
