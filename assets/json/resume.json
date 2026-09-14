@@ -29,7 +29,25 @@
       "endDate": "2026-02-01"
     }
   ],
+  "research": [
+    {
+      "name": "Zhejiang University, in collaboration with Dr. Jianghao Liu (Paris Brain Institute, ICM) and the University of Sussex",
+      "position": "Undergraduate Researcher",
+      "startDate": "2026-09-01",
+      "endDate": "2028-09-01",
+      "summary": "Neural mechanisms of conscious access to visual mental imagery in aphantasia",
+      "highlights": [
+        "Co-designed the study and set up the experimental platform at Zhejiang University; responsible for data collection.",
+        "Tests whether imagery signals in aphantasia fail to be generated or fail to reach conscious access, using behavioural psychophysics together with electrophysiological and neuromodulation approaches."
+      ]
+    }
+  ],
   "awards": [
+    {
+      "title": "First Prize (large-project workshop), \"Mind Science and Intelligent Future\" International Summer School for Top Students in Psychology",
+      "date": "2026-08-01",
+      "awarder": "Ministry of Education Psychology Teaching Steering Committee & Faculty of Psychology, Beijing Normal University"
+    },
     {
       "title": "Excellent Poster Award, Psychology (Honor's Program) Research Exhibition",
       "date": "2026-03-01",
@@ -44,6 +62,23 @@
       "title": "Best Debater & Best Team, Design Intelligence Award Debate Competition",
       "date": "2025-04-01",
       "awarder": "DIA"
+    }
+  ],
+  "service": [
+    {
+      "position": "Class Monitor",
+      "organization": "Psychology (Qiushi Science Class) 2501, Chu Kochen Honors College, Zhejiang University",
+      "date": "2025 – Present"
+    },
+    {
+      "position": "Peer Mentor Group Leader",
+      "organization": "Qiushi Psychology Science Class & Brain-Machine Intelligence Innovation Class, Zhejiang University",
+      "date": "2026 – Present"
+    },
+    {
+      "position": "Volunteer",
+      "organization": "Sino-European International Conference on Human Cognition and Artificial Intelligence",
+      "date": "2026"
     }
   ],
   "skills": [
