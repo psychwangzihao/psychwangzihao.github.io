@@ -15,43 +15,48 @@ PERCEPTION.css('scene-brain', `
   display:block;width:100%;height:auto;
   font-family:var(--font-sans);overflow:visible;
 }
-/* 整脑外轮廓：既是底色，也是所有脑叶的裁剪边界 */
-.brain .hull{fill:var(--brain-fill);stroke:var(--brain-line);stroke-width:2.2;
-  stroke-linejoin:round;}
-/* 外轮廓描边单独再压一层，避免被脑叶填色吃掉 */
-.brain .outline{fill:none;stroke:var(--brain-line);stroke-width:2.2;
+/* 整脑：底色由 SVG 里的径向渐变给（左上亮、右下沉），这里只管描边 */
+.brain .hull{stroke:var(--brain-line);stroke-width:2.4;stroke-linejoin:round;}
+/* 外轮廓描边单独再压一层，保证线条完整 */
+.brain .outline{fill:none;stroke:var(--brain-line);stroke-width:2.4;
   stroke-linejoin:round;pointer-events:none;}
 /* 小脑 / 脑干：轮廓之外的两个独立结构（先画，上半被大脑盖住） */
-.brain .stem{fill:var(--brain-deep);stroke:var(--brain-line);stroke-width:2.2;
-  stroke-linejoin:round;}
-/* 脑叶：不描边，各自的边界靠中央沟 / 外侧裂 / 顶枕沟的走势暗示；
-   纯填色，形状由外轮廓裁出来，所以脑叶之间永远不会有空洞 */
+.brain .stem{fill:var(--brain-deep);stroke:none;}
+.brain .stem-outline{fill:none;stroke:var(--brain-line);stroke-width:2.2;
+  stroke-linejoin:round;pointer-events:none;}
+/* 脑叶：**不填色**，只用来接指针 —— 高亮时给整块脑面上层蓝，
+   脑回仍然画在它上面，于是蓝色是「透过褶皱透出来」的。
+   fill:none 的元素默认不响应指针，所以必须 pointer-events:all。 */
 .brain .lobe{
-  fill:var(--brain-fill);stroke:none;stroke-width:2;stroke-linejoin:round;
-  transition:fill var(--dur-normal) var(--ease-out),
-             stroke var(--dur-normal) var(--ease-out);
+  fill:none;pointer-events:all;
+  transition:fill var(--dur-normal) var(--ease-out);
 }
-.brain .lobe.on{fill:var(--accent-blue-light);stroke:var(--accent-blue);}
-.brain .lobe.err{fill:var(--error);stroke:var(--error);}
-/* 脑沟脑回：几条短弧线，让整脑读起来「有褶皱」而不是一团面 */
+.brain .lobe.on{fill:var(--accent-blue-light);}
+.brain .lobe.err{fill:var(--error);fill-opacity:.55;}
+/* 脑回：流线，细而密，比大沟淡一档 —— 它是「质感」不是「结构」 */
 .brain .gyri{
-  fill:none;stroke:rgba(120,100,80,.30);stroke-width:1.9;
-  stroke-linecap:round;pointer-events:none;
+  fill:none;stroke:rgba(122,100,78,.34);stroke-width:1.5;
+  stroke-linecap:round;stroke-linejoin:round;pointer-events:none;
 }
 /* 三条大沟：中央沟 / 外侧裂 / 顶枕沟 —— 比脑回更重、更深 */
 .brain .sulcus{
-  fill:none;stroke:rgba(105,84,64,.55);stroke-width:2.8;
+  fill:none;stroke:rgba(100,78,58,.58);stroke-width:3;
   stroke-linecap:round;pointer-events:none;
 }
-/* 小脑横纹 */
-.brain .stria{fill:none;stroke:var(--brain-line);stroke-width:1.7;
+/* 小脑叶片 */
+.brain .folia{fill:none;stroke:rgba(122,100,78,.32);stroke-width:1.5;
   stroke-linecap:round;pointer-events:none;}
 
-/* 脑叶说明文字：默认隐藏，高亮时淡入 */
-/* 注：SVG 内的字号用 user unit（viewBox 620 宽），不能直接套 vw 字号阶梯 */
+/* 脑叶说明文字：默认隐藏，高亮时淡入。
+   文字描了一圈脑底色（paint-order:stroke），压在褶皱上也读得清 ——
+   不然「边缘叶」这种落在一堆流线上的标签会糊掉。 */
 .brain .cap{opacity:0;pointer-events:none;
   transition:opacity var(--dur-slow) var(--ease-out);}
 .brain .cap.on{opacity:1;}
+.brain .cap text{
+  paint-order:stroke;stroke:#EFE8DE;stroke-width:6;
+  stroke-linejoin:round;
+}
 .brain .cap .t{fill:var(--text-primary);font-size:17px;font-weight:var(--fw-bold);}
 .brain .cap .s{fill:var(--text-secondary);font-size:12.5px;}
 /* 放对了标签，就顺手把那个脑叶的说明浮出来（4.1 用，不必改 JS） */
@@ -284,39 +289,81 @@ var BRAIN_LOBES = {
     'C248,148 204,192 214,262 C218,278 182,280 178,262 Z',
 };
 
-/* 脑回：用同一条波形扫过脑面，每条横穿大半个脑 ——
-   短划痕看起来像刮痕，绵延的褶皱才像脑。 */
+/* 脑回：用「流线」画，不要用一排行波。
+   行波永远是一道道等宽的平行线，看起来像等高线 / 木纹。
+   做法：定义一个方向场，再从很多起点沿场走线 —— 流线不相交、
+   会一起拐弯、间距有疏有密，正好是脑回的样子。
+
+   场是 8 个不同方向的正弦叠出来的（Gabor 噪声的思路）：
+   成分少了会退化成一个大漩涡，整张图就变成木纹带结疤；
+   成分多了方向才「一块一块地」变，像真的脑回那样打补丁。
+   流线还要短 —— 走太长就会把整个漩涡描出来。 */
+var GYRI_WAVES = [
+  [ 0.031,  0.014, 1.00, 0.0],
+  [-0.019,  0.028, 0.90, 1.7],
+  [ 0.041, -0.023, 0.75, 3.1],
+  [ 0.012,  0.037, 0.80, 4.6],
+  [-0.034, -0.016, 0.70, 0.9],
+  [ 0.026,  0.033, 0.62, 2.4],
+  [-0.043,  0.011, 0.55, 5.2],
+  [ 0.017, -0.039, 0.50, 3.8],
+];
+
+function gyriField(x, y) {
+  var a = 0;
+  for (var i = 0; i < GYRI_WAVES.length; i++) {
+    var w = GYRI_WAVES[i];
+    a += w[2] * Math.sin(x * w[0] + y * w[1] + w[3]);
+  }
+  return a * 0.82;
+}
+
 function brainGyriPaths() {
-  var rows = [
-    { y: 70,  x0: 128, x1: 420, amp: 15, freq: 2.4, ph: 0.9, tilt: -0.10 },
-    { y: 100, x0: 96,  x1: 470, amp: 19, freq: 3.1, ph: 0.4, tilt: -0.06 },
-    { y: 136, x0: 74,  x1: 522, amp: 23, freq: 2.6, ph: 1.7, tilt: 0.00 },
-    { y: 170, x0: 64,  x1: 554, amp: 21, freq: 2.3, ph: 2.9, tilt: 0.03 },
-    { y: 204, x0: 72,  x1: 542, amp: 19, freq: 3.4, ph: 0.9, tilt: 0.06 },
-    { y: 236, x0: 86,  x1: 512, amp: 17, freq: 2.9, ph: 4.1, tilt: 0.05 },
-    { y: 264, x0: 110, x1: 472, amp: 14, freq: 3.2, ph: 1.2, tilt: 0.02 },
-    { y: 288, x0: 152, x1: 418, amp: 10, freq: 3.6, ph: 2.4, tilt: 0.00 },
-  ];
-  return rows.map(function (r) {
-    var N = 40, d = [], i;
-    for (i = 0; i <= N; i++) {
-      var t = i / N;
-      var x = r.x0 + (r.x1 - r.x0) * t;
-      /* 振幅沿程一起一伏（脑回有粗有细），再加一点高频抖动，
-         否则整排同频同幅，看起来像灯芯绒而不像脑 */
-      var env = 0.62 + 0.38 * Math.sin(t * 4.1 + r.ph * 1.7);
-      var y = r.y
-        + (t - 0.5) * (r.x1 - r.x0) * r.tilt
-        + Math.sin(t * r.freq * Math.PI * 2 + r.ph) * r.amp * env
-        + Math.sin(t * 11.7 + r.ph * 2.3) * 3.4;
-      d.push([x, y]);
+  var out = [], i, j;
+  for (j = 0; j < 14; j++) {
+    for (i = 0; i < 20; i++) {
+      /* 起点铺满包围盒 + 抖动，免得流线排成整齐的行、也避免秃斑 */
+      var x = 34 + i * 28 + (j % 2 ? 14 : 0) + Math.sin(i * 2.3 + j * 1.7) * 11;
+      var y = 10 + j * 23 + Math.sin(i * 1.3 + j * 2.9) * 12;
+
+      var pts = [[x, y]], px = x, py = y;
+      var steps = 9 + (i * 5 + j * 3) % 9;        /* 短：4–9 段，断口才不齐整 */
+      for (var t = 0; t < steps; t++) {
+        var a = gyriField(px, py);
+        px += Math.cos(a) * 4.5;
+        py += Math.sin(a) * 4.5;
+        if (px < 20 || px > 620 || py < 0 || py > 440) break;
+        pts.push([px, py]);
+      }
+      if (pts.length > 2) out.push(smoothPath(pts, false));
     }
-    return smoothPath(d, false);
-  });
+  }
+  return out;
+}
+
+/* 小脑叶片：按小脑的椭圆轮廓算出一排横纹，保证不会戳出轮廓外 ——
+   之前那三条手写横纹有两条跑到小脑外面去了。 */
+function brainFoliaPaths() {
+  var cx = 478, cy = 290, rx = 92, ry = 58;
+  var out = [], k, i;
+  for (k = 0; k < 9; k++) {
+    var y = 248 + k * 11.5;
+    var dy = (y - cy) / ry;
+    if (Math.abs(dy) > 0.9) continue;
+    var hw = rx * Math.sqrt(1 - dy * dy) * 0.9;
+    var d = [], n = 7;
+    for (i = 0; i <= n; i++) {
+      var t = i / n;
+      d.push([cx - hw + 2 * hw * t, y + Math.sin(t * Math.PI) * 7]);
+    }
+    out.push(smoothPath(d, false));
+  }
+  return out;
 }
 
 var BRAIN_OUTLINE = brainOutlinePath();
 var BRAIN_GYRI = brainGyriPaths();
+var BRAIN_FOLIA = brainFoliaPaths();
 
 /* 几条大沟：这三条线比什么都重要 —— 它们才是「一眼认出是脑」的原因。
    中央沟分出额叶/顶叶，外侧裂分出颞叶，顶枕沟分出枕叶。 */
@@ -333,10 +380,10 @@ var BRAIN_SULCI = [
 var BRAIN_CAPS = [
   { id: 'lobe-frontal',    x: 240, y: 96,  t: '额叶',   s: '运动 · 计划 · 语言' },
   { id: 'lobe-parietal',   x: 400, y: 104, t: '顶叶',   s: '触觉 · 痛觉 · 空间' },
-  { id: 'lobe-temporal',   x: 250, y: 286, t: '颞叶',   s: '听觉 · 记忆' },
+  { id: 'lobe-temporal',   x: 238, y: 262, t: '颞叶',   s: '听觉 · 记忆' },
   { id: 'lobe-occipital',  x: 520, y: 168, t: '枕叶',   s: '视觉' },
-  { id: 'lobe-limbic',     x: 320, y: 178, t: '边缘叶', s: '情绪 · 记忆' },
-  { id: 'lobe-prefrontal', x: 104, y: 160, t: '前额叶', s: '自我 · 决策' },
+  { id: 'lobe-limbic',     x: 332, y: 186, t: '边缘叶', s: '情绪 · 记忆' },
+  { id: 'lobe-prefrontal', x: 122, y: 150, t: '前额叶', s: '自我 · 决策' },
 ];
 
 /* 大脑内部的绘制顺序（后画的盖住先画的） */
@@ -355,25 +402,43 @@ var brainUid = 0;
  */
 function brainSVG(o) {
   o = o || {};
-  var clip = 'brainclip' + (++brainUid);
+  var uid = ++brainUid;
+  var clip = 'brainclip' + uid;
+  var clipCb = 'braincb' + uid;
+  var grad = 'braingrad' + uid;   /* id 必须唯一：同页会先后存在两张脑图 */
   var s = '';
 
   /* 小脑与脑干先画：上半截随后被大脑盖住，只露出下半，位置才对 */
   s += '<path class="stem" id="lobe-cerebellum" d="' + BRAIN_CEREBELLUM + '"></path>';
-  s += '<path class="stria" d="M392,288 C434,280 482,292 512,310"></path>';
-  s += '<path class="stria" d="M388,314 C428,306 476,318 510,338"></path>';
-  s += '<path class="stria" d="M394,340 C424,334 458,342 484,356"></path>';
+  /* 小脑叶片裁在小脑轮廓里，保证一条都不会戳出去 */
+  s += '<g class="folia" clip-path="url(#' + clipCb + ')">' + BRAIN_FOLIA.map(function (d) {
+    return '<path d="' + d + '"></path>';
+  }).join('') + '</g>';
+  s += '<path class="stem-outline" d="' + BRAIN_CEREBELLUM + '"></path>';
   s += '<path class="stem" id="lobe-brainstem" d="' + BRAIN_BRAINSTEM + '"></path>';
+  s += '<path class="stem-outline" d="' + BRAIN_BRAINSTEM + '"></path>';
 
-  /* 大脑外轮廓：既当底色、又当所有脑叶的裁剪边界 */
-  s += '<defs><clipPath id="' + clip + '"><path d="' + BRAIN_OUTLINE + '"></path></clipPath></defs>';
-  s += '<path class="hull" d="' + BRAIN_OUTLINE + '"></path>';
+  /* 大脑：底色是一层柔和的体积渐变（左上亮、右下沉），
+     脑叶本身不填色，高亮时才上一层蓝 —— 顺序见下面 */
+  s += '<defs>' +
+         '<clipPath id="' + clip + '"><path d="' + BRAIN_OUTLINE + '"></path></clipPath>' +
+         '<clipPath id="' + clipCb + '"><path d="' + BRAIN_CEREBELLUM + '"></path></clipPath>' +
+         '<radialGradient id="' + grad + '" cx="34%" cy="26%" r="86%">' +
+           '<stop offset="0%" stop-color="#F6F1EA"/>' +
+           '<stop offset="58%" stop-color="#EDE5D9"/>' +
+           '<stop offset="100%" stop-color="#DCD0BF"/>' +
+         '</radialGradient>' +
+       '</defs>';
+  s += '<path class="hull" d="' + BRAIN_OUTLINE + '" fill="url(#' + grad + ')"></path>';
 
   s += '<g clip-path="url(#' + clip + ')">';
+  /* 脑叶是透明的、只负责接指针（CSS 里给了 pointer-events:all），
+     所以高亮时是给整块脑面上一层蓝，而不会盖掉下面的脑回 */
   BRAIN_ORDER.forEach(function (id) {
     s += '<path class="lobe" id="' + id + '" d="' + BRAIN_LOBES[id] + '"></path>';
   });
-  /* 脑沟纹理 */
+  /* 脑回画在脑叶之上：这样高亮的蓝色是「透过褶皱透出来的」，
+     而不是把褶皱整块盖住 —— 顺序反了就会变成一块塑料贴纸 */
   s += '<g class="gyri">' + BRAIN_GYRI.map(function (d) {
     return '<path d="' + d + '"></path>';
   }).join('') + '</g>';

@@ -33,9 +33,11 @@ PERCEPTION.css('scene-stratton', `
 #stratText{transform-origin:center;transition:transform .6s var(--ease-in-out);}
 #stratText.flip{transform:scaleY(-1);}
 
-/* 被翻的那个世界 */
+/* 被翻的那个世界。给得越大越有冲击力 —— 这一下是全场最「物理」的一刻，
+   缩成一个小方块就只剩示意图了。SVG 的 viewBox 是 240×110，比例别改。 */
 #stratWorld{
-  width:42vw;height:19.2vw;min-width:320px;min-height:146px;
+  width:min(64vw, 118vh);height:auto;aspect-ratio:240/110;
+  min-width:320px;
   border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-md);
 }
 #stratWorld svg{display:block;width:100%;height:100%;}

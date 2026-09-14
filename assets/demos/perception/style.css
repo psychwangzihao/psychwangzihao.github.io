@@ -202,6 +202,9 @@ html,body{
 /* 1.9.1 卡片 */
 .card{
   background:var(--bg-card);
+  /* 一条极细的边：投影仪对比度一差，柔和阴影就整个消失，
+     白卡片糊在白背景上会看不出边界。有这条边就还立得住。 */
+  border:1px solid rgba(26,26,26,.07);
   border-radius:var(--radius-lg);
   box-shadow:var(--shadow-md);
   padding:var(--space-md);
@@ -274,10 +277,12 @@ html,body{
 .ico.lg{width:3vw;height:3vw;min-width:34px;min-height:34px;}
 .ico.xl{width:6vw;height:6vw;min-width:56px;min-height:56px;}
 
-/* 收束句 */
+/* 收束句：比副标题再大一档 —— 这些句子是全场的「结论」，
+   要从后排一眼抓住，不该和旁边的说明文字一个分量 */
 .takeaway{
-  font-size:var(--fs-subtitle);font-weight:var(--fw-bold);
-  color:var(--text-primary);text-align:center;line-height:1.5;
+  font-size:clamp(21px,2.9vw,56px);font-weight:var(--fw-bold);
+  color:var(--text-primary);text-align:center;line-height:1.45;
+  letter-spacing:.01em;
 }
 .scene.dark .takeaway{color:var(--text-inverse);}
 
