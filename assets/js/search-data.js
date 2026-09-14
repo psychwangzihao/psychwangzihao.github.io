@@ -61,7 +61,7 @@ ninja.data = [{
           section: "News",},{id: "news-volunteered-at-the-sino-european-international-conference-on-human-cognition-and-artificial-intelligence-aug-31-sep-4-2026",
           title: 'Volunteered at the Sino-European International Conference on Human Cognition and Artificial Intelligence (Aug...',
           description: "",
-          section: "News",},{id: "news-gave-an-interactive-talk-connecting-the-dots-to-the-incoming-cohort-of-the-department-of-psychology-zhejiang-university-an-interactive-visual-journey-across-interdisciplinary-science-the-2050-gathering-studying-abroad-and-consciousness-research",
+          section: "News",},{id: "news-gave-an-interactive-talk-connecting-the-dots-to-the-incoming-cohort-of-the-department-of-psychology-zhejiang-university-an-interactive-visual-journey-across-interdisciplinary-science-the-2050-gathering-studying-abroad-and-consciousness-research-it-was-also-my-20th-birthday",
           title: 'Gave an interactive talk, Connecting the Dots, to the incoming cohort of the...',
           description: "",
           section: "News",},{id: "news-gave-a-psychology-science-outreach-talk-at-yuqian-high-school-lin-an-hangzhou-bringing-mind-and-brain-science-to-high-school-students",
