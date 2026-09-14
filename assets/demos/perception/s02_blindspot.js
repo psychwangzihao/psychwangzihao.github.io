@@ -99,7 +99,7 @@ PERCEPTION.scene({
             <span>找不到就调这个</span>
           </div>
 
-          <div id="bsWarn" class="anim fade" style="--d:.8s">不要偷看，不要眨眼 · 按 → 进入计时</div>
+          <div id="bsWarn" class="anim fade" style="--d:.8s">不要偷看，不要眨眼</div>
 
           <!-- 后排的同学离屏幕太远，这个实验在投影上做不出来。
                所以再给一条不靠屏幕的路：用自己的两根拇指。 -->
@@ -139,7 +139,7 @@ PERCEPTION.scene({
           </div>
 
           <div class="small faint anim fade" style="--d:.4s;margin-top:var(--space-sm)">
-            保持右眼盯住 <b>+</b>，慢慢前后移动 · <b>→</b> 提前揭晓
+            保持右眼盯住 <b>+</b>，慢慢前后移动
           </div>
         </div>
       `);

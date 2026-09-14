@@ -371,7 +371,7 @@ PERCEPTION.scene({
             '<div id="brainZoom">' + brainSVG({ idle: true }) + '</div>' +
           '</div>' +
         '</div>' +
-        '<div class="brain-hint small faint anim fade" style="--d:.8s">拖拽旋转，滚轮缩放</div>'
+        ''
       );
 
       var stage = ctx.q('#brainStage');
@@ -441,7 +441,7 @@ PERCEPTION.scene({
               }).join('') +
             '</div>' +
             '<div class="small faint" style="margin-top:var(--space-xs)">' +
-              '先点一个标签，再点你觉得它该在的地方<br>猜错也没关系 —— 我们一起来找' +
+              '' +
             '</div>' +
           '</div>' +
           '<div id="labBrainWrap" class="anim fade" style="--d:.2s">' +

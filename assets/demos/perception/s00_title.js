@@ -17,12 +17,6 @@ PERCEPTION.css('scene-title', `
 }
 #titleCard h1{margin-bottom:.6vw;}
 .title-sub{margin-top:.8vw;letter-spacing:.12em;}
-.title-hint{
-  position:absolute;bottom:9vh;left:0;right:0;text-align:center;
-  font-size:var(--fs-small);color:var(--text-tertiary);letter-spacing:.2em;
-  opacity:0;transition:opacity .8s var(--ease-out);
-}
-.title-hint.on{opacity:1;animation:softPulse 3.5s var(--ease-in-out) infinite;}
 .title-date{font-size:var(--fs-tiny);color:var(--text-tertiary);letter-spacing:.24em;margin-top:.6vw;}
 
 /* 开场那一屏的标题卡：门拉开时它已经在后面了，
@@ -45,7 +39,7 @@ PERCEPTION.scene({
 
     /* ---- 0.0 门关着：校徽 + 开始提示 ---- */
     function (ctx) {
-      ctx.set(DOOR.html({ hint: '点击校徽 · 开始上课' }));
+      ctx.set(DOOR.html({}));
     },
 
     /* ---- 0.1 门拉开，露出标题 ---- */
@@ -64,11 +58,6 @@ PERCEPTION.scene({
                   alt="浙江大学心理与行为科学系">
            </picture>
          </div>` +
-        /* 提示语必须是 .scene 的直接子元素：它用 position:absolute，
-           放进 #titleCard 里就会贴着卡片底部，和副标题叠在一起 */
-        `<div class="title-hint" id="titleHint">
-           按 <b>→</b> 继续 · 空格 / 点击任意处也可以
-         </div>` +
         DOOR.html({ open: false, hint: '' })
       );
 
@@ -78,7 +67,7 @@ PERCEPTION.scene({
 
       ctx.soon(function () { ctx.q('#titleCard').classList.add('on'); }, 60);
       DOOR.open(ctx, 260);
-      ctx.after(2600, function () { ctx.q('#titleHint').classList.add('on'); });
+
     },
 
   ],

@@ -1,5 +1,5 @@
 /* ============================================================
- * 场景 1：树倒悖论  (id: tree · 4 个状态)
+ * 场景 1：树倒悖论  (id: tree · 5 个状态)
  * 目的：制造认知冲突，引出「刺激 ≠ 知觉」。
  * ============================================================ */
 PERCEPTION.css('scene-tree', `
@@ -28,9 +28,50 @@ PERCEPTION.css('scene-tree', `
 .tri .ico{margin-right:.4vw;}
 `);
 
+/* ---------- 声波动画 ----------
+   原本想做「树倒下去」的动画，试完放弃了：剪影式的平涂树一旦横过来，
+   就是一个棒槌，怎么调都像草台。这里改成只演「声波」这一半 ——
+   一圈一圈荡开，没有任何具象物体，也就不会画虎不成。
+   而且这一屏的重点本来就是「波发生了，但没有人听到」，
+   树倒不倒其实是次要的。 */
+PERCEPTION.css('scene-tree-fall', `
+#fallStage{width:min(74vw,140vh);max-width:1400px;margin-bottom:var(--space-lg);}
+#fallStage svg{display:block;width:100%;height:auto;overflow:visible;}
+
+/* 一圈一圈荡开的声波。
+   fill-mode 用 forwards 而不是 both —— 用 both 的话，delay 期间
+   元素会先摆出 0% 的姿态（半透明的小圈），页面一进来就露馅。 */
+.fall-ring{
+  fill:none;stroke:var(--accent-orange);stroke-width:3;
+  opacity:0;transform-box:fill-box;transform-origin:center;
+  animation:fallRing 1.9s var(--ease-out) forwards;
+}
+#fallRing1{animation-delay:.25s;}
+#fallRing2{animation-delay:.75s;}
+#fallRing3{animation-delay:1.25s;}
+@keyframes fallRing{
+  0%{opacity:.9;transform:scale(.04);}
+  100%{opacity:0;transform:scale(1);}
+}
+`);
+
 /* 现场举手的票数。挂在 PERCEPTION 上而不是放进状态里：退回这一页时
    不该清零，而且第 11 幕会把同一组数字再拿出来对照一次。 */
 PERCEPTION.votes = { yes: 0, no: 0 };
+
+/* 一棵树：树干收分 + 团块树冠。根部在原点，往上长，
+   这样绕原点旋转就是绕根部倒。 */
+var FALL_TREE_BODY = (function () {
+  var d = '<path d="M-13,0 L-6,-150 L6,-150 L13,0 Z"/>' +
+          '<circle cx="0" cy="-214" r="56"/>';
+  var i, a;
+  for (i = 0; i < 7; i++) {                 /* 一圈小团，树冠边缘才不秃 */
+    a = (-90 + i * 360 / 7) * Math.PI / 180;
+    d += '<circle cx="' + (Math.cos(a) * 58).toFixed(0) +
+         '" cy="' + (-214 + Math.sin(a) * 58).toFixed(0) + '" r="36"/>';
+  }
+  return d;
+})();
 
 PERCEPTION.scene({
   id: 'tree',
@@ -68,7 +109,7 @@ PERCEPTION.scene({
           </div>
 
           <div id="voteHint" class="anim fade" style="--d:.8s">
-            举手示意，老师点按钮计数 · 按 <b>R</b> 清空 · 按 <b>→</b> 继续
+            举手示意
           </div>
         </div>
       `);
@@ -97,7 +138,39 @@ PERCEPTION.scene({
       });
     },
 
-    /* ---- 1.1 拆解：声波 ≠ 响 ---- */
+
+    /* ---- 1.1 树倒：先把「物理事件」演一遍 ---- */
+    function (ctx) {
+      ctx.set(`
+        <div class="stack gap-lg">
+          <div id="fallStage" class="anim fade" style="--d:0s">
+            <svg viewBox="0 0 640 380" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <!-- 只有一片很淡的林子剪影当背景，不画具体的那棵树 -->
+              <g opacity=".13" fill="#6E5741">
+                <g transform="translate(56,310) scale(.26)">${FALL_TREE_BODY}</g>
+                <g transform="translate(88,310) scale(.17)">${FALL_TREE_BODY}</g>
+                <g transform="translate(600,310) scale(.22)">${FALL_TREE_BODY}</g>
+              </g>
+
+              <!-- 地面 -->
+              <path d="M0,310 L640,310" stroke="#D8CFC2" stroke-width="3"/>
+
+              <!-- 声波：从一个点荡开。外层平移把圆心放到地面上，
+                   内层绕自身中心放大 -->
+              <g transform="translate(330,310)">
+                <circle class="fall-ring" id="fallRing1" r="250"/>
+                <circle class="fall-ring" id="fallRing2" r="250"/>
+                <circle class="fall-ring" id="fallRing3" r="250"/>
+              </g>
+            </svg>
+          </div>
+
+          <div class="takeaway anim fade" style="--d:2.3s">声波发生了。这一点是确定的。</div>
+        </div>
+      `);
+    },
+
+    /* ---- 1.2 拆解：声波 ≠ 响 ---- */
     function (ctx) {
       ctx.set(`
         <div class="row gap-xl wrap">
@@ -129,7 +202,7 @@ PERCEPTION.scene({
       ctx.after(900, function () { ctx.wordby('#treeTake', 60); });
     },
 
-    /* ---- 1.2 三连问：光 / 糖 / 损伤 ---- */
+    /* ---- 1.3 三连问：光 / 糖 / 损伤 ---- */
     function (ctx) {
       ctx.set(`
         <div class="stack gap-md" id="triWrap">
@@ -155,7 +228,7 @@ PERCEPTION.scene({
       `);
     },
 
-    /* ---- 1.3 过渡 ---- */
+    /* ---- 1.4 过渡 ---- */
     function (ctx) {
       ctx.set(`
         <h2 class="title center anim" style="--d:0s">那大脑是怎么做到的？</h2>

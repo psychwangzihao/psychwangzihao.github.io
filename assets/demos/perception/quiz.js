@@ -68,7 +68,7 @@ window.QUIZ = {
         }).join('') +
       '</div>' +
       '<div class="qz-note" id="qzNote">' + (o.note || '') + '</div>' +
-      '<div class="qz-hint" id="qzHint">点一个你觉得对的</div>' +
+      '<div class="qz-hint" id="qzHint"></div>' +
     '</div>';
   },
 
@@ -86,7 +86,7 @@ window.QUIZ = {
       var n = ctx.q('#qzNote');
       if (n) ctx.soon(function () { n.classList.add('on'); }, 220);
       var h = ctx.q('#qzHint');
-      if (h) h.textContent = '按 → 继续';
+      if (h) h.textContent = '';
     }
 
     ctx.each('.qz-card', function (card) {
