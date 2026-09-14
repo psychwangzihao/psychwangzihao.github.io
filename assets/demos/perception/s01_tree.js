@@ -2,6 +2,24 @@
  * 场景 1：树倒悖论  (id: tree · 6 个状态)
  * 目的：制造认知冲突，引出「刺激 ≠ 知觉」。
  * ============================================================ */
+PERCEPTION.css('scene-tree-hear', `
+#hearStage{width:min(84vw,150vh);max-width:1560px;}
+#hearStage svg{display:block;width:100%;height:auto;}
+
+/* 通路上的每一段：默认压暗，被点到时才亮起来 */
+.hp-st{opacity:.2;transition:opacity .55s var(--ease-out);}
+.hp-st.on{opacity:1;}
+.hp-st path{fill:none;stroke:var(--brain-ink);stroke-width:4.5;
+  stroke-linecap:round;stroke-linejoin:round;transition:stroke .55s var(--ease-out);}
+.hp-st text{fill:var(--text-secondary);font-family:var(--font-sans);
+  font-size:24px;font-weight:var(--fw-medium);}
+.hp-st.on path{stroke:var(--accent-blue);}
+.hp-st.on text{fill:var(--accent-blue);font-weight:var(--fw-bold);}
+/* 最后一段是大脑：它和前面七段不是一类东西，单独给个颜色 */
+#hpBrain.on path{stroke:var(--accent-purple);}
+#hpBrain.on text{fill:var(--accent-purple);}
+`);
+
 PERCEPTION.css('scene-tree', `
 #treeQ{max-width:74vw;}
 #voteWrap{margin-top:var(--space-md);width:46vw;min-width:380px;max-width:900px;}
@@ -25,165 +43,196 @@ PERCEPTION.css('scene-tree', `
 .tree-tri .ico{margin-right:.4vw;}
 `);
 
-/* ---------- 声波动画 ----------
-   原本想做「树倒下去」的动画，试完放弃了：剪影式的平涂树一旦横过来，
-   就是一个棒槌，怎么调都像草台。这里改成只演「声波」这一半 ——
-   一圈一圈荡开，没有任何具象物体，也就不会画虎不成。
-   而且这一屏的重点本来就是「波发生了，但没有人听到」，
-   树倒不倒其实是次要的。 */
-PERCEPTION.css('scene-tree-fall', `
-#fallStage{width:min(74vw,140vh);max-width:1400px;margin-bottom:var(--space-lg);}
-#fallStage svg{display:block;width:100%;height:auto;overflow:visible;}
-
-/* 一圈一圈荡开的声波。
-   fill-mode 用 forwards 而不是 both —— 用 both 的话，delay 期间
-   元素会先摆出 0% 的姿态（半透明的小圈），页面一进来就露馅。 */
-.fall-ring{
-  fill:none;stroke:var(--accent-orange);stroke-width:3;
-  opacity:0;transform-box:fill-box;transform-origin:center;
-  animation:fallRing 1.9s var(--ease-out) forwards;
-}
-#fallRing1{animation-delay:.25s;}
-#fallRing2{animation-delay:.75s;}
-#fallRing3{animation-delay:1.25s;}
-@keyframes fallRing{
-  0%{opacity:.9;transform:scale(.04);}
-  100%{opacity:0;transform:scale(1);}
-}
-`);
-
-/* 现场举手的票数。挂在 PERCEPTION 上而不是放进状态里：退回这一页时
-   不该清零，而且第 11 幕会把同一组数字再拿出来对照一次。 */
+/* 现场举手的票数。挂在 PERCEPTION 上而不是放进状态里：开场要投两次，
+   最后第 11 幕回扣时还要用它。 */
 PERCEPTION.votes = { yes: 0, no: 0 };
 
-/* 一棵树：树干收分 + 团块树冠。根部在原点，往上长，
-   这样绕原点旋转就是绕根部倒。 */
-var FALL_TREE_BODY = (function () {
-  var d = '<path d="M-13,0 L-6,-150 L6,-150 L13,0 Z"/>' +
-          '<circle cx="0" cy="-214" r="56"/>';
-  var i, a;
-  for (i = 0; i < 7; i++) {                 /* 一圈小团，树冠边缘才不秃 */
-    a = (-90 + i * 360 / 7) * Math.PI / 180;
-    d += '<circle cx="' + (Math.cos(a) * 58).toFixed(0) +
-         '" cy="' + (-214 + Math.sin(a) * 58).toFixed(0) + '" r="36"/>';
+/* ---------- 声音的通路 ----------
+   声波 → 耳廓 → 耳道 → 鼓膜 → 听小骨 → 耳蜗 → 听神经 → 大脑
+   画成「流程图」而不是解剖图：这一屏要讲的是路径，不是耳朵长什么样。
+   终点落在大脑上，正好接后面那一幕。 */
+function hearingSpiral(cx, cy, r0, r1, turns, steps) {
+  var d = '', i, t, ang, r, x, y;
+  for (i = 0; i <= steps; i++) {
+    t = i / steps;
+    ang = t * turns * Math.PI * 2;
+    r = r0 + (r1 - r0) * t;
+    x = cx + Math.cos(ang) * r;
+    y = cy + Math.sin(ang) * r;
+    d += (i ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1);
   }
   return d;
-})();
+}
+
+function hearingPathSVG() {
+  return `
+  <svg viewBox="0 0 980 320" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <g class="hp-st" id="hpWave">
+      <path d="M34,132 Q62,165 34,198"/>
+      <path d="M62,110 Q104,165 62,220"/>
+      <path d="M90,88 Q146,165 90,242"/>
+      <text x="72" y="292" text-anchor="middle">声波</text>
+    </g>
+    <g class="hp-st" id="hpPinna">
+      <path d="M216,78 C168,88 158,152 172,206 C182,244 208,256 226,244"/>
+      <path d="M210,110 C186,120 182,162 192,198"/>
+      <text x="196" y="292" text-anchor="middle">耳廓</text>
+    </g>
+    <g class="hp-st" id="hpCanal">
+      <path d="M224,126 L326,142"/>
+      <path d="M230,208 L326,190"/>
+      <text x="272" y="292" text-anchor="middle">耳道</text>
+    </g>
+    <g class="hp-st" id="hpDrum">
+      <path d="M334,136 C346,158 346,176 334,198"/>
+      <text x="338" y="292" text-anchor="middle">鼓膜</text>
+    </g>
+    <g class="hp-st" id="hpBones">
+      <path d="M356,148 L378,138 L386,166 Z"/>
+      <path d="M390,140 L412,152 L400,178 Z"/>
+      <path d="M418,148 L440,162 L424,184 Z"/>
+      <text x="412" y="292" text-anchor="middle">听小骨</text>
+    </g>
+    <g class="hp-st" id="hpCochlea">
+      <path d="${hearingSpiral(500, 166, 7, 54, 2.4, 90)}"/>
+      <text x="504" y="292" text-anchor="middle">耳蜗</text>
+    </g>
+    <g class="hp-st" id="hpNerve">
+      <path d="M560,150 C600,142 630,124 664,112"/>
+      <path d="M560,166 C600,160 630,144 664,134"/>
+      <path d="M560,182 C600,178 630,164 664,156"/>
+      <text x="620" y="292" text-anchor="middle">听神经</text>
+    </g>
+    <g class="hp-st" id="hpBrain">
+      <path d="M700,168 C696,126 726,100 772,96 C822,92 866,118 878,150
+               C890,180 874,204 840,212 C806,220 760,218 726,206
+               C706,198 698,186 700,168 Z"/>
+      <path d="M726,140 C744,128 764,138 776,126"/>
+      <path d="M790,124 C810,114 830,124 844,114"/>
+      <path d="M714,182 C734,172 754,182 770,172"/>
+      <path d="M798,176 C818,168 838,176 852,168"/>
+      <text x="790" y="292" text-anchor="middle">大脑</text>
+    </g>
+  </svg>`;
+}
+
+/* 投票面板。第 1.1 和第 1.3 两幕都用它 —— 两次统计长得一样，
+   只有上面那行小标签不同（第一次 / 第二次）。票数存在 PERCEPTION.votes 里，
+   两次共用一组数字，最后一次为准。 */
+function voteBoard(ctx, tag) {
+  var votes = PERCEPTION.votes;
+  ctx.set(`
+    <div class="stack gap-lg" style="width:100%">
+      <div class="body center anim fade" style="--d:0s;color:var(--text-secondary)">
+        ${tag}统计 —— 觉得「它会响」的，请举手。
+      </div>
+
+      <div id="voteWrap" class="stack gap-sm">
+        <div class="row gap-lg anim" style="--d:.3s">
+          <button class="btn primary" id="voteYes">会</button>
+          <button class="btn" id="voteNo">不会</button>
+        </div>
+
+        <div class="bars anim fade" id="bars" style="--d:.5s;opacity:0">
+          <div class="bar-row">
+            <span class="bar-name">会</span>
+            <span class="bar-track"><span class="bar" id="barYes"></span></span>
+            <span class="bar-num c-blue" id="numYes">0</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-name">不会</span>
+            <span class="bar-track"><span class="bar alt" id="barNo"></span></span>
+            <span class="bar-num c-orange" id="numNo">0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  `);
+  var bars = ctx.q('#bars');
+  var barYes = ctx.q('#barYes'), barNo = ctx.q('#barNo');
+  var numYes = ctx.q('#numYes'), numNo = ctx.q('#numNo');
+  function paint() {
+    bars.style.opacity = 1;
+    var total = votes.yes + votes.no;
+    numYes.textContent = votes.yes;
+    numNo.textContent = votes.no;
+    if (!total) { barYes.style.width = '0'; barNo.style.width = '0'; return; }
+    barYes.style.width = (votes.yes / total * 100) + '%';
+    barNo.style.width = (votes.no / total * 100) + '%';
+  }
+  ctx.on('#voteYes', 'click', function () { votes.yes++; paint(); });
+  ctx.on('#voteNo', 'click', function () { votes.no++; paint(); });
+  ctx.on(window, 'keydown', function (e) {
+    if (e.isComposing) return;
+    if (e.key === 'r' || e.key === 'R') { votes.yes = 0; votes.no = 0; paint(); }
+  });
+  paint();
+}
 
 PERCEPTION.scene({
   id: 'tree',
   label: '树倒悖论',
   states: [
 
-    /* ---- 1.0 窗外的树：先给一个每个人都点头的事实 ---- */
+    /* ---- 1.0 两个提问。不预设答案，也不先给结论 ---- */
     function (ctx) {
       ctx.set(`
-        <div class="stack gap-lg" style="max-width:70vw">
-          <div class="hero center anim" style="--d:0s">
-            窗外那棵树倒下来了。
-          </div>
+        <div class="stack gap-xl" style="max-width:74vw">
+          <h1 class="title center anim" style="--d:0s">
+            如果现在，窗外有一棵树倒下来了 ——<br>你觉得会怎么样？
+          </h1>
 
-          <p class="step body center muted">
-            你听见了 —— 轰的一声。
-          </p>
+          <h1 class="step title center">
+            从科学上讲，这件事会不会因为你在不在场，而改变？
+          </h1>
 
-          <p class="step body center muted">
-            这件事，不会因为你在不在场而改变。
-          </p>
+          <h1 class="step hero center" style="color:var(--accent-blue)">
+            那么：在一片无人的森林里，<br>一棵树倒下了，它还会响吗？
+          </h1>
         </div>
       `);
       ctx.steps();
     },
 
-    /* ---- 1.1 无人的森林：把观察者拿走 ---- */
+    /* ---- 1.1 第一次统计 ---- */
     function (ctx) {
-      var votes = PERCEPTION.votes;
+      voteBoard(ctx, '第一次');
+    },
 
+    /* ---- 1.2 声音的通路：一条一条点亮，走到大脑为止 ---- */
+    function (ctx) {
       ctx.set(`
         <div class="stack gap-lg" style="width:100%">
-          <h1 class="hero center anim" id="treeQ" style="--d:0s;max-width:74vw">
-            那么 —— 森林里一棵树倒下了，<br>周围没有人。它会响吗？
-          </h1>
-
-          <div id="voteWrap" class="stack gap-sm">
-            <div class="row gap-lg anim" style="--d:.5s">
-              <button class="btn primary" id="voteYes">会</button>
-              <button class="btn" id="voteNo">不会</button>
-            </div>
-
-            <div class="bars anim fade" id="bars" style="--d:.7s;opacity:0">
-              <div class="bar-row">
-                <span class="bar-name">会</span>
-                <span class="bar-track"><span class="bar" id="barYes"></span></span>
-                <span class="bar-num c-blue" id="numYes">0</span>
-              </div>
-              <div class="bar-row">
-                <span class="bar-name">不会</span>
-                <span class="bar-track"><span class="bar alt" id="barNo"></span></span>
-                <span class="bar-num c-orange" id="numNo">0</span>
-              </div>
-            </div>
+          <div class="body center anim fade" style="--d:0s;color:var(--text-secondary)">
+            先看「响」是怎么发生的。
           </div>
+
+          <div id="hearStage" class="anim fade" style="--d:.2s">${hearingPathSVG()}</div>
+
+          <div class="step takeaway">没有耳朵，就没有「响」。</div>
         </div>
       `);
 
-      var bars = ctx.q('#bars');
-      var barYes = ctx.q('#barYes'), barNo = ctx.q('#barNo');
-      var numYes = ctx.q('#numYes'), numNo = ctx.q('#numNo');
-
-      /* 横条：宽度是相对轨道的百分比，比例一定是准的。
-         （原来是竖柱，高度的百分比相对的是「整列」——
-          连数字和标签都算在里面，所以怎么调都对不上。） */
-      function paint() {
-        bars.style.opacity = 1;
-        var total = votes.yes + votes.no;
-        numYes.textContent = votes.yes;
-        numNo.textContent = votes.no;
-        if (!total) { barYes.style.width = '0'; barNo.style.width = '0'; return; }
-        barYes.style.width = (votes.yes / total * 100) + '%';
-        barNo.style.width = (votes.no / total * 100) + '%';
-      }
-
-      ctx.on('#voteYes', 'click', function () { votes.yes++; paint(); });
-      ctx.on('#voteNo', 'click', function () { votes.no++; paint(); });
-      ctx.on(window, 'keydown', function (e) {
-        if (e.isComposing) return;
-        if (e.key === 'r' || e.key === 'R') { votes.yes = 0; votes.no = 0; paint(); }
+      /* 一段一段亮过去，像一道脉冲沿着通路走。只演一遍，不拦翻页 ——
+         讲者想在哪一段停下来讲都行。 */
+      var STAGES = ['hpWave', 'hpPinna', 'hpCanal', 'hpDrum',
+                    'hpBones', 'hpCochlea', 'hpNerve', 'hpBrain'];
+      STAGES.forEach(function (id, i) {
+        ctx.after(700 + i * 330, function () {
+          var el = ctx.q('#' + id);
+          if (el) el.classList.add('on');
+        });
       });
+
+      ctx.steps();   /* 收束句按一下才出 */
     },
 
-    /* ---- 1.2 声波：把「物理事件」演一遍 ---- */
+    /* ---- 1.3 第二次统计：这次才是准的 ---- */
     function (ctx) {
-      ctx.set(`
-        <div class="stack gap-lg">
-          <div id="fallStage" class="anim fade" style="--d:0s">
-            <svg viewBox="0 0 640 380" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <!-- 只有一片很淡的林子剪影当背景，不画具体的那棵树 -->
-              <g opacity=".13" fill="#6E5741">
-                <g transform="translate(56,310) scale(.26)">${FALL_TREE_BODY}</g>
-                <g transform="translate(88,310) scale(.17)">${FALL_TREE_BODY}</g>
-                <g transform="translate(600,310) scale(.22)">${FALL_TREE_BODY}</g>
-              </g>
-
-              <!-- 地面 -->
-              <path d="M0,310 L640,310" stroke="#D8CFC2" stroke-width="3"/>
-
-              <!-- 声波：从一个点荡开。外层平移把圆心放到地面上，
-                   内层绕自身中心放大 -->
-              <g transform="translate(330,310)">
-                <circle class="fall-ring" id="fallRing1" r="250"/>
-                <circle class="fall-ring" id="fallRing2" r="250"/>
-                <circle class="fall-ring" id="fallRing3" r="250"/>
-              </g>
-            </svg>
-          </div>
-
-          <div class="takeaway anim fade" style="--d:2.3s">声波发生了。这一点是确定的。</div>
-        </div>
-      `);
+      voteBoard(ctx, '第二次');
     },
 
-    /* ---- 1.3 拆解：声波 ≠ 响 ---- */
+    /* ---- 1.4 拆解：声波 ≠ 响 ---- */
     function (ctx) {
       ctx.set(`
         <div class="row gap-xl wrap">
@@ -208,7 +257,7 @@ PERCEPTION.scene({
           </div>
         </div>
 
-        <div class="takeaway anim fade" style="--d:.8s;margin-top:4vw">
+        <div class="takeaway" style="margin-top:4vw">
           <span class="wordby" id="treeTake">声波在森林里，响在大脑里。</span>
         </div>
 
@@ -218,10 +267,18 @@ PERCEPTION.scene({
           <span class="attr">David Eagleman, <i>Incognito</i></span>
         </div>
       `);
-      ctx.after(900, function () { ctx.wordby('#treeTake', 60); });
+
+      /* 逐字出现：**一进来就把文字拆成单个字**，再让外框一起淡入。
+         原来的写法是先整句出现、900ms 后再拆成逐字，于是会闪一下
+         （先看见整句 → 消失 → 再一个字一个字来）。 */
+      var el = ctx.q('#treeTake');
+      el.style.opacity = '0';
+      ctx.wordby(el, 70);
+      ctx.soon(function () { el.style.opacity = '1'; }, 60);
+      ctx.steps();
     },
 
-    /* ---- 1.4 三连问：光 / 糖 / 损伤 ---- */
+    /* ---- 1.5 三连问：光 / 糖 / 损伤 ---- */
     function (ctx) {
       ctx.set(`
         <div class="stack gap-md" id="triWrap">
@@ -247,7 +304,7 @@ PERCEPTION.scene({
       `);
     },
 
-    /* ---- 1.5 过渡 ---- */
+    /* ---- 1.6 过渡 ---- */
     function (ctx) {
       ctx.set(`
         <h2 class="title center anim" style="--d:0s">那大脑是怎么做到的？</h2>

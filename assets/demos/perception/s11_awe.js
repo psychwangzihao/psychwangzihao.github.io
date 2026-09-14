@@ -80,13 +80,19 @@ PERCEPTION.scene({
       `);
     },
 
-    /* ---- 11.1 答案是「不知道」 ---- */
+    /* ---- 11.1 答案是「不知道」 ----
+       开场投过两次票，这里要回扣。但**只有当「不会响」占多数时**
+       才能说「我们当时说：不会响」—— 不然就是把自己的话塞给全场。 */
     function (ctx) {
+      var v = PERCEPTION.votes || { yes: 0, no: 0 };
+      var OPENING = (v.no > v.yes)
+        ? '我们当时说：不会响。'
+        : '我们当时投出来的，是「会响」。';
       ctx.set(`
         <div class="aw-dark" data-dark>
           <div class="stack gap-lg" style="max-width:72vw">
-            <p class="body muted anim fade" style="--d:0s">我们当时说：不会响。</p>
-            <p class="body muted anim fade" style="--d:.35s">因为「响」不是声波，是体验 —— 而体验在大脑里。</p>
+            <p class="step body muted">${OPENING}</p>
+            <p class="step body muted">因为「响」不是声波，是体验 —— 而体验在大脑里。</p>
 
             <p class="small faint anim fade" style="--d:.9s;margin-top:var(--space-md)">
               但那道题真正的答案，其实是 ——
@@ -101,6 +107,7 @@ PERCEPTION.scene({
           </div>
         </div>
       `);
+      ctx.steps();
     },
 
     /* ---- 11.2 我们只能从自己推断 ---- */

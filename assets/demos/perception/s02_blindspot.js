@@ -6,9 +6,9 @@
 PERCEPTION.css('scene-blindspot', `
 #bsBoard{
   background:var(--bg-card);border-radius:var(--radius-xl);
-  box-shadow:var(--shadow-md);padding:var(--space-lg) var(--space-xl);
-  display:flex;align-items:center;justify-content:center;gap:180px;
-  position:relative;overflow:hidden;
+  box-shadow:var(--shadow-md);padding:var(--space-md);
+  display:flex;align-items:center;justify-content:center;gap:66vw;
+  width:100%;position:relative;overflow:hidden;
 }
 #bsFix{font-size:var(--fs-hero);font-weight:var(--fw-bold);line-height:1;user-select:none;}
 #bsDot{
@@ -95,13 +95,14 @@ PERCEPTION.scene({
 
           <div id="bsSlider" class="step anim fade" style="--d:.6s">
             <span>两点间距</span>
-            <input type="range" id="bsRange" min="80" max="520" value="260">
+            <input type="range" id="bsRange" min="8" max="66" value="66">
           </div>
         </div>
       `);
 
       var board = ctx.q('#bsBoard'), range = ctx.q('#bsRange');
-      function apply() { board.style.gap = range.value + 'px'; }
+      /* 单位是 vw：初始就在最远端（水平撑满整个屏幕），讲者再手动往小调 */
+      function apply() { board.style.gap = range.value + 'vw'; }
       ctx.on(range, 'input', apply);
       apply();
       ctx.steps();
