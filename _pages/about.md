@@ -24,7 +24,7 @@ latest_posts:
 
 I am a **B.Sc. candidate in Psychology** in the **Qiushi Honor's Program** at <a href='http://ckc.zju.edu.cn/ckcen/'>Chu Kochen Honors College, Zhejiang University</a> (expected June 2029).
 
-My research interests lie in **consciousness** (self-model; absence); **mental imagery** and **aphantasia**. I aim to understand the cognitive and neural mechanisms underlying conscious experience, using approaches from cognitive neuroscience.
+My primary research interest is **mental imagery** — in particular its absence in **aphantasia**. I am also drawn to broader questions about **consciousness** (self-model; absence). I aim to understand the cognitive and neural mechanisms underlying conscious experience, using approaches from cognitive neuroscience.
 
 I initiated <a href='https://consciousness-observers.github.io'>Consciousness Observers (CO-LAB)</a>, an interdisciplinary platform for consciousness research based at Zhejiang University.
 
