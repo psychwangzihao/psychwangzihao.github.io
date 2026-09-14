@@ -41,6 +41,8 @@ PERCEPTION.css('scene-stratton', `
   border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-md);
 }
 #stratWorld svg{display:block;width:100%;height:100%;}
+/* 收束那一屏文字多，世界收小当背景用 */
+.strat-sm #stratWorld{width:min(42vw,68vh);}
 
 /* 恶心感：左右各晃 5px，0.5s 一个来回，跑 6 趟 = 3s */
 @keyframes wobble{
@@ -185,16 +187,30 @@ PERCEPTION.scene({
     /* ---- 6.5 收束：不是硬件，是接线 ---- */
     function (ctx) {
       ctx.set(`
-        <div id="stratWrap" style="transform-origin:center;transition:transform .6s var(--ease-in-out)">
+        <div id="stratWrap" class="strat-sm" style="transform-origin:center;transition:transform .6s var(--ease-in-out)">
           <div id="stratWob" class="stack">
             <div id="stratWorld" class="anim fade" style="--d:.1s">${STRAT_WORLD_SVG}</div>
 
-            <div id="stratText" class="stack" style="margin-top:2vw">
+            <div id="stratText" class="stack" style="margin-top:1.4vw">
               <div class="title center anim fade" style="--d:.4s">
                 大脑不是固定硬件。它会根据输入重新接线。
               </div>
-              <div class="small center anim fade" style="--d:.55s;margin-top:1vw;color:var(--text-tertiary)">
-                2025 年的研究：左右颠倒，大脑同样能适应。
+
+              <!-- 2025 年的 fMRI 研究，把斯特拉顿的故事接到现在，
+                   而且时间尺度几乎重合（7–10 天 vs 第八天）—— 这是全场
+                   最有说服力的一处呼应。脑区是后顶叶，正好接回脑图那一幕。 -->
+              <div class="step body center" style="margin-top:var(--space-md);max-width:62vw;color:var(--text-secondary)">
+                2025 年，Brewer 等人让被试连续两周戴着左右颠倒的眼镜。
+              </div>
+
+              <div class="step body center" style="max-width:62vw;color:var(--text-secondary)">
+                <b class="c-blue">第七到十天</b>，他们适应了 —— 和斯特拉顿的「第八天」几乎重合。
+                与此同时，他们<b class="c-blue">后顶叶</b>的视觉地图也跟着变了。
+              </div>
+
+              <div class="step body center" style="max-width:62vw;color:var(--text-secondary)">
+                摘掉眼镜，一天之内恢复原样。可再戴回去 ——
+                <b class="c-blue">这次只要一天</b>。
               </div>
 
               <div class="quote step" style="max-width:52vw">
