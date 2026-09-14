@@ -37,10 +37,8 @@
   --error:#D95A5A;
   --info:#4A90D9;
 
-  /* 大脑示意图用的中性肤色（不在上面那套强调色里，单独列出） */
-  --brain-fill:#EDE5DA;
-  --brain-line:#C4B7A6;
-  --brain-deep:#E7DFD4;
+  /* 大脑线稿的墨色（Gray 版画风格，暖褐） */
+  --brain-ink:#6E5741;
 
   /* 1.3 字体系统 */
   --font-sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB",
