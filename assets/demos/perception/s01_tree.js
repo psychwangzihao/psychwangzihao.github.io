@@ -28,6 +28,10 @@ PERCEPTION.css('scene-tree', `
 .tri .ico{margin-right:.4vw;}
 `);
 
+/* 现场举手的票数。挂在 PERCEPTION 上而不是放进状态里：退回这一页时
+   不该清零，而且第 11 幕会把同一组数字再拿出来对照一次。 */
+PERCEPTION.votes = { yes: 0, no: 0 };
+
 PERCEPTION.scene({
   id: 'tree',
   label: '树倒悖论',
@@ -35,7 +39,9 @@ PERCEPTION.scene({
 
     /* ---- 1.0 问题 + 举手投票 ---- */
     function (ctx) {
-      var votes = { yes: 0, no: 0 };
+      /* 票数存在模块级，退回这一页时不会清零 —— 讲座里可能要来回对照。
+         要清空按 R。 */
+      var votes = PERCEPTION.votes;
 
       ctx.set(`
         <h1 class="hero center anim" id="treeQ" style="--d:0s">

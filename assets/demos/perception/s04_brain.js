@@ -16,18 +16,18 @@ PERCEPTION.css('scene-brain', `
   font-family:var(--font-sans);overflow:visible;
 }
 /* 整脑外轮廓：既是底色，也是所有脑叶的裁剪边界 */
-.brain .hull{fill:#EDE5DA;stroke:#C4B7A6;stroke-width:2.2;
+.brain .hull{fill:var(--brain-fill);stroke:var(--brain-line);stroke-width:2.2;
   stroke-linejoin:round;}
 /* 外轮廓描边单独再压一层，避免被脑叶填色吃掉 */
-.brain .outline{fill:none;stroke:#C4B7A6;stroke-width:2.2;
+.brain .outline{fill:none;stroke:var(--brain-line);stroke-width:2.2;
   stroke-linejoin:round;pointer-events:none;}
 /* 小脑 / 脑干：轮廓之外的两个独立结构（先画，上半被大脑盖住） */
-.brain .stem{fill:#E7DFD4;stroke:#C4B7A6;stroke-width:2.2;
+.brain .stem{fill:var(--brain-deep);stroke:var(--brain-line);stroke-width:2.2;
   stroke-linejoin:round;}
 /* 脑叶：不描边，各自的边界靠中央沟 / 外侧裂 / 顶枕沟的走势暗示；
    纯填色，形状由外轮廓裁出来，所以脑叶之间永远不会有空洞 */
 .brain .lobe{
-  fill:#EDE5DA;stroke:none;stroke-width:2;stroke-linejoin:round;
+  fill:var(--brain-fill);stroke:none;stroke-width:2;stroke-linejoin:round;
   transition:fill var(--dur-normal) var(--ease-out),
              stroke var(--dur-normal) var(--ease-out);
 }
@@ -44,7 +44,7 @@ PERCEPTION.css('scene-brain', `
   stroke-linecap:round;pointer-events:none;
 }
 /* 小脑横纹 */
-.brain .stria{fill:none;stroke:#C4B7A6;stroke-width:1.7;
+.brain .stria{fill:none;stroke:var(--brain-line);stroke-width:1.7;
   stroke-linecap:round;pointer-events:none;}
 
 /* 脑叶说明文字：默认隐藏，高亮时淡入 */
@@ -386,7 +386,7 @@ function brainSVG(o) {
   /* 轮廓描边压在最上层，避免被脑叶的填色吃掉 */
   s += '<path class="outline" d="' + BRAIN_OUTLINE + '"></path>';
 
-  /* 手区（中央前回附近的「手结节」，4.2 幻肢痛用） */
+  /* 手区（中央沟后缘的感觉手区；幻肢痛讲的正是这里的重映射） */
   s += '<circle class="spot" cx="344" cy="116" r="24"></circle>';
   s += '<text class="spot-cap" x="344" y="80" text-anchor="middle">手区</text>';
 

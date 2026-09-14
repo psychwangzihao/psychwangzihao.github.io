@@ -18,7 +18,9 @@ PERCEPTION.css('scene-blindspot', `
 #bsDot.blink{animation:softPulse 2s var(--ease-in-out) infinite;}
 
 #bsSteps{display:flex;gap:var(--space-md);margin-top:var(--space-lg);}
-#bsSteps .card{width:15vw;min-width:150px;text-align:center;}
+/* 字号必须给：不给就退回浏览器默认的 16px，投影到后排根本看不清 */
+#bsSteps .card{width:15vw;min-width:150px;text-align:center;
+               font-size:var(--fs-small);line-height:1.5;}
 #bsWarn{margin-top:var(--space-sm);font-size:var(--fs-tiny);color:var(--text-tertiary);letter-spacing:.1em;}
 
 #bsSlider{margin-top:var(--space-md);display:flex;align-items:center;gap:var(--space-sm);

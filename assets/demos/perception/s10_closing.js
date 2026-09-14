@@ -45,7 +45,7 @@ PERCEPTION.scene({
     /* ---- 10.0 回归：四个场景的回声，一次全出 ---- */
     function (ctx) {
       ctx.set(`
-        <div class="cl-dark">
+        <div class="cl-dark" data-dark>
           <div class="stack gap-sm cl-rows">
             <div class="subtitle anim fade" style="--d:0s">声波在森林里，响在大脑里。</div>
             <div class="subtitle anim fade" style="--d:.4s">波长在宇宙里，红在大脑里。</div>
@@ -59,7 +59,7 @@ PERCEPTION.scene({
     /* ---- 10.1 核心：一句话收束 ---- */
     function (ctx) {
       ctx.set(`
-        <div class="cl-dark">
+        <div class="cl-dark" data-dark>
           <div class="stack gap-md cl-rows">
             <div class="title bold center anim fade" style="--d:0s">
               感觉不在眼睛、耳朵、皮肤里，而在大脑里。
@@ -78,7 +78,7 @@ PERCEPTION.scene({
     /* ---- 10.2 不是虚幻：先破可能的误解 ---- */
     function (ctx) {
       ctx.set(`
-        <div class="cl-dark">
+        <div class="cl-dark" data-dark>
           <div class="stack gap-sm cl-rows">
             <div class="subtitle anim fade" style="--d:0s">这不是说世界是假的。</div>
             <div class="subtitle anim fade" style="--d:.4s">而是说，我们接触世界，必须通过大脑的翻译。</div>

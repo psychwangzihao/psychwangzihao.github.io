@@ -37,6 +37,11 @@
   --error:#D95A5A;
   --info:#4A90D9;
 
+  /* 大脑示意图用的中性肤色（不在上面那套强调色里，单独列出） */
+  --brain-fill:#EDE5DA;
+  --brain-line:#C4B7A6;
+  --brain-deep:#E7DFD4;
+
   /* 1.3 字体系统 */
   --font-sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB",
               "Noto Sans SC","Source Han Sans SC","Microsoft YaHei",sans-serif;
@@ -311,8 +316,15 @@ html,body{
 #navbar.on{opacity:1;pointer-events:auto;}
 #dots{display:flex;align-items:center;gap:.7vw;padding:.6vw 1vw;
       background:rgba(255,255,255,.72);backdrop-filter:blur(10px);
-      border-radius:var(--radius-full);box-shadow:var(--shadow-sm);}
-.scene.dark ~ #navbar #dots{background:rgba(30,30,30,.6);}
+      border-radius:var(--radius-full);box-shadow:var(--shadow-sm);
+      transition:background var(--dur-normal) var(--ease-out);}
+/* 暗色场景（脑电）下换一套配色 —— core.js 会在 body 上打 .dark-scene。
+   注意不能用 `.scene.dark ~ #navbar`：两者不是兄弟节点，那个选择器永远不匹配。 */
+body.dark-scene #dots{background:rgba(38,38,38,.82);box-shadow:none;}
+body.dark-scene .dot{background:#6E6E6E;}
+body.dark-scene .dot:hover{background:#9A9A9A;}
+body.dark-scene .dot.done{background:#9A9A9A;}
+body.dark-scene #dots .lbl{color:#8A8A8A;}
 .dot{
   width:6px;height:6px;border-radius:50%;background:var(--text-tertiary);
   border:0;padding:0;cursor:pointer;transition:all var(--dur-fast) var(--ease-out);
@@ -320,7 +332,7 @@ html,body{
 .dot:hover{background:var(--text-secondary);transform:scale(1.3);}
 .dot.done{background:var(--text-secondary);}
 .dot.cur{width:10px;height:10px;background:var(--accent-blue);animation:breathe 3s ease-in-out infinite;}
-#dots .lbl{font-size:11px;color:var(--text-tertiary);margin-left:.5vw;
+#dots .lbl{font-size:13px;color:var(--text-tertiary);margin-left:.5vw;
            font-family:var(--font-mono);letter-spacing:.05em;}
 
 /* 4.5 黑屏层 */

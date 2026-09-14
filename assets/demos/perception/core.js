@@ -187,7 +187,6 @@
     var wrap = document.createElement('div');
     wrap.className = 'scene';
     if (scene.dark) wrap.classList.add('dark');
-    dark = !!scene.dark;
     curEl = wrap;
     stage.appendChild(wrap);
 
@@ -199,6 +198,12 @@
       console.error('[scene ' + scene.id + ' state ' + st + ']', err);
       wrap.innerHTML = '<div class="body c-error">场景出错：' + (err && err.message) + '</div>';
     }
+
+    /* 暗色判定放在建完 DOM 之后：除了场景级 scene.dark，
+       状态里只要有一个 [data-dark] 元素也算 —— 一个场景里
+       暗色和亮色状态混着来的时候（收束、回响），靠这个切导航配色。 */
+    dark = !!scene.dark || !!wrap.querySelector('[data-dark]');
+    syncDarkClass();
 
     dispose = function () {
       try { if (typeof ret === 'function') ret(); } catch (e) {}
@@ -219,6 +224,11 @@
 
     updateChrome();
     syncHash();
+  }
+
+  /* 暗色场景时给 body 打标，让底部导航圆点换成暗色配色 */
+  function syncDarkClass() {
+    document.body.classList.toggle('dark-scene', !!dark);
   }
 
   function updateChrome() {
