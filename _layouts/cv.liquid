@@ -263,6 +263,18 @@ layout: default
           </div>
         {% endif %}
 
+        <!-- Research Experience -->
+        {% if site.data.resume.research.size > 0 %}
+          <a class="anchor" id="research"></a>
+          <div class="card mt-3 p-3">
+            <h3 class="card-title font-weight-medium">Research Experience</h3>
+            <div>
+              {% assign entries = site.data.resume.research %}
+              {% include cv/experience.liquid %}
+            </div>
+          </div>
+        {% endif %}
+
         <!-- Awards -->
         {% if site.data.resume.awards.size > 0 %}
           <a class="anchor" id="awards"></a>
@@ -272,6 +284,39 @@ layout: default
               {% assign entries = site.data.resume.awards %}
               {% include cv/awards.liquid %}
             </div>
+          </div>
+        {% endif %}
+
+        <!-- Service & Leadership -->
+        {% if site.data.resume.service.size > 0 %}
+          <a class="anchor" id="service"></a>
+          <div class="card mt-3 p-3">
+            <h3 class="card-title font-weight-medium">Service &amp; Leadership</h3>
+            <ul class="card-text font-weight-light list-group list-group-flush">
+              {% for entry in site.data.resume.service %}
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-xs-2 col-sm-2 col-md-2 text-center date-column">
+                      <table class="table-cv">
+                        <tbody>
+                          <tr>
+                            <td>
+                              <span class="badge font-weight-bold danger-color-dark text-uppercase align-middle" style="min-width: 75px">{{ entry.date }}</span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="col-xs-10 col-sm-10 col-md-10 mt-2 mt-md-0">
+                      <h6 class="title font-weight-bold ml-1 ml-md-4">{{ entry.position }}</h6>
+                      {% if entry.organization %}
+                        <h6 class="ml-1 ml-md-4" style="font-size: 0.95rem">{{ entry.organization }}</h6>
+                      {% endif %}
+                    </div>
+                  </div>
+                </li>
+              {% endfor %}
+            </ul>
           </div>
         {% endif %}
 
