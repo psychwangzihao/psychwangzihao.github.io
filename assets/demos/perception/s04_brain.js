@@ -196,18 +196,23 @@ PERCEPTION.css('scene-brain', `
   display:flex;align-items:center;justify-content:center;
   gap:var(--space-2xl);width:100%;
 }
-#phFig{width:15vw;min-width:140px;flex:none;}
-#phFig svg{display:block;width:100%;height:auto;overflow:visible;}
-#phFig path,#phFig circle{
-  fill:none;stroke:var(--text-tertiary);stroke-width:2;
+#phFig{width:17vw;min-width:150px;flex:none;}
+#phFig svg{display:block;width:100%;height:auto;}
+/* 身体：和大脑同一套墨色，两件东西才像一套图 */
+#phFig .fig-body{
+  fill:none;stroke:var(--brain-ink);stroke-width:5.2;
   stroke-linecap:round;stroke-linejoin:round;
 }
-#phFig .dash{stroke-dasharray:6 6;}
-#phFig .cut{stroke:var(--accent-pink);stroke-width:2.5;stroke-dasharray:5 5;}
-#phFig .leader{stroke:var(--accent-pink);stroke-width:1.5;stroke-dasharray:2 4;}
+/* 幽灵手臂：被截掉的那条，用虚线留在原地 */
+#phFig .fig-ghost{
+  fill:none;stroke:var(--accent-pink);stroke-width:5;
+  stroke-linecap:round;stroke-dasharray:9 9;
+}
+#phFig .fig-cut{stroke:var(--accent-pink);stroke-width:4;stroke-linecap:round;}
+#phFig .fig-leader{stroke:var(--accent-pink);stroke-width:2;stroke-dasharray:3 5;}
 #phFig .fig-lab{
   fill:var(--accent-pink);stroke:none;
-  font-family:var(--font-sans);font-size:14px;font-weight:var(--fw-bold);
+  font-family:var(--font-sans);font-size:34px;font-weight:var(--fw-bold);
 }
 #phBrain{width:34vw;min-width:240px;flex:none;}
 #phBrain .brain{pointer-events:none;}
@@ -327,26 +332,30 @@ function brainSVG(o) {
 }
 
 
-/* 4.2 用的简笔人体：右臂虚线 + 截断线 */
-var PHANTOM_FIGURE =
-  '<svg viewBox="0 0 240 340" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
-    '<circle cx="100" cy="44" r="26"></circle>' +
-    '<path d="M100 70 L100 196"></path>' +
-    '<path d="M64 100 L136 100"></path>' +
-    /* 完好的那条手臂 */
-    '<path d="M64 100 L48 156 L46 206"></path>' +
-    /* 被截掉的那条：虚线轮廓 */
-    '<path class="dash" d="M136 100 L152 150"></path>' +
-    '<path class="dash" d="M152 150 L158 200 L156 228"></path>' +
-    /* 截断线 + 引出线 + 标注 */
-    '<path class="cut" d="M138 148 L166 142"></path>' +
-    '<path class="leader" d="M170 140 L182 126"></path>' +
-    '<text class="fig-lab" x="186" y="122">截肢</text>' +
-    /* 骨盆与双腿 */
-    '<path d="M84 196 L116 196"></path>' +
-    '<path d="M84 196 L78 266 L76 322"></path>' +
-    '<path d="M116 196 L122 266 L124 322"></path>' +
+/* 4.2 用的幻肢图：NASA 先驱者号人像（公有领域），腰部以上。
+   抬起的那条手臂在下层被裁掉、再用虚线描一遍 —— 这就是幻肢本身。
+   几何来自 figure-art.js，一点没改。 */
+function phantomFigureSVG() {
+  var c = FIGURE_ARM_CUT;
+  var cut = '<rect x="' + c.x + '" y="' + c.y + '" width="' + c.w + '" height="' + c.h + '"/>';
+  return '<svg viewBox="' + FIGURE_VIEWBOX + '" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+    '<defs>' +
+      '<clipPath id="figArm">' + cut + '</clipPath>' +
+      '<mask id="figCut">' +
+        '<rect x="-40" y="-40" width="640" height="1420" fill="#fff"/>' +
+        '<rect x="' + c.x + '" y="' + c.y + '" width="' + c.w + '" height="' + c.h + '" fill="#000"/>' +
+      '</mask>' +
+    '</defs>' +
+    '<path class="fig-body" d="' + FIGURE_BODY + '" mask="url(#figCut)"/>' +
+    '<path class="fig-ghost" d="' + FIGURE_BODY + '" clip-path="url(#figArm)"/>' +
+    FIGURE_EYES.map(function (d) { return '<path class="fig-body" d="' + d + '"/>'; }).join('') +
+    /* 截断处 + 标注 */
+    '<path class="fig-cut" d="M132,392 L186,436"/>' +
+    '<path class="fig-leader" d="M182,430 L232,478"/>' +
+    '<text class="fig-lab" x="240" y="500">截肢</text>' +
   '</svg>';
+}
+
 
 /* 本场景在 PERCEPTION.scenes 里的下标（4.1 全部放好后要自动跳到 4.2） */
 function brainSceneIndex() {
@@ -607,7 +616,7 @@ PERCEPTION.scene({
     function (ctx) {
       ctx.set(
         '<div id="phWrap">' +
-          '<div id="phFig" class="anim fade" style="--d:.1s">' + PHANTOM_FIGURE + '</div>' +
+          '<div id="phFig" class="anim fade" style="--d:.1s">' + phantomFigureSVG() + '</div>' +
           '<div id="phBrain" class="anim fade" style="--d:.3s">' +
             brainSVG({ cls: 'brain-static' }) +
           '</div>' +
