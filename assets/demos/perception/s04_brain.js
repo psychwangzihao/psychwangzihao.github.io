@@ -33,18 +33,25 @@ PERCEPTION.css('scene-brain', `
 }
 .brain .lobe.on{fill:var(--accent-blue-light);}
 .brain .lobe.err{fill:var(--error);fill-opacity:.55;}
-/* 脑回：流线，细而密，比大沟淡一档 —— 它是「质感」不是「结构」 */
+/* 脑回：厚沟 + 受光的那面墙。
+   只画深线的话它永远是一张「画了线的平面」；加一道亮边，褶皱才有厚度。 */
 .brain .gyri{
-  fill:none;stroke:rgba(122,100,78,.34);stroke-width:1.5;
+  fill:none;stroke:rgba(139,110,84,.52);stroke-width:5.2;
   stroke-linecap:round;stroke-linejoin:round;pointer-events:none;
 }
-/* 三条大沟：中央沟 / 外侧裂 / 顶枕沟 —— 比脑回更重、更深 */
+.brain .gyri-lit{
+  fill:none;stroke:#FFFCF5;stroke-width:6.2;stroke-opacity:.8;
+  stroke-linecap:round;stroke-linejoin:round;pointer-events:none;
+}
+/* 三条大沟：中央沟 / 外侧裂 / 顶枕沟 —— 比脑回更宽、更深，是「结构」 */
 .brain .sulcus{
-  fill:none;stroke:rgba(100,78,58,.58);stroke-width:3;
+  fill:none;stroke:rgba(120,94,68,.62);stroke-width:3.4;
   stroke-linecap:round;pointer-events:none;
 }
-/* 小脑叶片 */
-.brain .folia{fill:none;stroke:rgba(122,100,78,.32);stroke-width:1.5;
+/* 小脑叶片：和大脑同一套画法 */
+.brain .folia{fill:none;stroke:rgba(139,110,84,.5);stroke-width:4.4;
+  stroke-linecap:round;pointer-events:none;}
+.brain .folia-lit{fill:none;stroke:#FFFCF5;stroke-width:5.6;stroke-opacity:.9;
   stroke-linecap:round;pointer-events:none;}
 
 /* 脑叶说明文字：默认隐藏，高亮时淡入。
@@ -289,25 +296,39 @@ var BRAIN_LOBES = {
     'C248,148 204,192 214,262 C218,278 182,280 178,262 Z',
 };
 
-/* 脑回：用「流线」画，不要用一排行波。
-   行波永远是一道道等宽的平行线，看起来像等高线 / 木纹。
-   做法：定义一个方向场，再从很多起点沿场走线 —— 流线不相交、
-   会一起拐弯、间距有疏有密，正好是脑回的样子。
+/* ============================================================
+ * 脑面纹理：一个平滑标量场的**等值线**
+ *
+ * 为什么不用「流线」（沿方向场积分）：
+ *   方向场频率低了，流线是一把顺毛、全都朝一个方向；
+ *   频率高了，流线会急拐弯，变成一团树根。
+ *   中间没有可用的一档，怎么调都不像脑。
+ *
+ * 等值线天生就是对的：
+ *   · 不会相交      → 不会出现交叉的假褶
+ *   · 会绕成迷宫    → 方向自然四处都有
+ *   · 间距由等值线的高差直接决定 → 褶皱宽度均匀
+ *     这正是 emoji 那个脑子看起来「像脑子」的原因。
+ * ============================================================ */
 
-   场是 8 个不同方向的正弦叠出来的（Gabor 噪声的思路）：
-   成分少了会退化成一个大漩涡，整张图就变成木纹带结疤；
-   成分多了方向才「一块一块地」变，像真的脑回那样打补丁。
-   流线还要短 —— 走太长就会把整个漩涡描出来。 */
-var GYRI_WAVES = [
-  [ 0.031,  0.014, 1.00, 0.0],
-  [-0.019,  0.028, 0.90, 1.7],
-  [ 0.041, -0.023, 0.75, 3.1],
-  [ 0.012,  0.037, 0.80, 4.6],
-  [-0.034, -0.016, 0.70, 0.9],
-  [ 0.026,  0.033, 0.62, 2.4],
-  [-0.043,  0.011, 0.55, 5.2],
-  [ 0.017, -0.039, 0.50, 3.8],
-];
+/* 6 个方向均匀铺开、权重接近的正弦 —— 场要「各向同性」，
+   等值线才会绕成迷宫，而不是一堆平行条纹。 */
+/* 18 条不同方向、不同波长的正弦叠在一起。
+   只有 6 条、波长又齐整的时候，等值线会围着几个峰绕成一圈圈同心环
+   —— 那就是「等高线图」，不是脑。分量多、波长散开之后，
+   峰和鞍点数量相当，等值线才会连成长长短短、到处拐弯的迷宫。
+   全部是确定值（不用随机数），每次打开长得都一样。 */
+var GYRI_WAVES = (function () {
+  var w = [], i, ang, f;
+  for (i = 0; i < 18; i++) {
+    ang = (i / 18) * Math.PI * 2 + 0.3;          /* 方向铺满一圈 */
+    f = 0.035 + 0.075 * ((i * 37) % 11) / 10;    /* 波长 42–180 之间散开 */
+    w.push([Math.cos(ang) * f, Math.sin(ang) * f,
+            0.55 + 0.45 * ((i * 53) % 7) / 6,    /* 权重也散开 */
+            ((i * 29) % 17) * 0.37]);            /* 相位打乱 */
+  }
+  return w;
+})();
 
 function gyriField(x, y) {
   var a = 0;
@@ -315,34 +336,72 @@ function gyriField(x, y) {
     var w = GYRI_WAVES[i];
     a += w[2] * Math.sin(x * w[0] + y * w[1] + w[3]);
   }
-  return a * 0.82;
+  return a;
 }
 
+/* marching squares：把标量场的等值线取出来。
+   每个小格子上求等值点，两两连成线段 —— 相邻格子共享端点，
+   所以这些小段首尾相接；圆头线帽会把接缝盖住，看起来就是一条连续的沟。 */
 function brainGyriPaths() {
-  var out = [], i, j;
-  for (j = 0; j < 14; j++) {
-    for (i = 0; i < 20; i++) {
-      /* 起点铺满包围盒 + 抖动，免得流线排成整齐的行、也避免秃斑 */
-      var x = 34 + i * 28 + (j % 2 ? 14 : 0) + Math.sin(i * 2.3 + j * 1.7) * 11;
-      var y = 10 + j * 23 + Math.sin(i * 1.3 + j * 2.9) * 12;
+  var X0 = 30, Y0 = 8, STEP = 6;
+  var NX = 92, NY = 56;              /* 覆盖 582 × 344，外圈交给 clipPath 裁 */
 
-      var pts = [[x, y]], px = x, py = y;
-      var steps = 9 + (i * 5 + j * 3) % 9;        /* 短：4–9 段，断口才不齐整 */
-      for (var t = 0; t < steps; t++) {
-        var a = gyriField(px, py);
-        px += Math.cos(a) * 4.5;
-        py += Math.sin(a) * 4.5;
-        if (px < 20 || px > 620 || py < 0 || py > 440) break;
-        pts.push([px, py]);
-      }
-      if (pts.length > 2) out.push(smoothPath(pts, false));
+  var F = [], i, j, v, min = 1e9, max = -1e9;
+  for (j = 0; j <= NY; j++) {
+    F[j] = [];
+    for (i = 0; i <= NX; i++) {
+      v = gyriField(X0 + i * STEP, Y0 + j * STEP);
+      F[j][i] = v;
+      if (v < min) min = v;
+      if (v > max) max = v;
     }
+  }
+
+  /* 褶皱间距别写死层数 —— 层数写死，一改波长就会要么糊成一片、
+     要么稀成等高线。这里用数值估计的梯度把间距直接钉在 ~11 个单位上。 */
+  var gsum = 0, gn = 0, gx, gy;
+  for (j = 1; j < NY; j++) {
+    for (i = 1; i < NX; i++) {
+      gx = (F[j][i + 1] - F[j][i - 1]) / (2 * STEP);
+      gy = (F[j + 1][i] - F[j - 1][i]) / (2 * STEP);
+      gsum += Math.sqrt(gx * gx + gy * gy);
+      gn++;
+    }
+  }
+  var gmean = gsum / Math.max(1, gn);
+  var interval = 11 * gmean;
+  var LEVELS = Math.max(3, Math.min(60, Math.round((max - min) / interval)));
+
+  var out = [];
+  for (var L = 0; L < LEVELS; L++) {
+    var lev = min + interval * (L + 0.5);
+    var d = '';
+    for (j = 0; j < NY; j++) {
+      for (i = 0; i < NX; i++) {
+        var a = F[j][i], b = F[j][i + 1], c = F[j + 1][i + 1], e = F[j + 1][i];
+        var x0 = X0 + i * STEP, y0 = Y0 + j * STEP;
+        var q = [];
+        if ((a - lev) * (b - lev) < 0) q.push([x0 + STEP * (lev - a) / (b - a), y0]);
+        if ((b - lev) * (c - lev) < 0) q.push([x0 + STEP, y0 + STEP * (lev - b) / (c - b)]);
+        if ((e - lev) * (c - lev) < 0) q.push([x0 + STEP * (lev - e) / (c - e), y0 + STEP]);
+        if ((a - lev) * (e - lev) < 0) q.push([x0, y0 + STEP * (lev - a) / (e - a)]);
+        if (q.length === 2) {
+          d += 'M' + q[0][0].toFixed(1) + ',' + q[0][1].toFixed(1) +
+               'L' + q[1][0].toFixed(1) + ',' + q[1][1].toFixed(1);
+        } else if (q.length === 4) {
+          d += 'M' + q[0][0].toFixed(1) + ',' + q[0][1].toFixed(1) +
+               'L' + q[1][0].toFixed(1) + ',' + q[1][1].toFixed(1) +
+               'M' + q[2][0].toFixed(1) + ',' + q[2][1].toFixed(1) +
+               'L' + q[3][0].toFixed(1) + ',' + q[3][1].toFixed(1);
+        }
+      }
+    }
+    if (d) out.push(d);
   }
   return out;
 }
 
-/* 小脑叶片：按小脑的椭圆轮廓算出一排横纹，保证不会戳出轮廓外 ——
-   之前那三条手写横纹有两条跑到小脑外面去了。 */
+/* 小脑叶片：按小脑的椭圆轮廓算出一排横纹，保证不会戳出轮廓外 */
 function brainFoliaPaths() {
   var cx = 478, cy = 290, rx = 92, ry = 58;
   var out = [], k, i;
@@ -361,11 +420,7 @@ function brainFoliaPaths() {
   return out;
 }
 
-var BRAIN_OUTLINE = brainOutlinePath();
-var BRAIN_GYRI = brainGyriPaths();
-var BRAIN_FOLIA = brainFoliaPaths();
-
-/* 几条大沟：这三条线比什么都重要 —— 它们才是「一眼认出是脑」的原因。
+/* 几条大沟：比脑回更宽更深，是「结构」不是「质感」。
    中央沟分出额叶/顶叶，外侧裂分出颞叶，顶枕沟分出枕叶。 */
 var BRAIN_SULCI = [
   /* 中央沟 */
@@ -392,6 +447,10 @@ var BRAIN_ORDER = [
   'lobe-frontal', 'lobe-prefrontal', 'lobe-limbic',
 ];
 
+var BRAIN_OUTLINE = brainOutlinePath();
+var BRAIN_GYRI = brainGyriPaths();
+var BRAIN_FOLIA = brainFoliaPaths();
+
 /* clipPath 的 id 需要唯一（同页可能先后存在两张脑图） */
 var brainUid = 0;
 
@@ -411,6 +470,9 @@ function brainSVG(o) {
   /* 小脑与脑干先画：上半截随后被大脑盖住，只露出下半，位置才对 */
   s += '<path class="stem" id="lobe-cerebellum" d="' + BRAIN_CEREBELLUM + '"></path>';
   /* 小脑叶片裁在小脑轮廓里，保证一条都不会戳出去 */
+  s += '<g class="folia-lit" clip-path="url(#' + clipCb + ')">' + BRAIN_FOLIA.map(function (d) {
+    return '<path d="' + d + '"></path>';
+  }).join('') + '</g>';
   s += '<g class="folia" clip-path="url(#' + clipCb + ')">' + BRAIN_FOLIA.map(function (d) {
     return '<path d="' + d + '"></path>';
   }).join('') + '</g>';
@@ -424,9 +486,9 @@ function brainSVG(o) {
          '<clipPath id="' + clip + '"><path d="' + BRAIN_OUTLINE + '"></path></clipPath>' +
          '<clipPath id="' + clipCb + '"><path d="' + BRAIN_CEREBELLUM + '"></path></clipPath>' +
          '<radialGradient id="' + grad + '" cx="34%" cy="26%" r="86%">' +
-           '<stop offset="0%" stop-color="#F6F1EA"/>' +
-           '<stop offset="58%" stop-color="#EDE5D9"/>' +
-           '<stop offset="100%" stop-color="#DCD0BF"/>' +
+           '<stop offset="0%" stop-color="#EDE2D3"/>' +
+           '<stop offset="58%" stop-color="#E2D5C2"/>' +
+           '<stop offset="100%" stop-color="#CDBBA2"/>' +
          '</radialGradient>' +
        '</defs>';
   s += '<path class="hull" d="' + BRAIN_OUTLINE + '" fill="url(#' + grad + ')"></path>';
@@ -437,11 +499,15 @@ function brainSVG(o) {
   BRAIN_ORDER.forEach(function (id) {
     s += '<path class="lobe" id="' + id + '" d="' + BRAIN_LOBES[id] + '"></path>';
   });
-  /* 脑回画在脑叶之上：这样高亮的蓝色是「透过褶皱透出来的」，
-     而不是把褶皱整块盖住 —— 顺序反了就会变成一块塑料贴纸 */
-  s += '<g class="gyri">' + BRAIN_GYRI.map(function (d) {
+  /* 脑回画两遍，做出「厚度」：
+     ① 先画一遍偏下右的亮色 —— 光从左上来，沟槽右下那面墙是受光的；
+     ② 再画一遍深色压在原位 —— 这是沟本身。
+     一个亮边加一道深槽，褶皱就立起来了。只画深线的话，永远是一张画了线的平面。 */
+  var gyriD = BRAIN_GYRI.map(function (d) {
     return '<path d="' + d + '"></path>';
-  }).join('') + '</g>';
+  }).join('');
+  s += '<g class="gyri-lit" transform="translate(1.7,2.1)">' + gyriD + '</g>';
+  s += '<g class="gyri">' + gyriD + '</g>';
   /* 三条大沟压在脑回之上，一眼就能认出这是脑 */
   s += '<g class="sulcus">' + BRAIN_SULCI.map(function (d) {
     return '<path d="' + d + '"></path>';
