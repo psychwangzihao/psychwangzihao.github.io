@@ -194,6 +194,19 @@ vs 人脑 1500 克 / 860 亿；「用小鼠研究抑郁症，就像用鱼缸模�
 | `stratton` 6.5 | The brain is a dynamic system… | Eagleman, *Livewired* |
 | `closing` 10.2 | If the human brain were so simple that we could understand it… | Emerson M. Pugh（约 1938，1977 年首次发表；Lyall Watson 1979 年传播开来） |
 
+**`stratton` 6.5 里那条 2025 年的研究**（由用户提供原文核对过）：
+
+> Brewer, Lin & Barton (2025). *Sustained Functional Plasticity can be Induced in
+> Human Parietal Cortex with Adaptation to Reversed Visual Input.*
+> UC Irvine. Research Square 预印本，2025-01-16。
+> DOI: 10.21203/rs.3.rs-5619751/v1
+
+要点（都写进了讲稿，不是我编的）：被试连续 **两周**戴左右颠倒的眼镜；
+**第 7–10 天**行为上适应，同时**后顶叶（PPC）**的视野表征从对侧转向同侧；
+摘掉后**一天内**恢复；再戴回去**一天就重新适应**。
+⚠️ 这是**预印本，尚未同行评议** —— 屏幕上只写「2025 年的研究」，
+如果要更严谨，讲的时候可以口头说明。
+
 ⚠️ 注意：**Pugh 那句常被误记成别人的**（Lyall Watson、Ken Hill 等都有被安上），
 上面这个归属是查过 Quote Investigator 的。
 
