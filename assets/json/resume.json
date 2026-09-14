@@ -66,12 +66,12 @@
   "service": [
     {
       "position": "Class Monitor",
-      "organization": "Psychology (Qiushi Science Class) 2501, Chu Kochen Honors College, Zhejiang University",
+      "organization": "Psychology (Qiushi Honor's Program) 2501, Chu Kochen Honors College, Zhejiang University",
       "date": "2026 – Present"
     },
     {
       "position": "Peer Mentor Group Leader",
-      "organization": "Qiushi Psychology Science Class & Brain-Machine Intelligence Innovation Class, Zhejiang University",
+      "organization": "Psychology (Qiushi Honor's Program) & Brain-Machine Intelligence Class, Zhejiang University",
       "date": "2026 – 2027"
     },
     {
@@ -83,15 +83,29 @@
   "skills": [
     {
       "name": "Neuroimaging Methods",
-      "keywords": ["fMRI", "EEG", "fNIRS", "eye-tracking"]
+      "keywords": [
+        "fMRI",
+        "EEG",
+        "fNIRS",
+        "eye-tracking"
+      ]
     },
     {
       "name": "Programming",
-      "keywords": ["Python", "C", "MATLAB", "SPM", "PsychoPy"]
+      "keywords": [
+        "Python",
+        "C",
+        "MATLAB",
+        "SPM",
+        "PsychoPy"
+      ]
     },
     {
       "name": "Languages",
-      "keywords": ["Mandarin (Native)", "English (IELTS 8.0)"]
+      "keywords": [
+        "Mandarin (Native)",
+        "English (IELTS 8.0)"
+      ]
     }
   ],
   "interests": [
