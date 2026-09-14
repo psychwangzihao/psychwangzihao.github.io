@@ -1,6 +1,7 @@
 /* ============================================================
- * 场景 10：收束与求索卡  (id: closing · 4 个状态)
- * 目的：哲学收束，留下问题，建立连接。
+ * 场景 10：收束  (id: closing · 3 个状态)
+ * 目的：哲学收束。原来第 4 态「求索卡」要印卡片 + 两个二维码，
+ *       已经去掉（收尾那句「有问题，来教室外面找我」挪到了第 12 幕）。
  *
  * 注：core.js 的 dark 是「场景级」的，而 10.0–10.2 要暗底、10.3 要亮底，
  *     所以本场景不开 dark，由前三个状态自己铺一层 .cl-dark 暗色底；
@@ -16,25 +17,6 @@ PERCEPTION.css('scene-closing', `
 }
 .cl-rows{max-width:70vw;text-align:center;}
 
-/* 10.3 求索卡 */
-.cl-card{width:50vw;min-width:320px;}
-/* 填空线：inline-block + 虚线下边框，坐在文字基线上；空的也看得见 */
-.cl-blank{
-  display:inline-block;vertical-align:baseline;
-  width:14vw;min-width:110px;min-height:1.1em;
-  border-bottom:2px dashed var(--border-subtle);
-}
-
-/* 二维码位：图还没到位时就是一个虚线占位框 */
-.qr-slot{
-  width:8vw;height:8vw;min-width:96px;min-height:96px;
-  background:var(--bg-secondary);border-radius:var(--radius-md);
-  border:1px dashed var(--border-subtle);
-  display:flex;align-items:center;justify-content:center;
-  overflow:hidden;
-}
-.qr-slot img{display:block;width:100%;height:100%;object-fit:contain;}
-.cl-qr-item{display:flex;flex-direction:column;align-items:center;gap:var(--space-xs);}
 `);
 
 PERCEPTION.scene({
@@ -84,39 +66,6 @@ PERCEPTION.scene({
             <div class="subtitle anim fade" style="--d:.4s">而是说，我们接触世界，必须通过大脑的翻译。</div>
             <div class="subtitle anim fade" style="--d:.8s">科学就是研究翻译规则，以及它什么时候会出错。</div>
           </div>
-        </div>
-      `);
-    },
-
-    /* ---- 10.3 求索卡：学生写在纸上，带走一个问题 ---- */
-    function (ctx) {
-      ctx.set(`
-        <div class="stack gap-md">
-          <div class="card cl-card anim" style="--d:0s">
-            <div class="body">我最想问大脑的一个问题：<span class="cl-blank"></span></div>
-          </div>
-
-          <div class="card cl-card anim" style="--d:.2s">
-            <div class="body">如果我要验证它，我会怎么设计一个小实验：<span class="cl-blank"></span></div>
-          </div>
-
-          <div class="row anim fade" style="--d:.4s">
-            <div class="cl-qr-item">
-              <div class="qr-slot">
-                <img src="./media/qr-ask.png" alt="" onerror="this.style.display='none'">
-              </div>
-              <div class="small muted">匿名提问</div>
-            </div>
-
-            <div class="cl-qr-item">
-              <div class="qr-slot">
-                <img src="./media/qr-learn.png" alt="" onerror="this.style.display='none'">
-              </div>
-              <div class="small muted">想继续学习</div>
-            </div>
-          </div>
-
-          <div class="subtitle anim fade" style="--d:.6s">有问题，来教室外面找我。</div>
         </div>
       `);
     },

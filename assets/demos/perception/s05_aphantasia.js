@@ -1,5 +1,5 @@
 /* ============================================================
- * 场景 5：心盲症与想象  (id aphantasia · 4 个状态)
+ * 场景 5：心盲症与想象  (id aphantasia · 5 个状态)
  * 目的：展示主观体验的个体差异。
  * 注：讲者王梓豪本人是心盲症（aphantasia，约 3–4% 的人）。
  * ============================================================ */
@@ -94,7 +94,26 @@ PERCEPTION.scene({
       });
     },
 
-    /* ---- 5.1 对比：别人的脑海 vs 我的脑海 ---- */
+    /* ---- 5.1 举手：把主观体验变成看得见的比例
+       礼堂里让大家闭眼，等于放空一半人；改成举手，你从台上看得见，
+       学生自己也看得见 —— 冲击力比一屏插画大得多。 ---- */
+    function (ctx) {
+      ctx.set(`
+        <div class="stack gap-lg">
+          <h2 class="title center anim" style="--d:0s">睁开眼睛。</h2>
+
+          <p class="subtitle center anim" style="--d:.35s;max-width:60vw">
+            刚才脑海里有<b class="c-blue">清晰画面</b>的，请举手。
+          </p>
+
+          <p class="body muted center anim fade" style="--d:1.4s;max-width:52vw">
+            先别放下 —— 环顾一下四周，记住这个比例。<br>待会儿要用到它。
+          </p>
+        </div>
+      `);
+    },
+
+    /* ---- 5.2 对比：别人的脑海 vs 我的脑海 ---- */
     function (ctx) {
       ctx.set(`
         <div id="aphPair">
@@ -142,7 +161,7 @@ PERCEPTION.scene({
       ctx.soon(function () { ctx.q('#flowerArt').classList.add('on'); }, 700);
     },
 
-    /* ---- 5.2 补充：三句话，三个我 ---- */
+    /* ---- 5.3 补充：三句话，三个我 ---- */
     function (ctx) {
       ctx.set(`
         <div id="aphLines">
@@ -164,7 +183,7 @@ PERCEPTION.scene({
       `);
     },
 
-    /* ---- 5.3 过渡 ---- */
+    /* ---- 5.4 过渡 ---- */
     function (ctx) {
       ctx.set(`
         <h2 class="title center anim fade" style="--d:0s">构建可以不同，也可以缺失。那如果一条通道彻底缺失呢？</h2>

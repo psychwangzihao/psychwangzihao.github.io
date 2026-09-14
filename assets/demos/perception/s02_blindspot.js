@@ -23,6 +23,14 @@ PERCEPTION.css('scene-blindspot', `
                font-size:var(--fs-small);line-height:1.5;}
 #bsWarn{margin-top:var(--space-sm);font-size:var(--fs-tiny);color:var(--text-tertiary);letter-spacing:.1em;}
 
+/* 不用屏幕的那条路（后排同学用） */
+#bsHands{
+  margin-top:var(--space-md);max-width:52vw;text-align:left;
+  display:flex;flex-direction:column;gap:var(--space-2xs);
+}
+#bsHands b{font-size:var(--fs-small);color:var(--accent-blue);}
+#bsHands span{font-size:var(--fs-small);color:var(--text-secondary);line-height:1.5;}
+
 #bsSlider{margin-top:var(--space-md);display:flex;align-items:center;gap:var(--space-sm);
           font-size:var(--fs-tiny);color:var(--text-tertiary);}
 #bsSlider input{width:22vw;min-width:180px;accent-color:var(--accent-blue);}
@@ -92,6 +100,14 @@ PERCEPTION.scene({
           </div>
 
           <div id="bsWarn" class="anim fade" style="--d:.8s">不要偷看，不要眨眼 · 按 → 进入计时</div>
+
+          <!-- 后排的同学离屏幕太远，这个实验在投影上做不出来。
+               所以再给一条不靠屏幕的路：用自己的两根拇指。 -->
+          <div class="card tight" id="bsHands">
+            <b>坐得远？用自己的两根拇指就行</b>
+            <span>竖起两手拇指，间距约一拳；闭左眼，右眼盯住左边那根，
+            慢慢把右边那根往右挪 —— 挪到某个位置，它的指尖就没了。</span>
+          </div>
         </div>
       `);
 
