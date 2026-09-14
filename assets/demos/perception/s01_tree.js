@@ -1,14 +1,11 @@
 /* ============================================================
- * 场景 1：树倒悖论  (id: tree · 5 个状态)
+ * 场景 1：树倒悖论  (id: tree · 6 个状态)
  * 目的：制造认知冲突，引出「刺激 ≠ 知觉」。
  * ============================================================ */
 PERCEPTION.css('scene-tree', `
-#treeQ{max-width:70vw;}
-#voteWrap{margin-top:3vw;width:60vw;max-width:900px;}
+#treeQ{max-width:74vw;}
+#voteWrap{margin-top:var(--space-md);width:46vw;min-width:380px;max-width:900px;}
 #bars{margin-top:var(--space-sm);}
-.bar-col .num{font-size:var(--fs-data);font-weight:var(--fw-bold);font-family:var(--font-mono);}
-.bar-col .lab{font-size:var(--fs-body);color:var(--text-secondary);}
-#voteHint{font-size:var(--fs-tiny);color:var(--text-tertiary);margin-top:var(--space-sm);}
 
 .cmp-card{width:30vw;min-width:230px;min-height:15vw;}
 .cmp-card ul{list-style:none;margin-top:var(--space-xs);}
@@ -19,13 +16,13 @@ PERCEPTION.css('scene-tree', `
 }
 
 #triWrap{width:60vw;max-width:1000px;}
-.tri{
+.tree-tri{
   display:flex;align-items:center;gap:var(--space-sm);
   width:100%;padding:var(--space-sm) var(--space-md);
   border-radius:var(--radius-lg);
 }
-.tri .txt{font-size:var(--fs-body);line-height:1.5;}
-.tri .ico{margin-right:.4vw;}
+.tree-tri .txt{font-size:var(--fs-body);line-height:1.5;}
+.tree-tri .ico{margin-right:.4vw;}
 `);
 
 /* ---------- 声波动画 ----------
@@ -78,38 +75,54 @@ PERCEPTION.scene({
   label: '树倒悖论',
   states: [
 
-    /* ---- 1.0 问题 + 举手投票 ---- */
+    /* ---- 1.0 窗外的树：先给一个每个人都点头的事实 ---- */
     function (ctx) {
-      /* 票数存在模块级，退回这一页时不会清零 —— 讲座里可能要来回对照。
-         要清空按 R。 */
+      ctx.set(`
+        <div class="stack gap-lg" style="max-width:70vw">
+          <div class="hero center anim" style="--d:0s">
+            窗外那棵树倒下来了。
+          </div>
+
+          <p class="step body center muted">
+            你听见了 —— 轰的一声。
+          </p>
+
+          <p class="step body center muted">
+            这件事，不会因为你在不在场而改变。
+          </p>
+        </div>
+      `);
+      ctx.steps();
+    },
+
+    /* ---- 1.1 无人的森林：把观察者拿走 ---- */
+    function (ctx) {
       var votes = PERCEPTION.votes;
 
       ctx.set(`
-        <h1 class="hero center anim" id="treeQ" style="--d:0s">
-          如果森林里一棵树倒下了，<br>周围没有人，它会响吗？
-        </h1>
+        <div class="stack gap-lg" style="width:100%">
+          <h1 class="hero center anim" id="treeQ" style="--d:0s;max-width:74vw">
+            那么 —— 森林里一棵树倒下了，<br>周围没有人。它会响吗？
+          </h1>
 
-        <div id="voteWrap" class="stack gap-sm">
-          <div class="row gap-lg anim" style="--d:.4s">
-            <button class="btn primary" id="voteYes">会</button>
-            <button class="btn" id="voteNo">不会</button>
-          </div>
-
-          <div class="bars anim fade" id="bars" style="--d:.6s;opacity:0">
-            <div class="bar-col">
-              <span class="num c-blue" id="numYes">0</span>
-              <div class="bar" id="barYes"></div>
-              <span class="lab">会</span>
+          <div id="voteWrap" class="stack gap-sm">
+            <div class="row gap-lg anim" style="--d:.5s">
+              <button class="btn primary" id="voteYes">会</button>
+              <button class="btn" id="voteNo">不会</button>
             </div>
-            <div class="bar-col">
-              <span class="num c-orange" id="numNo">0</span>
-              <div class="bar alt" id="barNo"></div>
-              <span class="lab">不会</span>
-            </div>
-          </div>
 
-          <div id="voteHint" class="anim fade" style="--d:.8s">
-            举手示意
+            <div class="bars anim fade" id="bars" style="--d:.7s;opacity:0">
+              <div class="bar-row">
+                <span class="bar-name">会</span>
+                <span class="bar-track"><span class="bar" id="barYes"></span></span>
+                <span class="bar-num c-blue" id="numYes">0</span>
+              </div>
+              <div class="bar-row">
+                <span class="bar-name">不会</span>
+                <span class="bar-track"><span class="bar alt" id="barNo"></span></span>
+                <span class="bar-num c-orange" id="numNo">0</span>
+              </div>
+            </div>
           </div>
         </div>
       `);
@@ -118,16 +131,17 @@ PERCEPTION.scene({
       var barYes = ctx.q('#barYes'), barNo = ctx.q('#barNo');
       var numYes = ctx.q('#numYes'), numNo = ctx.q('#numNo');
 
+      /* 横条：宽度是相对轨道的百分比，比例一定是准的。
+         （原来是竖柱，高度的百分比相对的是「整列」——
+          连数字和标签都算在里面，所以怎么调都对不上。） */
       function paint() {
         bars.style.opacity = 1;
-        var max = Math.max(votes.yes, votes.no, 1);
+        var total = votes.yes + votes.no;
         numYes.textContent = votes.yes;
         numNo.textContent = votes.no;
-        /* 高度：最高的柱子占满，其余按比例；都为 0 时留一点底 */
-        barYes.style.height = (votes.yes / max * 100) + '%';
-        barNo.style.height = (votes.no / max * 100) + '%';
-        barYes.style.minHeight = votes.yes ? '12px' : '0';
-        barNo.style.minHeight = votes.no ? '12px' : '0';
+        if (!total) { barYes.style.width = '0'; barNo.style.width = '0'; return; }
+        barYes.style.width = (votes.yes / total * 100) + '%';
+        barNo.style.width = (votes.no / total * 100) + '%';
       }
 
       ctx.on('#voteYes', 'click', function () { votes.yes++; paint(); });
@@ -138,8 +152,7 @@ PERCEPTION.scene({
       });
     },
 
-
-    /* ---- 1.1 树倒：先把「物理事件」演一遍 ---- */
+    /* ---- 1.2 声波：把「物理事件」演一遍 ---- */
     function (ctx) {
       ctx.set(`
         <div class="stack gap-lg">
@@ -170,7 +183,7 @@ PERCEPTION.scene({
       `);
     },
 
-    /* ---- 1.2 拆解：声波 ≠ 响 ---- */
+    /* ---- 1.3 拆解：声波 ≠ 响 ---- */
     function (ctx) {
       ctx.set(`
         <div class="row gap-xl wrap">
@@ -202,21 +215,21 @@ PERCEPTION.scene({
       ctx.after(900, function () { ctx.wordby('#treeTake', 60); });
     },
 
-    /* ---- 1.3 三连问：光 / 糖 / 损伤 ---- */
+    /* ---- 1.4 三连问：光 / 糖 / 损伤 ---- */
     function (ctx) {
       ctx.set(`
         <div class="stack gap-md" id="triWrap">
-          <div class="card tight tri anim" style="--d:0s;background:var(--accent-blue-light)">
+          <div class="card tight tree-tri anim" style="--d:0s;background:var(--accent-blue-light)">
             ${ICON.sun('ico lg c-blue')}
             <div class="txt">波长在宇宙里，<b class="c-blue">红</b>在大脑里</div>
           </div>
 
-          <div class="card tight tri anim" style="--d:.15s;background:var(--accent-green-light)">
+          <div class="card tight tree-tri anim" style="--d:.15s;background:var(--accent-green-light)">
             ${ICON.candy('ico lg c-green')}
             <div class="txt">分子在杯子里，<b class="c-green">甜</b>在大脑里</div>
           </div>
 
-          <div class="card tight tri anim" style="--d:.3s;background:var(--accent-pink-light)">
+          <div class="card tight tree-tri anim" style="--d:.3s;background:var(--accent-pink-light)">
             ${ICON.body('ico lg c-pink')}
             <div class="txt">组织在身体上，<b class="c-pink">痛</b>在大脑里</div>
           </div>
@@ -228,7 +241,7 @@ PERCEPTION.scene({
       `);
     },
 
-    /* ---- 1.4 过渡 ---- */
+    /* ---- 1.5 过渡 ---- */
     function (ctx) {
       ctx.set(`
         <h2 class="title center anim" style="--d:0s">那大脑是怎么做到的？</h2>

@@ -323,9 +323,6 @@ PERCEPTION.scene({
           <div class="title center bold anim fade" style="--d:0s">
             大脑不在乎信号从哪里来，只在乎有没有规律。
           </div>
-          <div class="subtitle center c-blue anim fade" style="--d:.3s">
-            感觉器官只是换能器。
-          </div>
         </div>
       `);
     },
@@ -333,11 +330,12 @@ PERCEPTION.scene({
     /* ---- 7.6 过渡 ---- */
     function (ctx) {
       ctx.set(`
-        <div class="stack gap-md">
+        <div class="stack gap-md" style="max-width:70vw">
           <div class="title center bold anim fade" style="--d:0s">既然能换，能不能直接写？</div>
-          <div class="title center bold anim fade" style="--d:.3s">但首先，我们怎么知道大脑在做什么？</div>
+          <div class="step title center bold">可是 —— 我们真的能相信自己的判断吗？</div>
         </div>
       `);
+      ctx.steps();
     },
 
   ],

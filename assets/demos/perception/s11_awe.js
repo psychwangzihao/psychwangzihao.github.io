@@ -152,9 +152,6 @@ PERCEPTION.scene({
               </div>
             </div>
 
-            <p class="small faint anim fade" style="--d:2.4s;margin-top:var(--space-md)">
-              这两个问题，我今天答不上来。
-            </p>
           </div>
         </div>
       `);

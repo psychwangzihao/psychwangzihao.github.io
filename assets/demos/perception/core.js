@@ -174,6 +174,26 @@
         kill.push(function () { nextGate = null; });
       },
 
+      /** 把一屏内容拆成「按一次出一行」。
+          带 .step 的元素默认隐藏（CSS 里 opacity:0），每按一次 → 露出下一行；
+          全部露完之后，再按才真的翻页。讲者因此完全掌握节奏 ——
+          想停多久停多久，也不会因为手快把还没讲的内容翻过去。
+          用法：ctx.set(`<p class="step">…</p><p class="step">…</p>`);
+                ctx.steps(); */
+      steps: function (sel) {
+        var items = ctx.qa(sel || '.step');
+        var i = 0;
+        function advance() {
+          if (i >= items.length) return false;
+          items[i].classList.add('on');
+          i++;
+          if (i < items.length) ctx.holdNext(advance);   /* 还有，继续拦 */
+          return true;
+        }
+        if (items.length) ctx.holdNext(advance);
+        return advance;
+      },
+
       dispose: function () { kill.forEach(function (f) { try { f(); } catch (e) {} }); kill.length = 0; },
     };
     return ctx;
@@ -319,7 +339,11 @@
       if (si > 0) goto(si - 1, 0); e.preventDefault();
     } else if (k === 'f' || k === 'F') {
       toggleFullscreen();
-    } else if (k === 'b' || k === 'B') {
+    } else if (k === 'x' || k === 'X') {
+      /* 黑屏原来绑在 B 上 —— 但不少翻页笔的「黑屏」键发的就是 b，
+         会和翻页打架。改到 X，并额外支持翻页笔常发的 '.'（黑屏键）。 */
+      toggleBlack();
+    } else if (k === '.') {
       toggleBlack();
     } else if (k === 'd' || k === 'D') {
       toggleDebug();

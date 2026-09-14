@@ -1,5 +1,5 @@
 /* ============================================================
- * 场景 4：大脑模型  (id: brain · 5 个状态)
+ * 场景 4：大脑  (id: brain · 4 个状态)
  * 目的：建立「感觉在大脑」的空间感。
  *
  * 说明：本 demo 无构建步骤、零外部依赖，也没有 .glb 模型，
@@ -635,40 +635,15 @@ PERCEPTION.scene({
       });
     },
 
-    /* ---- 4.3 平衡觉：让大家站起来一次
-       前面连着三幕都是坐着的「听讲」，这里插一个 20 秒的集体动作换换气。
-       顺带补上一个前面没提的感官 —— 平衡，而它住的地方就在这张图上。 ---- */
+    /* ---- 4.3 过渡：从「感觉在大脑」推到「线路能不能改」 ---- */
     function (ctx) {
-      ctx.set(`
-        <div class="stack gap-lg">
-          <h2 class="title center anim" style="--d:0s">先站起来，活动一下。</h2>
-
-          <p class="subtitle center anim" style="--d:.4s">
-            单脚站立，坚持 10 秒。别扶桌子。
-          </p>
-
-          <div id="balNum" class="hero mono c-green anim pop" style="--d:.7s">10</div>
-
-          <p class="body muted center anim fade" style="--d:2.6s;max-width:56vw">
-            你刚才靠的是<b class="c-green">平衡觉</b> —— 它也是一种感觉，<br>
-            而管它的是小脑。小脑一直画在刚才那张图里，只是没轮到它贴标签。
-          </p>
-        </div>
-      `);
-
-      var num = ctx.q('#balNum');
-      var left = 10;
-      ctx.every(1000, function () {
-        if (left <= 0) return;
-        left--;
-        num.textContent = left;
-        num.animate([{ transform: 'scale(1.2)' }, { transform: 'scale(1)' }],
-                    { duration: 200, easing: 'cubic-bezier(.16,1,.3,1)' });
-        if (left === 0) num.textContent = '好';
-      });
+      ctx.set(
+        '<h2 class="title bold center anim fade" style="--d:.1s;max-width:70vw">' +
+          '感觉在哪里，由大脑决定。<br>那这条线路，是天生固定、不能改的吗？' +
+        '</h2>'
+      );
     },
 
-    /* ---- 4.4 过渡 ---- */
     function (ctx) {
       ctx.set(
         '<h2 class="title bold center anim fade" style="--d:.1s">' +

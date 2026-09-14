@@ -284,18 +284,34 @@ html,body{
 }
 .scene.dark .takeaway{color:var(--text-inverse);}
 
+/* 「按一次出一行」：配合 ctx.steps() 用。
+   加 .step 的元素默认藏着，每按一次 → 露出下一行。 */
+.step{opacity:0;transform:translateY(10px);
+  transition:opacity var(--dur-slower) var(--ease-out),
+             transform var(--dur-slower) var(--ease-out);}
+.step.on{opacity:1;transform:none;}
+
 /* 逐字出现：每个 <span class="w"> 一个词 */
 .wordby .w{display:inline-block;opacity:0;animation:fadeIn var(--dur-normal) var(--ease-out) both;}
 
 /* 投票柱状图 */
-.bars{display:flex;align-items:flex-end;justify-content:center;gap:var(--space-xl);height:12vw;min-height:120px;}
-.bar-col{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:var(--space-xs);}
+.bars{display:flex;flex-direction:column;gap:var(--space-sm);width:100%;}
+.bar-row{display:flex;align-items:center;gap:var(--space-sm);}
+.bar-name{flex:none;width:4.5em;text-align:right;font-size:var(--fs-body);}
+.bar-track{
+  flex:1;height:3.2vw;min-height:30px;border-radius:var(--radius-full);
+  background:var(--bg-secondary);overflow:hidden;
+}
 .bar{
-  width:6vw;min-width:60px;border-radius:var(--radius-md) var(--radius-md) 0 0;
+  /* display:block 必须有 —— .bar 是 <span>，默认 inline，
+     inline 元素上的 width 会被忽略，柱子永远是 0 宽。 */
+  display:block;height:100%;width:0;border-radius:var(--radius-full);
   background:var(--accent-blue);
-  height:0;transition:height var(--dur-slower) var(--ease-out);
+  transition:width var(--dur-slower) var(--ease-out);
 }
 .bar.alt{background:var(--accent-orange);}
+.bar-num{flex:none;width:3.5em;font-size:var(--fs-body);font-weight:var(--fw-bold);
+  font-family:var(--font-mono);}
 
 /* 眼睛图标 */
 .eye{width:3vw;height:1.6vw;min-width:34px;min-height:18px;border:2px solid currentColor;

@@ -71,9 +71,20 @@ PERCEPTION.scene({
         q: '戴上把世界上下颠倒的眼镜，一直戴着。<br>戴到第八天，你会看到什么？',
         options: ['还是颠倒的', '正过来了', '知道是颠倒的，但不再难受'],
         answer: 1,
-        note: '1897 年，心理学家斯特拉顿在自己身上做了这个实验。'
+        note: ''
       }));
-      QUIZ.mount(ctx, { answer: 1 });
+      /* 押对了 → 下一按直接跳到「第一天」，跳过「引入」那一屏（内容重复）；
+         押错了 → 先让正确答案留一下，下一按正常进「引入」再讲一遍。 */
+      QUIZ.mount(ctx, {
+        answer: 1,
+        onReveal: function (picked, correct) {
+          if (correct) {
+            ctx.holdNext(function () {
+              ctx.goto(PERCEPTION.scenes.findIndex(function (x) { return x.id === 'stratton'; }), 2);
+            });
+          }
+        }
+      });
     },
 
     /* ---- 6.1 引入：1897 年，那副眼镜 ---- */
@@ -83,16 +94,17 @@ PERCEPTION.scene({
           <div id="stratWob" class="stack">
             <div id="stGlass">${ICON.glasses('ico xl c-blue')}</div>
 
-            <div class="subtitle center anim fade" style="--d:.2s;margin-top:2vw">
+            <div class="subtitle center anim fade" style="--d:.45s;margin-top:2vw">
               1897 年，心理学家斯特拉顿戴上了一副眼镜。
             </div>
 
-            <div class="body center muted anim fade" style="--d:.4s;margin-top:1vw">
+            <div class="step body center muted" style="margin-top:1vw">
               这副眼镜把世界上下颠倒。
             </div>
           </div>
         </div>
       `);
+      ctx.steps();
     },
 
     /* ---- 6.2 第一天：世界翻过来 ---- */

@@ -11,7 +11,8 @@
  *     answer: 1,                       // 哪一个是「结果」（会打勾）
  *     note: '1897 年，斯特拉顿自己做了这个实验。'
  *   }));
- *   QUIZ.mount(ctx, { answer: 1 });
+ *   QUIZ.mount(ctx, { answer: 1, onReveal: (picked, correct) => {…} });
+ *   onReveal 可选：用来在揭晓后做别的事（比如押对了就直接跳到下一节）。
  *
  * 交互有两层保险：点选项会揭晓；如果讲者直接按 →（不点），
  * 第一次 → 也只会揭晓、不会翻页（靠 ctx.holdNext），再按才走。
@@ -75,6 +76,7 @@ window.QUIZ = {
   mount: function (ctx, o) {
     var done = false;
 
+    var picked = -1;
     function reveal() {
       if (done) return;
       done = true;
@@ -87,11 +89,13 @@ window.QUIZ = {
       if (n) ctx.soon(function () { n.classList.add('on'); }, 220);
       var h = ctx.q('#qzHint');
       if (h) h.textContent = '';
+      if (o.onReveal) o.onReveal(picked, picked === o.answer);
     }
 
     ctx.each('.qz-card', function (card) {
       ctx.on(card, 'click', function () {
         if (done) return;
+        picked = parseInt(card.dataset.i, 10);
         card.classList.add('picked');
         /* 让「picked」先画出来，再揭晓答案，两拍看得清 */
         ctx.after(320, reveal);

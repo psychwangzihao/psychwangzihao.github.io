@@ -4,9 +4,8 @@
  * 注：讲者王梓豪本人是心盲症（aphantasia，约 3–4% 的人）。
  * ============================================================ */
 PERCEPTION.css('scene-aphantasia', `
-/* 5.0 指令：一句问话 + 倒计时数字 */
+/* 5.0 指令：一句问话 */
 #aphAsk{max-width:60vw;}
-#cdNum{font-family:var(--font-mono);line-height:1;}
 
 /* 5.1 对比：左右两张卡片 */
 #aphPair{display:flex;align-items:stretch;justify-content:center;gap:4vw;}
@@ -69,29 +68,13 @@ PERCEPTION.scene({
   label: '心盲症',
   states: [
 
-    /* ---- 5.0 指令：闭眼想一朵花，10 秒倒计时 ---- */
+    /* ---- 5.0 指令：闭眼想一朵花（不倒计时，讲者自己掌握节奏）---- */
     function (ctx) {
       ctx.set(`
         <h2 id="aphAsk" class="title center anim" style="--d:0s;font-weight:var(--fw-medium)">
-          闭上眼睛，想象一朵花。花瓣是绿色的，叶子是红色的。
+          闭上眼睛，想象一朵花。<br>花瓣是绿色的，叶子是红色的。
         </h2>
-
-        <div id="cdNum" class="hero c-blue anim pop" style="--d:.2s;margin-top:3vw">10</div>
       `);
-
-      var num = ctx.q('#cdNum');
-      var left = 10;
-
-      /* 每秒换一个数字，缩一下再回弹 */
-      ctx.every(1000, function () {
-        if (left <= 0) return;
-        left--;
-        num.textContent = left;
-        num.animate([{ transform: 'scale(1.2)' }, { transform: 'scale(1)' }],
-                    { duration: 200, easing: 'cubic-bezier(.16,1,.3,1)' });
-        /* 数到 0 停一下，让学生看清，再走 */
-        if (left === 0) ctx.after(350, function () { ctx.next(); });
-      });
     },
 
     /* ---- 5.1 举手：把主观体验变成看得见的比例
@@ -106,9 +89,6 @@ PERCEPTION.scene({
             刚才脑海里有<b class="c-blue">清晰画面</b>的，请举手。
           </p>
 
-          <p class="body muted center anim fade" style="--d:1.4s;max-width:52vw">
-            先别放下 —— 环顾一下四周，记住这个比例。<br>待会儿要用到它。
-          </p>
         </div>
       `);
     },
@@ -123,13 +103,13 @@ PERCEPTION.scene({
               <!-- 茎 -->
               <path d="M50 62V134" fill="none" stroke="var(--accent-green)"
                     stroke-width="4" stroke-linecap="round"/>
-              <!-- 两片叶子 -->
-              <ellipse cx="33" cy="90" rx="15" ry="7.5" fill="var(--accent-green)"
+              <!-- 两片叶子：按题目要求画成红色 -->
+              <ellipse cx="33" cy="90" rx="15" ry="7.5" fill="#C4553F"
                        transform="rotate(-28 33 90)"/>
-              <ellipse cx="67" cy="110" rx="15" ry="7.5" fill="var(--accent-green)"
+              <ellipse cx="67" cy="110" rx="15" ry="7.5" fill="#C4553F"
                        transform="rotate(28 67 110)"/>
-              <!-- 六片圆花瓣 -->
-              <g fill="var(--accent-pink)">
+              <!-- 六片圆花瓣：按题目要求画成绿色 -->
+              <g fill="var(--accent-green)">
                 <ellipse cx="50" cy="25" rx="10.5" ry="16"/>
                 <ellipse cx="50" cy="25" rx="10.5" ry="16" transform="rotate(60 50 40)"/>
                 <ellipse cx="50" cy="25" rx="10.5" ry="16" transform="rotate(120 50 40)"/>
@@ -149,8 +129,8 @@ PERCEPTION.scene({
         </div>
 
         <div id="aphFoot">
-          <div class="body anim fade" style="--d:.46s;color:var(--text-secondary)">我属于右边这 3–4%。</div>
-          <div class="small faint anim fade" style="--d:.6s;margin-top:var(--space-xs)">心盲症（Aphantasia）</div>
+          <div class="step body" style="color:var(--text-secondary)">我属于右边这 3–4%。</div>
+          <div class="step small faint" style="margin-top:var(--space-xs)">心盲症（Aphantasia）</div>
         </div>
       `);
 
@@ -159,34 +139,36 @@ PERCEPTION.scene({
       ctx.soon(function () { ctx.q('#aphB').classList.add('in'); }, 60);
       /* 花：糊 + 褪色 → 清晰 + 上色，1s */
       ctx.soon(function () { ctx.q('#flowerArt').classList.add('on'); }, 700);
+      ctx.steps();
     },
 
     /* ---- 5.3 补充：三句话，三个我 ---- */
     function (ctx) {
       ctx.set(`
         <div id="aphLines">
-          <div class="card aph-line anim" style="--d:0s">
+          <div class="card aph-line step">
             ${ICON.eye('ico c-blue')}
             <span class="body">我知道花长什么样，能认出来，能画出来。</span>
           </div>
 
-          <div class="card aph-line anim" style="--d:.15s">
+          <div class="card aph-line step">
             ${ICON.eyeOff('ico faint')}
             <span class="body">但闭上眼睛，什么都没有。</span>
           </div>
 
-          <div class="card aph-line anim" style="--d:.3s">
+          <div class="card aph-line step">
             ${ICON.moon('ico c-purple')}
             <span class="body">可我做梦时能看到画面。</span>
           </div>
         </div>
       `);
+      ctx.steps();
     },
 
     /* ---- 5.4 过渡 ---- */
     function (ctx) {
       ctx.set(`
-        <h2 class="title center anim fade" style="--d:0s">构建可以不同，也可以缺失。那如果一条通道彻底缺失呢？</h2>
+        <h2 class="title center anim fade" style="--d:0s;max-width:70vw">同一个世界，不同的大脑给出不同的体验。<br>那么这颗大脑本身，是天生固定、不能改的吗？</h2>
       `);
     },
 
