@@ -123,6 +123,12 @@ PERCEPTION.scene({
             <p class="step muted">没有。你看到的是背景。</p>
             <p class="step">但那里没有感光细胞。<br>谁填的？—— <b class="c-blue">大脑</b>。</p>
           </div>
+
+          <div class="quote step" style="max-width:34vw;margin-top:var(--space-md)">
+            “Instead of reality being passively recorded by the brain,<br>
+            it is actively constructed by it.”
+            <span class="attr">David Eagleman, <i>Incognito</i></span>
+          </div>
         </div>
       `);
 

@@ -1,6 +1,6 @@
 # 感觉在哪里？ / Where Do Senses Live
 
-於潜中学心理学科普讲座的交互式演示。13 个场景、54 个状态，
+於潜中学心理学科普讲座的交互式演示。13 个场景、55 个状态，
 不是幻灯片 —— 每一幕是一个可以动手玩的小实验。
 
 - 线上地址：<https://psychwangzihao.github.io/demos/perception/>
@@ -50,7 +50,7 @@ index.html?debug=1
 | 5 | `stratton` | 斯特拉顿眼镜 | 7 | 先猜一猜 → 世界颠倒 |
 | 6 | `eagleman` | Eagleman 背心 | 7 | 先猜一猜 → 背心 |
 | 7 | `illusion` | 大小错觉 | 2 | 为「要测量」铺垫 |
-| 8 | `eeg` | 脑电波演示 | 6 | 暗色场景 |
+| 8 | `eeg` | 脑电波演示 | 8 | 暗色场景；含科学精神与人脑库 |
 | 9 | `bci` | 脑机接口 | 3 | 四种接口并排一屏 |
 | 10 | `closing` | 收束 | 3 | |
 | 11 | `awe` | 回响（回到那棵树） | 4 | |
@@ -159,6 +159,43 @@ ctx.steps();
 
 **这个 demo 里几乎不该有自动翻页。** 原来有几处倒计时（盲点 20 秒、
 心盲症 10 秒、平衡觉 10 秒）都已经去掉了 —— 现场由讲者控制节奏。
+
+### 科学精神那一节：要举例，不说教
+
+`eeg` 的 8.4 / 8.5 两屏是全场唯一讲「科学方法」的地方。原来写的是
+「脑电不是读心术 / 要基线要控制要重复要统计」——那是口号，学生听不进去，
+而且有说教味。**说教感来自没把话讲明白**，所以改成：
+
+1. 先摆三条**几乎人人都听过、而且都是错的**说法（10% 大脑 / 左右脑型人格 /
+   头环读心）；
+2. 再一条条给**具体、可查**的反驳（临床损伤的对应关系、胼胝体、
+   脑电的空间分辨率到底是多少）；
+3. 收在「每一条错的，都不是『想错了』，而是『没测过』」，
+   再到「科学不是猜，是测量」。
+
+**面向高中生要按「有独立思考能力的人」来写，不是按「听什么就是什么的人」。**
+泛泛地扣「伪科学」的帽子没有说服力，给实例才有。
+
+8.6 是人脑库（材料取自用户自己那份杭二中讲稿）：小鼠 0.4 克 / 7000 万神经元
+vs 人脑 1500 克 / 860 亿；「用小鼠研究抑郁症，就像用鱼缸模拟太平洋」；
+2012 年浙大医学院建立中国第一座人脑库，至今七百多例全脑捐赠；
+每个捐赠者的名字刻在医学院门口的「无语良师碑」上。收在 Laureys 那句
+器官捐献的话上 —— 这是这堂课的生命教育落点。
+
+### 引文
+
+共五处，都是**核对过出处**的（英文原句上屏，讲者现场翻译）：
+
+| 位置 | 引文 | 出处 |
+|---|---|---|
+| `tree` 1.3 | You're not perceiving what's out there… | Eagleman, *Incognito* |
+| `blindspot` 2.1 | Instead of reality being passively recorded… | Eagleman, *Incognito* |
+| `illusion` 1 | So the first lesson about trusting your senses is: don't. | Eagleman, *Incognito* |
+| `stratton` 6.5 | The brain is a dynamic system… | Eagleman, *Livewired* |
+| `closing` 10.2 | If the human brain were so simple that we could understand it… | Emerson M. Pugh（约 1938，1977 年首次发表；Lyall Watson 1979 年传播开来） |
+
+⚠️ 注意：**Pugh 那句常被误记成别人的**（Lyall Watson、Ken Hill 等都有被安上），
+上面这个归属是查过 Quote Investigator 的。
 
 ### ⚠️ 屏幕上不要写「怎么操作」的提示
 

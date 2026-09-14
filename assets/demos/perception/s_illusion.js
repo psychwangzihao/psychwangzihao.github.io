@@ -23,6 +23,8 @@ PERCEPTION.css('scene-illusion', `
   gap:3.5vw;width:100%;margin:var(--space-md) 0;
 }
 .eb-group{position:relative;width:min(26vw,42vh);height:min(26vw,42vh);}
+/* 揭晓那一屏下面还有三行字和一句引文，圆要收小一点才放得下 */
+.eb-sm .eb-group{width:min(21vw,32vh);height:min(21vw,32vh);}
 .eb-group svg{display:block;width:100%;height:100%;overflow:visible;}
 
 /* 揭晓时压上去的那两个「一模一样的圆」 */
@@ -90,7 +92,7 @@ PERCEPTION.scene({
     /* ---- 1：一样大（而且知道了也没用）---- */
     function (ctx) {
       ctx.set(`
-        <div class="stack gap-md">
+        <div class="stack gap-md eb-sm">
           <div id="ebWrap">
             <div class="eb-group">${ebbinghausSVG(50, 112, 'ebProofL')}</div>
             <div class="eb-group">${ebbinghausSVG(18, 79, 'ebProofR')}</div>
@@ -106,6 +108,11 @@ PERCEPTION.scene({
           <p class="subtitle anim fade" style="--d:2.2s;max-width:62vw;text-align:center">
             知道真相，并不能让错觉消失。
           </p>
+
+          <div class="quote step">
+            “So the first lesson about trusting your senses is: don’t.”
+            <span class="attr">David Eagleman, <i>Incognito</i></span>
+          </div>
         </div>
       `);
 

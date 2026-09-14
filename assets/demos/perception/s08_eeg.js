@@ -1,5 +1,5 @@
 /* ============================================================
- * 场景 8：脑电波演示  (id: eeg · 6 个状态 · 暗色)
+ * 场景 8：脑电波演示  (id: eeg · 8 个状态 · 暗色)
  * 目的：展示科学测量，强调脑电不是读心术。
  * 现场会请一位志愿者戴上脑电头环，本场景是他的视觉伴奏，
  * 8.1 就是直接说给志愿者听的指令。
@@ -275,29 +275,118 @@
         return function () { a.dispose(); b.dispose(); };
       },
 
-      /* ---- 8.4 科学方法：四行，再收一句 ---- */
+      /* ---- 8.4 科学精神：用三个「流传很广的错误说法」来讲 ----
+         原来说的是「脑电不是读心术 / 要基线要控制要重复」——那是口号，
+         学生听不进去。换成：先摆三条几乎人人都听过、而且都是错的说法，
+         再一条条给出具体反驳。有实例才有说服力，也才不像说教。 */
       function (ctx) {
         ctx.set(`
-          <!-- 先把开场那个闪烁网格接回来：你自己看到的黑点，旁边的人可能
-               一个都没看到 —— 所以「我看到」不能当证据。这一句是整场的枢纽。 -->
-          <div class="body center anim fade" style="--d:0s;color:var(--accent-orange);max-width:62vw;margin-bottom:var(--space-md)">
-            开场那个闪烁的网格 —— 你看到的黑点，你同桌可能一个都没看到。
+          <div class="subtitle center anim fade" style="--d:0s;color:var(--text-inverse);margin-bottom:var(--space-md)">
+            下面这三个说法，你可能都听过。
           </div>
 
-          <div id="sciLines" class="stack" style="gap:var(--space-sm)">
-            <div class="subtitle center anim fade" style="--d:.35s;color:var(--text-inverse)">脑电不是读心术。</div>
-            <div class="subtitle center anim fade" style="--d:.6s;color:var(--text-inverse)">它有伪迹：眨眼、肌肉活动、电源干扰。</div>
-            <div class="subtitle center anim fade" style="--d:.9s;color:var(--text-inverse)">要基线、要控制、要重复、要统计。</div>
-            <div class="subtitle center anim fade" style="--d:1.2s;color:var(--text-inverse)">一个人不算，要很多人、很多试次。</div>
-          </div>
+          <div id="sciMyths" class="stack" style="gap:var(--space-sm);max-width:74vw">
+            <div class="step body center" style="color:var(--text-inverse)">
+              ① 人类只用了大脑的 10%
+            </div>
+            <div class="step body center" style="color:var(--text-inverse)">
+              ② 你是「左脑型」还是「右脑型」人格
+            </div>
+            <div class="step body center" style="color:var(--text-inverse)">
+              ③ 戴个头环，就能读出你在想什么
+            </div>
 
-          <div id="sciClose" class="title bold center anim fade" style="--d:2.7s">
-            科学不是猜，是测量。
+            <div class="step body center" style="margin-top:var(--space-md);color:var(--accent-orange)">
+              三条都是错的。而且，错得各不相同。
+            </div>
           </div>
         `);
+        ctx.steps();
       },
 
-      /* ---- 8.5 过渡：把问题抛给下一场 ---- */
+      /* ---- 8.5 一条一条拆：具体的反驳，不讲空话 ---- */
+      function (ctx) {
+        ctx.set(`
+          <div class="stack gap-md" style="max-width:78vw">
+            <div class="card tight" style="background:#242424;text-align:left">
+              <div class="body" style="color:var(--text-inverse)">
+                <b class="c-orange">「只用了 10%」</b>
+                —— 如果真有九成闲着，那切掉它应该没事。可临床上恰恰相反：
+                任何一块脑区受损，几乎都会带来对应的功能丧失。脑成像也显示，
+                <b>哪怕只是躺着发呆，全脑都在持续耗能</b>。
+              </div>
+            </div>
+
+            <div class="step card tight" style="background:#242424;text-align:left">
+              <div class="body" style="color:var(--text-inverse)">
+                <b class="c-orange">「左脑理性、右脑感性」</b>
+                —— 两侧大脑之间有一条<b>胼胝体</b>，几亿根神经纤维来回通信。
+                任何一件稍微复杂的事，两边都在同时参与。这个说法没有任何
+                解剖学依据 —— 它来自上世纪六十年代对<b>切断胼胝体的病人</b>
+                的研究，被简化成了完全走样的版本。
+              </div>
+            </div>
+
+            <div class="step card tight" style="background:#242424;text-align:left">
+              <div class="body" style="color:var(--text-inverse)">
+                <b class="c-orange">「头环读心」</b>
+                —— 头皮上测到的，是<b>上百万神经元同步活动的总和</b>，
+                空间分辨率以厘米计。它能告诉你「这个人现在紧张还是放松」，
+                说不出「他正在想中午吃什么」。
+              </div>
+            </div>
+
+            <div class="step subtitle center" style="color:var(--accent-blue);margin-top:var(--space-sm)">
+              每一条错的，都不是「想错了」，而是「没测过」。
+            </div>
+
+            <div class="step title bold center" style="color:var(--accent-blue)">
+              科学不是猜，是测量。
+            </div>
+          </div>
+        `);
+        ctx.steps();
+      },
+
+      /* ---- 8.6 人脑库：科学背后是别人的给予 ---- */
+      function (ctx) {
+        ctx.set(`
+          <div class="stack gap-md" style="max-width:74vw">
+            <div class="body center" style="color:var(--text-inverse)">
+              那么，研究大脑要用的脑子，从哪里来？
+            </div>
+
+            <div class="step body center" style="color:var(--text-inverse)">
+              小鼠的大脑 <b>0.4 克</b>、七千万个神经元；人脑 <b>1500 克</b>、<b>860 亿</b>个。
+              用小鼠研究抑郁症，就像<b class="c-orange">用鱼缸模拟太平洋</b>。
+            </div>
+
+            <div class="step body center" style="color:var(--text-inverse)">
+              2012 年，浙江大学医学院建立了中国第一座<b>人脑库</b>。
+              志愿者生前签署同意，去世后 24 小时内完成取材保存。
+              到今天，它已经收到<b>七百多例</b>全脑捐赠，
+              为全国八十多个课题组提供了近万份样本。
+            </div>
+
+            <div class="step body center" style="color:var(--text-inverse)">
+              每一位捐赠者的名字，都刻在浙大医学院门口的
+              <b class="c-blue">「无语良师碑」</b>上。
+            </div>
+
+            <div class="step body center" style="color:var(--accent-orange);margin-top:var(--space-sm)">
+              他们不言不语，却教给了我们关于大脑最要紧的知识。
+            </div>
+
+            <div class="quote step">
+              “If there is a life after death, it is organ donation.”
+              <span class="attr">Steven Laureys</span>
+            </div>
+          </div>
+        `);
+        ctx.steps();
+      },
+
+      /* ---- 8.7 过渡：把问题抛给下一场 ---- */
       function (ctx) {
         ctx.set(`
           <h2 class="title bold center anim fade" style="--d:.4s;color:var(--text-inverse);max-width:70vw">

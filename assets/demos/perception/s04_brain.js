@@ -644,13 +644,5 @@ PERCEPTION.scene({
       );
     },
 
-    function (ctx) {
-      ctx.set(
-        '<h2 class="title bold center anim fade" style="--d:.1s">' +
-          '如果大脑构建感觉的能力本身不同呢？' +
-        '</h2>'
-      );
-    },
-
   ],
 });

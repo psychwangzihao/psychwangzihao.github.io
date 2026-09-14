@@ -211,6 +211,12 @@ PERCEPTION.scene({
         <div class="takeaway anim fade" style="--d:.8s;margin-top:4vw">
           <span class="wordby" id="treeTake">声波在森林里，响在大脑里。</span>
         </div>
+
+        <div class="quote step">
+          “You’re not perceiving what’s out there.<br>
+          You’re perceiving whatever your brain tells you.”
+          <span class="attr">David Eagleman, <i>Incognito</i></span>
+        </div>
       `);
       ctx.after(900, function () { ctx.wordby('#treeTake', 60); });
     },

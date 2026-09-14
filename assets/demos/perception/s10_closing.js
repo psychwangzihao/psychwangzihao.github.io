@@ -62,9 +62,15 @@ PERCEPTION.scene({
       ctx.set(`
         <div class="cl-dark" data-dark>
           <div class="stack gap-sm cl-rows">
-            <div class="subtitle anim fade" style="--d:0s">这不是说世界是假的。</div>
-            <div class="subtitle anim fade" style="--d:.4s">而是说，我们接触世界，必须通过大脑的翻译。</div>
-            <div class="subtitle anim fade" style="--d:.8s">科学就是研究翻译规则，以及它什么时候会出错。</div>
+            <div class="subtitle">这不是说世界是假的。</div>
+            <div class="step subtitle">而是说，我们接触世界，必须通过大脑的翻译。</div>
+            <div class="step subtitle">科学就是研究翻译规则，以及它什么时候会出错。</div>
+
+            <div class="step quote" style="max-width:56vw;margin-top:var(--space-md)">
+              “If the human brain were so simple that we could understand it,<br>
+              we would be so simple that we couldn’t.”
+              <span class="attr">Emerson M. Pugh</span>
+            </div>
           </div>
         </div>
       `);

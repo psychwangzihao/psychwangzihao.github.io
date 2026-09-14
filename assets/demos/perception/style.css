@@ -291,6 +291,20 @@ html,body{
              transform var(--dur-slower) var(--ease-out);}
 .step.on{opacity:1;transform:none;}
 
+/* 引文：英文原文 + 出处。讲者现场翻译，所以屏幕上只放原文。 */
+.quote{
+  margin-top:var(--space-md);max-width:64vw;text-align:center;
+  font-family:var(--font-en);font-style:italic;
+  font-size:var(--fs-body);line-height:1.65;color:var(--text-secondary);
+}
+.quote .attr{
+  display:block;margin-top:.5em;font-style:normal;
+  font-family:var(--font-sans);font-size:var(--fs-small);
+  color:var(--text-tertiary);letter-spacing:.06em;
+}
+.scene.dark .quote{color:#BDBDBD;}
+.scene.dark .quote .attr{color:#7C7C7C;}
+
 /* 逐字出现：每个 <span class="w"> 一个词 */
 .wordby .w{display:inline-block;opacity:0;animation:fadeIn var(--dur-normal) var(--ease-out) both;}
 

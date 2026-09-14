@@ -196,6 +196,11 @@ PERCEPTION.scene({
               <div class="small center anim fade" style="--d:.55s;margin-top:1vw;color:var(--text-tertiary)">
                 2025 年的研究：左右颠倒，大脑同样能适应。
               </div>
+
+              <div class="quote step" style="max-width:52vw">
+                “The brain is a dynamic system,<br>constantly altering its own circuitry.”
+                <span class="attr">David Eagleman, <i>Livewired</i></span>
+              </div>
             </div>
           </div>
         </div>
@@ -207,6 +212,7 @@ PERCEPTION.scene({
         ctx.q('#stratWrap').classList.remove('flip');
         ctx.q('#stratText').classList.remove('flip');
       });
+      ctx.steps();
     },
 
     /* ---- 6.6 过渡 ---- */
