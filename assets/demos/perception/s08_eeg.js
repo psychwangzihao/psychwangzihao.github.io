@@ -278,14 +278,20 @@
       /* ---- 8.4 科学方法：四行，再收一句 ---- */
       function (ctx) {
         ctx.set(`
-          <div id="sciLines" class="stack" style="gap:var(--space-sm)">
-            <div class="subtitle center anim fade" style="--d:0s;color:var(--text-inverse)">脑电不是读心术。</div>
-            <div class="subtitle center anim fade" style="--d:.3s;color:var(--text-inverse)">它有伪迹：眨眼、肌肉活动、电源干扰。</div>
-            <div class="subtitle center anim fade" style="--d:.6s;color:var(--text-inverse)">要基线、要控制、要重复、要统计。</div>
-            <div class="subtitle center anim fade" style="--d:.9s;color:var(--text-inverse)">一个人不算，要很多人、很多试次。</div>
+          <!-- 先把开场那个闪烁网格接回来：你自己看到的黑点，旁边的人可能
+               一个都没看到 —— 所以「我看到」不能当证据。这一句是整场的枢纽。 -->
+          <div class="body center anim fade" style="--d:0s;color:var(--accent-orange);max-width:62vw;margin-bottom:var(--space-md)">
+            开场那个闪烁的网格 —— 你看到的黑点，你同桌可能一个都没看到。
           </div>
 
-          <div id="sciClose" class="title bold center anim fade" style="--d:2.4s">
+          <div id="sciLines" class="stack" style="gap:var(--space-sm)">
+            <div class="subtitle center anim fade" style="--d:.35s;color:var(--text-inverse)">脑电不是读心术。</div>
+            <div class="subtitle center anim fade" style="--d:.6s;color:var(--text-inverse)">它有伪迹：眨眼、肌肉活动、电源干扰。</div>
+            <div class="subtitle center anim fade" style="--d:.9s;color:var(--text-inverse)">要基线、要控制、要重复、要统计。</div>
+            <div class="subtitle center anim fade" style="--d:1.2s;color:var(--text-inverse)">一个人不算，要很多人、很多试次。</div>
+          </div>
+
+          <div id="sciClose" class="title bold center anim fade" style="--d:2.7s">
             科学不是猜，是测量。
           </div>
         `);

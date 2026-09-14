@@ -1,5 +1,5 @@
 /* ============================================================
- * 场景 7：Eagleman 背心  (id: eagleman · 6 个状态)
+ * 场景 7：Eagleman 背心  (id: eagleman · 7 个状态)
  * 目的：展示通道可替换 —— 大脑只关心信息结构，不关心信号从哪来。
  * 装置：David Eagleman 的 32 马达感官替代背心（VEST）。
  *
@@ -95,12 +95,12 @@ PERCEPTION.css('scene-eagleman', `
 .motor.hot{fill:var(--accent-orange);}
 @keyframes motorBreathe{0%,100%{opacity:.5;}50%{opacity:1;}}
 
-/* ---- 7.1 工作原理：左波形 + 右背心 ---- */
+/* ---- 7.2 工作原理：左波形 + 右背心 ---- */
 #egTop{margin-bottom:var(--space-lg);}
 #egWaveCol{flex:none;}
 #egWave{width:26vw;height:10vw;min-width:200px;min-height:80px;display:block;}
 
-/* ---- 7.2 学习曲线 ---- */
+/* ---- 7.3 学习曲线 ---- */
 #egTl{position:relative;width:60vw;max-width:1000px;height:13vw;min-height:150px;margin-top:var(--space-md);}
 #egTlLine{
   position:absolute;left:0;right:0;top:0;height:2px;background:var(--border-subtle);
@@ -120,7 +120,7 @@ PERCEPTION.css('scene-eagleman', `
 .eg-node .eg-d{margin-top:.3vw;opacity:0;transition:opacity var(--dur-slower) var(--ease-out);}
 .eg-node.on .eg-h,.eg-node.on .eg-d{opacity:1;}
 
-/* ---- 7.3 两张卡片 ---- */
+/* ---- 7.4 感官替代 vs 感官新增 ---- */
 #egCards{gap:4vw;flex-wrap:wrap;}
 #egCards .card{
   width:35vw;min-width:260px;text-align:center;
@@ -144,7 +144,18 @@ PERCEPTION.scene({
   dark: false,
   states: [
 
-    /* ---- 7.0 背心展示 ---- */
+    /* ---- 7.0 先猜一猜 ---- */
+    function (ctx) {
+      ctx.set(QUIZ.html({
+        q: '麦克风把声音变成背上一片一片的振动。<br>穿了三个月之后，会怎么样？',
+        options: ['只觉得痒和麻', '能分辨出不同的词', '能「听懂」，不用想'],
+        answer: 2,
+        note: '这三种都发生过 —— 它们是同一个人身上，第 1 天、第 4 天、第 3 个月的样子。'
+      }));
+      QUIZ.mount(ctx, { answer: 2 });
+    },
+
+    /* ---- 7.1 背心展示 ---- */
     function (ctx) {
       ctx.set(`
         <div class="stack gap-md">
@@ -156,7 +167,7 @@ PERCEPTION.scene({
       `);
     },
 
-    /* ---- 7.1 工作原理：声音 → 振动位置 ---- */
+    /* ---- 7.2 工作原理：声音 → 振动位置 ---- */
     function (ctx) {
       ctx.set(`
         <div class="row gap-xl" id="egTop">
@@ -248,7 +259,7 @@ PERCEPTION.scene({
       }
     },
 
-    /* ---- 7.2 学习曲线 ---- */
+    /* ---- 7.3 学习曲线 ---- */
     function (ctx) {
       var node = function (left, day, desc) {
         return '<div class="eg-node" style="left:' + left + '%">' +
@@ -280,7 +291,7 @@ PERCEPTION.scene({
       });
     },
 
-    /* ---- 7.3 感官替代 vs 感官新增 ---- */
+    /* ---- 7.4 感官替代 vs 感官新增 ---- */
     function (ctx) {
       ctx.set(`
         <div class="row" id="egCards">
@@ -305,7 +316,7 @@ PERCEPTION.scene({
       ctx.soon(function () { ctx.q('#egCards').classList.add('on'); }, 60);
     },
 
-    /* ---- 7.4 收束 ---- */
+    /* ---- 7.5 收束 ---- */
     function (ctx) {
       ctx.set(`
         <div class="stack gap-md">
@@ -319,7 +330,7 @@ PERCEPTION.scene({
       `);
     },
 
-    /* ---- 7.5 过渡 ---- */
+    /* ---- 7.6 过渡 ---- */
     function (ctx) {
       ctx.set(`
         <div class="stack gap-md">

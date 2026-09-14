@@ -1,5 +1,5 @@
 /* ============================================================
- * 场景 6：斯特拉顿眼镜  (id stratton · 6 个状态)
+ * 场景 6：斯特拉顿眼镜  (id stratton · 7 个状态)
  * 目的：展示大脑可以根据输入重新接线。
  * 1897 年，心理学家 George Stratton 戴上了一副上下颠倒的眼镜。
  *
@@ -62,7 +62,19 @@ PERCEPTION.scene({
   label: '斯特拉顿眼镜',
   states: [
 
-    /* ---- 6.0 引入：1897 年，那副眼镜 ---- */
+    /* ---- 6.0 先猜一猜：揭晓之前先让人押一个答案 ----
+       押过之后同一个结果会记得牢得多 —— 因为他在等自己的答案对不对。 */
+    function (ctx) {
+      ctx.set(QUIZ.html({
+        q: '戴上把世界上下颠倒的眼镜，一直戴着。<br>戴到第八天，你会看到什么？',
+        options: ['还是颠倒的', '正过来了', '知道是颠倒的，但不再难受'],
+        answer: 1,
+        note: '1897 年，心理学家斯特拉顿在自己身上做了这个实验。'
+      }));
+      QUIZ.mount(ctx, { answer: 1 });
+    },
+
+    /* ---- 6.1 引入：1897 年，那副眼镜 ---- */
     function (ctx) {
       ctx.set(`
         <div id="stratWrap" style="transform-origin:center;transition:transform .6s var(--ease-in-out)">
@@ -81,7 +93,7 @@ PERCEPTION.scene({
       `);
     },
 
-    /* ---- 6.1 第一天：世界翻过来 ---- */
+    /* ---- 6.2 第一天：世界翻过来 ---- */
     function (ctx) {
       ctx.set(`
         <div id="stratWrap" style="transform-origin:center;transition:transform .6s var(--ease-in-out)">
@@ -105,7 +117,7 @@ PERCEPTION.scene({
       ctx.after(1050, function () { ctx.q('#stratWob').classList.add('wob'); });
     },
 
-    /* ---- 6.2 第八天：大脑把它正过来了 ---- */
+    /* ---- 6.3 第八天：大脑把它正过来了 ---- */
     function (ctx) {
       ctx.set(`
         <div id="stratWrap" style="transform-origin:center;transition:transform .6s var(--ease-in-out)">
@@ -134,7 +146,7 @@ PERCEPTION.scene({
       });
     },
 
-    /* ---- 6.3 摘掉眼镜：又颠倒回去 ---- */
+    /* ---- 6.4 摘掉眼镜：又颠倒回去 ---- */
     function (ctx) {
       ctx.set(`
         <div id="stratWrap" style="transform-origin:center;transition:transform .6s var(--ease-in-out)">
@@ -156,7 +168,7 @@ PERCEPTION.scene({
       });
     },
 
-    /* ---- 6.4 收束：不是硬件，是接线 ---- */
+    /* ---- 6.5 收束：不是硬件，是接线 ---- */
     function (ctx) {
       ctx.set(`
         <div id="stratWrap" style="transform-origin:center;transition:transform .6s var(--ease-in-out)">
@@ -183,7 +195,7 @@ PERCEPTION.scene({
       });
     },
 
-    /* ---- 6.5 过渡 ---- */
+    /* ---- 6.6 过渡 ---- */
     function (ctx) {
       ctx.set(`
         <h2 class="title center anim fade" style="--d:0s">那如果换一条完全不同的通道呢？</h2>

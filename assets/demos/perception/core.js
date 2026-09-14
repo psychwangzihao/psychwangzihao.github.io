@@ -63,6 +63,7 @@
 
   var si = 0, st = 0;          // 场景索引 / 状态索引
   var busy = false;            // 切换防抖
+  var nextGate = null;         // 见 ctx.holdNext()
   var dispose = null;          // 当前状态的清理函数
   var curEl = null;            // 当前 .scene 元素
   var seen = [];               // 每个场景是否到过（导航圆点用）
@@ -165,6 +166,13 @@
 
       /** 让下一个状态在 N 毫秒后自动前进（只能有一次） */
       autoNext: function (ms) { ctx.after(ms, function () { next(); }); },
+
+      /** 拦下「下一次前进」，先做别的事（例如揭晓答案），再按才翻页。
+          只生效一次；离开本状态会自动失效。 */
+      holdNext: function (fn) {
+        nextGate = function () { try { fn(); } catch (e) {} };
+        kill.push(function () { nextGate = null; });
+      },
 
       dispose: function () { kill.forEach(function (f) { try { f(); } catch (e) {} }); kill.length = 0; },
     };
@@ -274,6 +282,9 @@
 
   function next() {
     if (busy) return;
+    /* 场景可以「拦一下」下一次前进：先用掉它做别的事（比如揭晓答案），
+       再按才真的翻页。见 ctx.holdNext。 */
+    if (nextGate) { var g = nextGate; nextGate = null; g(); return; }
     var scene = SCENES[si];
     if (st < scene.states.length - 1) goto(si, st + 1, 1);
     else if (si < SCENES.length - 1) goto(si + 1, 0, 1);
