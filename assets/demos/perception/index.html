@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>感觉在哪里？ · Where Do Senses Live</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+  <!-- 舞台：所有场景都渲染在这里 -->
+  <div id="stage"></div>
+
+  <!-- 顶部进度条 -->
+  <div id="progress"><i id="progressFill"></i></div>
+
+  <!-- 底部场景导航（圆点） -->
+  <nav id="navbar" aria-label="场景导航"><div id="dots"></div></nav>
+
+  <!-- 黑屏层（按 B） -->
+  <div id="blackout"></div>
+
+  <!-- 调试面板（按 D 或 ?debug=1） -->
+  <div id="debug"></div>
+
+  <!-- 全屏按钮 -->
+  <button id="fsbtn" title="全屏 / 退出全屏 (F)">⛶</button>
+
+  <!-- 轻提示 -->
+  <div id="toast"></div>
+
+  <script src="./icons.js"></script>
+  <script src="./core.js"></script>
+  <script src="./s00_title.js"></script>
+  <script src="./s01_tree.js"></script>
+  <script src="./s02_blindspot.js"></script>
+  <script src="./s03_mcgurk.js"></script>
+  <script src="./s04_brain.js"></script>
+  <script src="./s05_aphantasia.js"></script>
+  <script src="./s06_stratton.js"></script>
+  <script src="./s07_eagleman.js"></script>
+  <script src="./s08_eeg.js"></script>
+  <script src="./s09_bci.js"></script>
+  <script src="./s10_closing.js"></script>
+</body>
+</html>
