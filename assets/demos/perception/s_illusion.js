@@ -1,10 +1,10 @@
 /* ============================================================
- * 场景：大小错觉（冷开场）  (id: illusion · 2 个状态)
+ * 场景：大小错觉  (id: illusion · 3 个状态)
  *
- * 位置：紧接着开幕，在「树倒悖论」之前。
+ * 位置：在 Eagleman 之后、脑电之前 —— 它是「为什么要测量」的引子。
  *
- * 为什么放在最前面：一场讲座的头 60 秒决定后面 40 分钟。
- * 与其先讲道理，不如先让全场亲眼看到自己的眼睛在骗自己。
+ * 这一幕的第二拍才是重点：先证明「一样大」，再把同一张图放一次，
+ * 让他当着「已知」的面再失败一次 —— **知道答案，修不好它**。
  *
  * ⚠️ 换成艾宾浩斯错觉的理由（原来用的是闪烁网格）：
  *   闪烁网格属于「周边视觉」类错觉 —— 必须盯着中间不动、
@@ -89,7 +89,7 @@ PERCEPTION.scene({
       `);
     },
 
-    /* ---- 1：一样大（而且知道了也没用）---- */
+    /* ---- 1：揭晓「一样大」，只给证据，不给结论 ---- */
     function (ctx) {
       ctx.set(`
         <div class="stack gap-md eb-sm">
@@ -100,13 +100,38 @@ PERCEPTION.scene({
 
           <div class="il-answer anim" style="--d:.2s">一样大。</div>
 
-          <p class="body anim fade" style="--d:1.2s;max-width:62vw;text-align:center;color:var(--text-secondary)">
-            橙圈是原样描上去的，和两个蓝圆<b>严格重合</b>。<br>
-            可你现在再看一眼 —— 它们<b class="c-orange">还是不一样大</b>。
+          <p class="step body" style="max-width:62vw;text-align:center;color:var(--text-secondary)">
+            橙圈是原样描上去的，和两个蓝圆<b>严格重合</b> —— 像素级的相同。
+          </p>
+        </div>
+      `);
+
+      ctx.soon(function () {
+        ctx.q('#ebProofL').classList.add('on');
+        ctx.q('#ebProofR').classList.add('on');
+      }, 260);
+      ctx.steps();
+    },
+
+    /* ---- 2：知道了，再看一眼——还是错的。
+       这一幕的第二拍才是全场最要紧的一下：**知道答案，修不好它**。
+       所以把同一张图再放一次，让他当着「已知」的面再失败一次。 ---- */
+    function (ctx) {
+      ctx.set(`
+        <div class="stack gap-md eb-sm">
+          <div id="ebWrap">
+            <div class="eb-group">${ebbinghausSVG(50, 112, 'ebProofL')}</div>
+            <div class="eb-group">${ebbinghausSVG(18, 79, 'ebProofR')}</div>
+          </div>
+
+          <p class="step body" style="max-width:62vw;text-align:center;color:var(--text-secondary)">
+            你现在<b>已经知道</b>它们一样大了。再看一眼 ——
           </p>
 
-          <p class="subtitle anim fade" style="--d:2.2s;max-width:62vw;text-align:center">
-            知道真相，并不能让错觉消失。
+          <div class="step il-answer" style="color:var(--accent-orange)">还是不一样。</div>
+
+          <p class="step subtitle" style="max-width:62vw;text-align:center">
+            知道答案，并不能修好它。
           </p>
 
           <div class="quote step">
@@ -115,12 +140,7 @@ PERCEPTION.scene({
           </div>
         </div>
       `);
-
-      /* 描边圆转一圈画出来，把「严格重合」这件事演示掉 */
-      ctx.soon(function () {
-        ctx.q('#ebProofL').classList.add('on');
-        ctx.q('#ebProofR').classList.add('on');
-      }, 260);
+      ctx.steps();
     },
 
   ],

@@ -1,5 +1,5 @@
 /* ============================================================
- * 场景 8：脑电波演示  (id: eeg · 8 个状态 · 暗色)
+ * 场景 8：脑电波演示  (id: eeg · 9 个状态 · 暗色)
  * 目的：展示科学测量，强调脑电不是读心术。
  * 现场会请一位志愿者戴上脑电头环，本场景是他的视觉伴奏，
  * 8.1 就是直接说给志愿者听的指令。
@@ -275,39 +275,42 @@
         return function () { a.dispose(); b.dispose(); };
       },
 
-      /* ---- 8.4 科学精神：用三个「流传很广的错误说法」来讲 ----
-         原来说的是「脑电不是读心术 / 要基线要控制要重复」——那是口号，
-         学生听不进去。换成：先摆三条几乎人人都听过、而且都是错的说法，
-         再一条条给出具体反驳。有实例才有说服力，也才不像说教。 */
+      /* ---- 8.4 四句流传很广的话 ----
+         前两句是「脑科学」的谣言，后两句是对心理学本身的误解，
+         甚至是恶意。面向高中生，要按「有独立思考能力的人」来写 ——
+         扣「伪科学」的帽子没有说服力，得给实例、给数据。 */
       function (ctx) {
         ctx.set(`
           <div class="subtitle center anim fade" style="--d:0s;color:var(--text-inverse);margin-bottom:var(--space-md)">
-            下面这三个说法，你可能都听过。
+            下面这四句话，你可能都听过。
           </div>
 
-          <div id="sciMyths" class="stack" style="gap:var(--space-sm);max-width:74vw">
-            <div class="step body center" style="color:var(--text-inverse)">
+          <div class="stack" style="gap:var(--space-sm);max-width:76vw">
+            <div class="body center" style="color:var(--text-inverse)">
               ① 人类只用了大脑的 10%
             </div>
             <div class="step body center" style="color:var(--text-inverse)">
-              ② 你是「左脑型」还是「右脑型」人格
+              ② 你是「左脑型」还是「右脑型」
             </div>
             <div class="step body center" style="color:var(--text-inverse)">
-              ③ 戴个头环，就能读出你在想什么
+              ③ 心理学？不就是算命那一类吗
+            </div>
+            <div class="step body center" style="color:var(--text-inverse)">
+              ④ 你学心理的？那你猜猜我现在在想什么
             </div>
 
             <div class="step body center" style="margin-top:var(--space-md);color:var(--accent-orange)">
-              三条都是错的。而且，错得各不相同。
+              四句都值得认真回答一次 —— 一句一句来。
             </div>
           </div>
         `);
         ctx.steps();
       },
 
-      /* ---- 8.5 一条一条拆：具体的反驳，不讲空话 ---- */
+      /* ---- 8.5 一句一句回答：每条都给具体、可查的东西 ---- */
       function (ctx) {
         ctx.set(`
-          <div class="stack gap-md" style="max-width:78vw">
+          <div class="stack gap-md" style="max-width:80vw">
             <div class="card tight" style="background:#242424;text-align:left">
               <div class="body" style="color:var(--text-inverse)">
                 <b class="c-orange">「只用了 10%」</b>
@@ -320,35 +323,61 @@
             <div class="step card tight" style="background:#242424;text-align:left">
               <div class="body" style="color:var(--text-inverse)">
                 <b class="c-orange">「左脑理性、右脑感性」</b>
-                —— 两侧大脑之间有一条<b>胼胝体</b>，几亿根神经纤维来回通信。
-                任何一件稍微复杂的事，两边都在同时参与。这个说法没有任何
-                解剖学依据 —— 它来自上世纪六十年代对<b>切断胼胝体的病人</b>
-                的研究，被简化成了完全走样的版本。
+                —— 两侧之间有<b>胼胝体</b>，几亿根神经纤维来回通信，
+                任何一件稍复杂的事两边都同时参与。这个说法来自上世纪六十年代
+                对<b>切断胼胝体的病人</b>的研究，被简化成了完全走样的版本。
               </div>
             </div>
 
             <div class="step card tight" style="background:#242424;text-align:left">
               <div class="body" style="color:var(--text-inverse)">
-                <b class="c-orange">「头环读心」</b>
-                —— 头皮上测到的，是<b>上百万神经元同步活动的总和</b>，
-                空间分辨率以厘米计。它能告诉你「这个人现在紧张还是放松」，
-                说不出「他正在想中午吃什么」。
+                <b class="c-orange">「心理学就是算命」</b>
+                —— 占卜的结论没法被证伪，这是它和科学的分界线。
+                举一个具体的：<b>MBTI</b> 那类人格测试，同一个人隔五周重测，
+                <b>约有一半的人会换掉至少一个字母</b>。
+                一个会变的「类型」，测的就不是稳定的性格。
+              </div>
+            </div>
+
+            <div class="step card tight" style="background:#242424;text-align:left">
+              <div class="body" style="color:var(--text-inverse)">
+                <b class="c-orange">「那你说说我在想什么」</b>
+                —— 靠表情和身体语言判断说谎，206 项研究、两万四千人的汇总结果
+                是 <b>54%</b>，比抛硬币只好一点点；而且<b>受过训练的警察和法官，
+                并不比普通人更准</b>。
               </div>
             </div>
 
             <div class="step subtitle center" style="color:var(--accent-blue);margin-top:var(--space-sm)">
               每一条错的，都不是「想错了」，而是「没测过」。
             </div>
+          </div>
+        `);
+        ctx.steps();
+      },
 
+      /* ---- 8.6 落到测量上，并回应那句「学心理的是不是都有病」 ---- */
+      function (ctx) {
+        ctx.set(`
+          <div class="stack gap-lg" style="max-width:72vw">
             <div class="step title bold center" style="color:var(--accent-blue)">
               科学不是猜，是测量。
+            </div>
+
+            <div class="step body center" style="color:var(--text-inverse)">
+              顺带说一句：心理学的对象是<b>人自己</b>，所以每个人都觉得
+              自己有资格评论它 —— <b>物理学就没有这个待遇</b>。
+            </div>
+
+            <div class="step body center" style="color:var(--text-inverse)">
+              这不是它不科学的原因，恰恰是它难的地方。
             </div>
           </div>
         `);
         ctx.steps();
       },
 
-      /* ---- 8.6 人脑库：科学背后是别人的给予 ---- */
+      /* ---- 8.7 人脑库：科学背后是别人的给予 ---- */
       function (ctx) {
         ctx.set(`
           <div class="stack gap-md" style="max-width:74vw">
@@ -386,7 +415,7 @@
         ctx.steps();
       },
 
-      /* ---- 8.7 过渡：把问题抛给下一场 ---- */
+      /* ---- 8.8 过渡：把问题抛给下一场 ---- */
       function (ctx) {
         ctx.set(`
           <h2 class="title bold center anim fade" style="--d:.4s;color:var(--text-inverse);max-width:70vw">
