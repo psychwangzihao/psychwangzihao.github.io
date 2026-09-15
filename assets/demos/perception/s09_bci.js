@@ -106,23 +106,34 @@
 
   PERCEPTION.scene({
     id: 'bci',
-    label: '如何改变脑 · 直接写入',
+    label: '如何改变脑 · 从读到写',
     states: [
 
-      /* ---- 9.0 原理：两条通路，一进一出 ---- */
+      /* ---- 9.0 原理：读一条，写一条 ----
+         上一幕收在「电极只负责读」。所以这里两条通路必须是
+         **同一条链的两个方向**：上=读（大脑→电极→解码），
+         下=写（指令→编码→电极→大脑）。
+         原来上面那条写的是「感觉器官→换能器→神经信号→大脑」，
+         那是自然的输入通路，和「读」没关系，接不上上一幕。 */
       function (ctx) {
         ctx.set(`
           <div id="bciRows" class="stack">
             <div id="flowIn" class="anim" style="--d:0s">
-              ${flow(['感觉器官', '换能器', '神经信号', '大脑'], 'var(--accent-blue)')}
+              <div class="small center muted" style="margin-bottom:var(--space-2xs)">
+                读 —— 脑电走的是这一条
+              </div>
+              ${flow(['大脑', '电极', '解码', '意图'], 'var(--accent-blue)')}
             </div>
             <div id="flowOut" class="anim" style="--d:0s">
-              ${flow(['外部信号', '电极', '神经信号', '大脑'], 'var(--accent-orange)')}
+              <div class="small center muted" style="margin-bottom:var(--space-2xs)">
+                写 —— 脑机接口走的是这一条
+              </div>
+              ${flow(['指令', '编码', '电极', '大脑'], 'var(--accent-orange)')}
             </div>
           </div>
 
           <div id="bciCaption" class="subtitle bold center anim fade" style="--d:.8s">
-            如果知觉是神经模式，能不能绕过感官，直接写？
+            如果知觉是神经模式，那么绕过感官、直接写入，原则上就是可行的。
           </div>
         `);
 

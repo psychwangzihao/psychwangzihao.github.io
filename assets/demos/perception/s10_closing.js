@@ -64,7 +64,7 @@ PERCEPTION.scene({
       ctx.set(`
         <div class="cl-dark" data-dark>
           <div class="stack gap-sm cl-rows">
-            <div class="subtitle">那 —— 世界是假的吗？</div>
+            <div class="subtitle">那么，世界是假的吗？</div>
             <div class="step subtitle">不是。</div>
             <div class="step subtitle">是说：我们接触世界，必须经过大脑的翻译。<br>翻译会有偏差，但原文是真的。</div>
             <div class="step subtitle">科学要研究的，就是这套翻译规则 —— <br>以及它什么时候会出错。</div>

@@ -110,7 +110,7 @@ PERCEPTION.scene({
 
             <div id="stratText" class="stack" style="margin-top:2vw">
               <div class="subtitle center anim fade" style="--d:.4s">
-                第一天：没法走路，伸手全反，恶心呕吐。
+                第一天：无法走路，伸手方向全反，恶心呕吐。
               </div>
             </div>
           </div>
@@ -185,7 +185,7 @@ PERCEPTION.scene({
 
             <div id="stratText" class="stack" style="margin-top:1.4vw">
               <div class="title center anim fade" style="--d:.4s">
-                大脑不是固定硬件。它会根据输入重新接线。
+                大脑不是固定的硬件，它会根据输入重新接线。
               </div>
 
               <!-- 2025 年的 fMRI 研究，把斯特拉顿的故事接到现在，

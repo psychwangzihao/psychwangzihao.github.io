@@ -205,15 +205,15 @@ PERCEPTION.scene({
       ctx.set(`
         <div class="stack gap-xl" style="max-width:74vw">
           <h1 class="title center">
-            如果现在，窗外有一棵树倒下来了 ——<br>你觉得会怎么样？
+            如果现在，窗外有一棵树倒下来了。
           </h1>
 
           <h1 class="step title center">
-            从科学上讲，这件事会不会因为你在不在场，而改变？
+            从科学上讲，这件事会不会因为你是否在场，而改变？
           </h1>
 
           <h1 class="step hero center" style="color:var(--accent-blue)">
-            那么：在一片无人的森林里，<br>一棵树倒下了，它还会响吗？
+            那么，在一片无人的森林里，<br>一棵树倒下了，它还会响吗？
           </h1>
         </div>
       `);
@@ -222,7 +222,7 @@ PERCEPTION.scene({
 
     /* ---- 1.1 第一次统计 ---- */
     function (ctx) {
-      voteBoard(ctx, 'r1', '第一次统计 —— 觉得「它会响」的，请举手。');
+      voteBoard(ctx, 'r1', '第一次统计');
     },
 
     /* ---- 1.2 声音的通路：一条一条点亮，走到大脑为止 ---- */
@@ -230,7 +230,7 @@ PERCEPTION.scene({
       ctx.set(`
         <div class="stack gap-lg" style="width:100%">
           <div class="body center anim fade" style="--d:0s;color:var(--text-secondary)">
-            先看「响」是怎么发生的。
+            「响」是怎么发生的
           </div>
 
           <div id="hearStage" class="anim fade" style="--d:.2s">${hearingPathSVG()}</div>
@@ -246,7 +246,7 @@ PERCEPTION.scene({
 
     /* ---- 1.3 第二次统计：这次才是准的 ---- */
     function (ctx) {
-      voteBoard(ctx, 'r2', '第二次统计 —— 现在再举一次手。');
+      voteBoard(ctx, 'r2', '第二次统计');
     },
 
     /* ---- 1.4 拆解：声波 ≠ 响 ---- */
@@ -324,7 +324,7 @@ PERCEPTION.scene({
     /* ---- 1.6 过渡 ---- */
     function (ctx) {
       ctx.set(`
-        <h2 class="title center anim" style="--d:0s">那大脑是怎么做到的？</h2>
+        <h2 class="title center anim" style="--d:0s">大脑是怎么做到的？</h2>
       `);
     },
 

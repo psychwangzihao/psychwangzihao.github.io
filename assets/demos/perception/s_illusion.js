@@ -125,13 +125,13 @@ PERCEPTION.scene({
           </div>
 
           <p class="body anim fade" style="--d:.25s;max-width:62vw;text-align:center;color:var(--text-secondary)">
-            你现在<b>已经知道</b>它们一样大了。再看一眼 ——
+            你已经<b>知道</b>它们一样大了。再看一眼。
           </p>
 
           <div class="step il-answer" style="color:var(--accent-orange)">还是不一样。</div>
 
           <p class="step subtitle" style="max-width:62vw;text-align:center">
-            知道答案，并不能修好它。
+            知道答案，也修不好它。
           </p>
 
           <div class="quote step">

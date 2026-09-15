@@ -161,7 +161,7 @@ PERCEPTION.scene({
         <div class="stack gap-md">
           <div class="anim pop" style="--d:0s">${vestSVG({ w: 30 })}</div>
           <div class="subtitle center anim fade" style="--d:.4s">
-            David Eagleman 发明了一件背心，用来「听」。
+            David Eagleman 发明了一件用来「听」的背心。
           </div>
         </div>
       `);
@@ -279,7 +279,7 @@ PERCEPTION.scene({
           </div>
 
           <div class="subtitle center anim fade" style="--d:1.7s;margin-top:3vw">
-            就像盲人摸盲文，不需要想「这个凸起代表什么字母」。
+            如同盲人读盲文，不必先想「这个凸起代表哪个字母」。
           </div>
         </div>
       `);
@@ -321,7 +321,7 @@ PERCEPTION.scene({
       ctx.set(`
         <div class="stack gap-md">
           <div class="title center bold anim fade" style="--d:0s">
-            大脑不在乎信号从哪里来，只在乎有没有规律。
+            大脑不关心信号来自哪里，只关心其中有没有规律。
           </div>
         </div>
       `);
@@ -331,8 +331,8 @@ PERCEPTION.scene({
     function (ctx) {
       ctx.set(`
         <div class="stack gap-md" style="max-width:70vw">
-          <div class="title center bold anim fade" style="--d:0s">换掉输入，大脑自己就跟上了。</div>
-          <div class="step title center bold">可是 —— 我们凭什么相信自己的判断？</div>
+          <div class="title center bold anim fade" style="--d:0s">换掉输入，大脑会自己跟上。</div>
+          <div class="step title center bold">可是，我们凭什么相信自己的判断？</div>
         </div>
       `);
       ctx.steps();

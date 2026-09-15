@@ -44,8 +44,8 @@ PERCEPTION.scene({
           </h1>
 
           <p class="body center muted anim fade" style="--d:1.6s;max-width:64vw">
-            道理听起来很顺：思考会发热，心脏把滚烫的血送到大脑 ——
-            大脑上那些弯弯曲曲的褶皱，其实是<b>散热片</b>，
+            它的依据是：思考会发热，心脏把滚烫的血送到大脑 ——
+            大脑表面的褶皱其实是<b>散热片</b>，
             让血冷却之后再流回心脏。
           </p>
         </div>
@@ -57,7 +57,7 @@ PERCEPTION.scene({
       ctx.set(`
         <div class="stack gap-lg" style="max-width:72vw">
           <h1 class="title center anim" style="--d:0s">
-            这套理论完美自洽 —— 而且它非常符合日常经验。
+            这套理论完美自洽，而且符合日常经验。
           </h1>
 
           <div class="card tight anim" style="--d:.8s;background:var(--accent-pink-light);text-align:left;max-width:56vw">
@@ -76,7 +76,7 @@ PERCEPTION.scene({
           </div>
 
           <p class="step body center muted" style="max-width:56vw">
-            你看，它解释得通，也符合直觉。所以它统治了两千多年。
+            它解释得通，也符合直觉 —— 因此统治了两千多年。
           </p>
         </div>
       `);
@@ -88,7 +88,7 @@ PERCEPTION.scene({
       ctx.set(`
         <div class="stack gap-lg" style="max-width:74vw">
           <div class="title center anim" style="--d:0s">
-            可是，来看两组数据。
+            来看两组数据。
           </div>
 
           <div class="card tight anim" style="--d:.7s;background:var(--accent-blue-light);text-align:left;max-width:60vw">

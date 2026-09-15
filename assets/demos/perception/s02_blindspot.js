@@ -122,9 +122,9 @@ PERCEPTION.scene({
           </div>
 
           <div id="bsCard" class="card anim" style="--d:.1s">
-            <p class="anim fade" style="--d:.3s"><b>圆点消失时，你看到黑洞了吗？</b></p>
-            <p class="step muted">没有。你看到的是背景。</p>
-            <p class="step">但那里没有感光细胞。<br>谁填的？—— <b class="c-blue">大脑</b>。</p>
+            <p class="anim fade" style="--d:.3s"><b>圆点消失时，你看到的不是黑洞。</b></p>
+            <p class="step muted">你看到的是背景 —— 而那个位置并没有感光细胞。</p>
+            <p class="step">填补它的是 <b class="c-blue">大脑</b>。</p>
           </div>
 
           <div class="quote step" style="max-width:34vw;margin-top:var(--space-md)">
@@ -144,7 +144,7 @@ PERCEPTION.scene({
     /* ---- 2.2 过渡 ---- */
     function (ctx) {
       ctx.set(`
-        <h2 class="title center anim" style="--d:0s;max-width:70vw">大脑会替你补上不存在的东西。<br>可每个人补出来的，都一样吗？</h2>
+        <h2 class="title center anim" style="--d:0s;max-width:70vw">大脑会补上不存在的东西。<br>但每个人补出来的，一样吗？</h2>
       `);
     },
 

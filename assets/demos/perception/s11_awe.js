@@ -63,7 +63,7 @@ PERCEPTION.scene({
         ? '<span class="pill">会 · ' + v.yes + '</span>' +
           '<span class="pill orange">不会 · ' + v.no + '</span>' +
           '<span class="small faint">开场时我们班投出来的</span>'
-        : '<span class="small faint">开场时我们举过手 —— 现在，请再想一次。</span>';
+        : '<span class="small faint">开场时我们举过手。</span>';
 
       ctx.set(`
         <div class="stack gap-md">
