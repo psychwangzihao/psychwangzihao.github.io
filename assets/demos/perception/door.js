@@ -35,11 +35,15 @@
 .door.open .door-l{transform:translateX(-101%);}
 .door.open .door-r{transform:translateX(101%);}
 
-/* 门牌：校徽 + 提示语，正好骑在门缝上 */
+/* 门牌：校徽 + 提示语，正好骑在门缝上。
+   阴影放在这一层（它不动），呼吸动画放在下面的 img 上 ——
+   带 filter 的元素会单独占一个渲染层，进/出全屏时这层会被重建，
+   两者放在同一个元素上时，动画就会看起来「卡住不动了」。 */
 .door-plate{
   position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
   display:flex;flex-direction:column;align-items:center;gap:var(--space-md);
   cursor:pointer;
+  filter:drop-shadow(0 12px 40px rgba(0,0,0,.35));
   transition:opacity var(--dur-slower) var(--ease-out),
              transform var(--dur-slower) var(--ease-out);
 }
@@ -47,9 +51,10 @@
 /* 关门：门板走到一半，校徽才浮出来 */
 .door.closing .door-plate{transition-delay:.45s;cursor:default;}
 
+/* will-change 让 img 这一层跨全屏切换被保留下来 */
 .door-plate img{
   width:26vw;min-width:190px;max-width:380px;height:auto;display:block;
-  filter:drop-shadow(0 12px 40px rgba(0,0,0,.35));
+  will-change:transform;
   animation:doorBreathe 4s var(--ease-in-out) infinite;
 }
 @keyframes doorBreathe{
@@ -66,6 +71,17 @@
   letter-spacing:.06em;text-align:center;
 }
 `);
+
+  /* 保险丝：万一浏览器在全屏切换时把动画的渲染层丢了（layer 重建，
+     动画看起来就停住了），切回来时把动画重启一次。
+     强制读一次 offsetWidth 会触发回流，动画才会真的从头开始。 */
+  document.addEventListener('fullscreenchange', function () {
+    var img = document.querySelector('.door-plate img');
+    if (!img) return;
+    img.style.animation = 'none';
+    void img.offsetWidth;
+    img.style.animation = '';
+  });
 
   window.DOOR = {
     html: function (opt) {

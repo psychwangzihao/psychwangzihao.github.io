@@ -21,7 +21,7 @@ PERCEPTION.scene({
     function (ctx) {
       /* 门一开始是开的（接着上一幕的亮屏），然后缓缓合上 */
       ctx.set(
-        DOOR.html({ open: true, note: '有问题，来教室外面找我。' }) +
+        DOOR.html({ open: true, note: '谢谢大家，欢迎提问。' }) +
         '<div class="curtain-sign" id="curtainSign">浙江大学心理与行为科学系 · 王梓豪</div>'
       );
 

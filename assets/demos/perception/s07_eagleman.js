@@ -331,8 +331,8 @@ PERCEPTION.scene({
     function (ctx) {
       ctx.set(`
         <div class="stack gap-md" style="max-width:70vw">
-          <div class="title center bold anim fade" style="--d:0s">既然能换，能不能直接写？</div>
-          <div class="step title center bold">可是 —— 我们真的能相信自己的判断吗？</div>
+          <div class="title center bold anim fade" style="--d:0s">这些事，大脑都在你意识不到的地方做完了。</div>
+          <div class="step title center bold">那么 —— 你还信得过自己的「看到」和「听到」吗？</div>
         </div>
       `);
       ctx.steps();
