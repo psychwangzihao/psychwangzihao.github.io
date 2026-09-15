@@ -234,7 +234,9 @@ PERCEPTION.scene({
     /* ---- 6.6 过渡 ---- */
     function (ctx) {
       ctx.set(`
-        <h2 class="title center anim fade" style="--d:0s">那如果换一条完全不同的通道呢？</h2>
+        <h2 class="title center anim fade" style="--d:0s;max-width:70vw">
+          这颗大脑会自己改写自己。<br>那么 —— 我们怎么知道，它此刻到底在做什么？
+        </h2>
       `);
     },
 

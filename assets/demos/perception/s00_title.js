@@ -1,5 +1,6 @@
 /* ============================================================
  * 场景 0：开场  (id: title · 2 个状态)
+ * 标题：眼见为实吗？ / Is Seeing Believing?
  *   0.0  两扇门合拢，门缝上是浙大校徽 + 「点击校徽，开始上课」
  *   0.1  门向两侧滑开，露出标题
  * 学生入场时停在第 0 态，人到齐了点校徽（或按 →）开始。
@@ -49,8 +50,8 @@ PERCEPTION.scene({
       ctx.set(
         `<div class="stack" id="titleCard">
            <div id="halo" class="anim pop" style="--d:0s"></div>
-           <h1 class="hero center anim" style="--d:.5s">感觉在哪里？</h1>
-           <div class="title-date anim" style="--d:.7s">WHERE&nbsp;DO&nbsp;SENSES&nbsp;LIVE</div>
+           <h1 class="hero center anim" style="--d:.5s">眼见为实吗？</h1>
+           <div class="title-date anim" style="--d:.7s">IS&nbsp;SEEING&nbsp;BELIEVING&nbsp;?</div>
            <div class="small faint title-sub anim" style="--d:.8s">浙江大学心理与行为科学系 · 王梓豪</div>
            <picture class="anim fade" style="--d:1s">
              <source srcset="./media/dept-logo.webp" type="image/webp">

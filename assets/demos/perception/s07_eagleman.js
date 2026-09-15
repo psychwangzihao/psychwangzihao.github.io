@@ -287,7 +287,7 @@ PERCEPTION.scene({
       /* 线先长出来，再一个个点亮节点 */
       ctx.soon(function () { ctx.q('#egTlLine').classList.add('on'); }, 60);
       ctx.each('.eg-node', function (el, i) {
-        ctx.after(700 + i * 200, function () { el.classList.add('on'); });
+        ctx.after(350 + i * 160, function () { el.classList.add('on'); });
       });
     },
 
@@ -331,8 +331,8 @@ PERCEPTION.scene({
     function (ctx) {
       ctx.set(`
         <div class="stack gap-md" style="max-width:70vw">
-          <div class="title center bold anim fade" style="--d:0s">这些事，大脑都在你意识不到的地方做完了。</div>
-          <div class="step title center bold">那么 —— 你还信得过自己的「看到」和「听到」吗？</div>
+          <div class="title center bold anim fade" style="--d:0s">换掉输入，大脑自己就跟上了。</div>
+          <div class="step title center bold">那 —— 能不能不经过感官，<b class="c-orange">直接写进去</b>？</div>
         </div>
       `);
       ctx.steps();

@@ -441,7 +441,7 @@
       function (ctx) {
         ctx.set(`
           <h2 class="title bold center anim fade" style="--d:.4s;color:var(--text-inverse);max-width:70vw">
-            能测量，能不能解码？能解码，能不能写入？
+            我们能读到大脑在做什么了。<br>那么 —— 能不能<b class="c-orange">改变</b>它？
           </h2>
         `);
       },

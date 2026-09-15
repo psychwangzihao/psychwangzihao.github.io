@@ -168,7 +168,7 @@ PERCEPTION.scene({
     /* ---- 5.4 过渡 ---- */
     function (ctx) {
       ctx.set(`
-        <h2 class="title center anim fade" style="--d:0s;max-width:70vw">同一个世界，不同的大脑给出不同的体验。<br>那就来看看这颗大脑本身。</h2>
+        <h2 class="title center anim fade" style="--d:0s;max-width:70vw">同一个世界，不同的大脑，给出不同的世界。<br>那么 —— 那个「在心里」感受着这一切的东西，究竟在哪里？</h2>
       `);
     },
 
