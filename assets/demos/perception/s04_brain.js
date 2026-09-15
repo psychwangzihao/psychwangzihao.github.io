@@ -639,7 +639,7 @@ PERCEPTION.scene({
     function (ctx) {
       ctx.set(
         '<h2 class="title bold center anim fade" style="--d:.1s;max-width:70vw">' +
-          '感觉在哪里，由大脑决定。<br>那这条线路，是天生固定、不能改的吗？' +
+          '感受发生在哪里，由大脑决定。<br>那这条线路，是天生固定、不能改的吗？' +
         '</h2>'
       );
     },

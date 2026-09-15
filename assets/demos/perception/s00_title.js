@@ -51,7 +51,7 @@ PERCEPTION.scene({
         `<div class="stack" id="titleCard">
            <div id="halo" class="anim pop" style="--d:0s"></div>
            <h1 class="hero center anim" style="--d:.5s">眼见为实吗？</h1>
-           <div class="title-date anim" style="--d:.7s">IS&nbsp;SEEING&nbsp;BELIEVING&nbsp;?</div>
+           <div class="title-date anim" style="--d:.7s">IS&nbsp;SEEING&nbsp;BELIEVING?</div>
            <div class="small faint title-sub anim" style="--d:.8s">浙江大学心理与行为科学系 · 王梓豪</div>
            <picture class="anim fade" style="--d:1s">
              <source srcset="./media/dept-logo.webp" type="image/webp">
