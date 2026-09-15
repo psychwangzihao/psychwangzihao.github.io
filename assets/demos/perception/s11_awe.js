@@ -119,22 +119,23 @@ PERCEPTION.scene({
               <div class="aw-step anim" style="--d:0s">
                 ${ICON.person('ico lg c-blue')}<span>我知道我有感受。</span>
               </div>
-              <div class="aw-step anim" style="--d:.45s">
+              <div class="aw-step step">
                 ${ICON.users('ico lg c-green')}<span>我猜你也有 —— 因为你和我一样。</span>
               </div>
-              <div class="aw-step anim" style="--d:.9s">
+              <div class="aw-step step">
                 ${ICON.question('ico lg c-purple')}<span>那它呢？一棵树、一只鸟、一台机器。</span>
               </div>
             </div>
 
-            <div class="rule short anim fade" style="--d:1.5s"></div>
+            <div class="step rule short"></div>
 
-            <p class="takeaway anim fade" style="--d:1.7s;max-width:58vw">
+            <p class="step takeaway" style="max-width:58vw">
               我们判断一个东西有没有心灵，靠的只是「它像不像我」。
             </p>
           </div>
         </div>
       `);
+      ctx.steps();
     },
 
     /* ---- 11.3 保持敬畏（全场结束） ---- */
@@ -151,10 +152,10 @@ PERCEPTION.scene({
             <div class="rule short anim fade" style="--d:.8s"></div>
 
             <div class="stack gap-md" style="margin-top:var(--space-sm)">
-              <div class="aw-ask anim" style="--d:1.2s">
+              <div class="aw-ask">
                 ${ICON.tree('ico lg c-green')}<span>砍树的时候，树会痛吗？</span>
               </div>
-              <div class="aw-ask anim" style="--d:1.7s">
+              <div class="aw-ask step">
                 ${ICON.bird('ico lg c-blue')}<span>小鸟也有意识吗？</span>
               </div>
             </div>

@@ -49,6 +49,9 @@ PERCEPTION.css('scene-blindspot', `
 
 /* 揭晓态：左图右文 */
 #bsReveal{display:flex;align-items:center;justify-content:center;gap:var(--space-xl);width:100%;}
+/* 揭晓页的板子是「成果展示」，不是那个撑满屏幕的交互界面，
+   两点距离要收回到正常大小 */
+#bsReveal #bsBoard{gap:12vw;width:auto;}
 #bsReveal .board{flex:none;transform:scale(.82);transform-origin:center;}
 #bsCard{width:35vw;min-width:280px;}
 #bsCard p{font-size:var(--fs-body);line-height:1.7;margin-bottom:var(--space-sm);}

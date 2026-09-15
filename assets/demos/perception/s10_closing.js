@@ -24,18 +24,19 @@ PERCEPTION.scene({
   label: '收束',
   states: [
 
-    /* ---- 10.0 回归：四个场景的回声，一次全出 ---- */
+    /* ---- 10.0 回归：四个场景的回声，一句一按 ---- */
     function (ctx) {
       ctx.set(`
         <div class="cl-dark" data-dark>
           <div class="stack gap-sm cl-rows">
-            <div class="subtitle anim fade" style="--d:0s">声波在森林里，响在大脑里。</div>
-            <div class="subtitle anim fade" style="--d:.4s">波长在宇宙里，红在大脑里。</div>
-            <div class="subtitle anim fade" style="--d:.8s">分子在杯子里，甜在大脑里。</div>
-            <div class="subtitle anim fade" style="--d:1.2s">损伤在身体上，痛在大脑里。</div>
+            <div class="subtitle">声波在森林里，响在大脑里。</div>
+            <div class="step subtitle">波长在宇宙里，红在大脑里。</div>
+            <div class="step subtitle">分子在杯子里，甜在大脑里。</div>
+            <div class="step subtitle">损伤在身体上，痛在大脑里。</div>
           </div>
         </div>
       `);
+      ctx.steps();
     },
 
     /* ---- 10.1 核心：一句话收束 ---- */
@@ -43,18 +44,19 @@ PERCEPTION.scene({
       ctx.set(`
         <div class="cl-dark" data-dark>
           <div class="stack gap-md cl-rows">
-            <div class="title bold center anim fade" style="--d:0s">
+            <div class="title bold center">
               感觉不在眼睛、耳朵、皮肤里，而在大脑里。
             </div>
-            <div class="subtitle anim fade" style="--d:.4s">
+            <div class="step subtitle">
               大脑可以构建、可以缺失、可以换通道、可以被写入。
             </div>
-            <div class="subtitle c-blue anim fade" style="--d:.8s">
+            <div class="step subtitle c-blue">
               而科学方法，是我们知道这一切的唯一可靠路径。
             </div>
           </div>
         </div>
       `);
+      ctx.steps();
     },
 
     /* ---- 10.2 不是虚幻：先破可能的误解 ---- */
@@ -62,9 +64,10 @@ PERCEPTION.scene({
       ctx.set(`
         <div class="cl-dark" data-dark>
           <div class="stack gap-sm cl-rows">
-            <div class="subtitle">这不是说世界是假的。</div>
-            <div class="step subtitle">而是说，我们接触世界，必须通过大脑的翻译。</div>
-            <div class="step subtitle">科学就是研究翻译规则，以及它什么时候会出错。</div>
+            <div class="subtitle">那 —— 世界是假的吗？</div>
+            <div class="step subtitle">不是。</div>
+            <div class="step subtitle">是说：我们接触世界，必须经过大脑的翻译。<br>翻译会有偏差，但原文是真的。</div>
+            <div class="step subtitle">科学要研究的，就是这套翻译规则 —— <br>以及它什么时候会出错。</div>
 
             <div class="step quote" style="max-width:56vw;margin-top:var(--space-md)">
               “If the human brain were so simple that we could understand it,<br>
@@ -74,6 +77,7 @@ PERCEPTION.scene({
           </div>
         </div>
       `);
+      ctx.steps();
     },
 
   ],

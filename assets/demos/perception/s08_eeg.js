@@ -1,5 +1,5 @@
 /* ============================================================
- * 场景 8：脑电波演示  (id: eeg · 10 个状态 · 暗色)
+ * 场景 8：脑电波演示  (id: eeg · 11 个状态 · 暗色)
  * 目的：展示科学测量，强调脑电不是读心术。
  * 现场会请一位志愿者戴上脑电头环，本场景是他的视觉伴奏，
  * 8.1 就是直接说给志愿者听的指令。
@@ -399,12 +399,52 @@
         ctx.steps();
       },
 
-      /* ---- 8.8 人脑库：科学背后是别人的给予 ---- */
+      /* ---- 8.8 爱因斯坦的大脑：一个样本能证明什么 ----
+         材料取自作者杭二中的讲稿：「把脑子拿出来看」那一段。
+         这个故事的价值在于 —— 它用一次真实的研究事故说明
+         「先射箭再画靶」是什么样子，比讲十条原则都管用。 */
+      function (ctx) {
+        ctx.set(`
+          <div class="stack gap-md" style="max-width:76vw">
+            <div class="body center anim fade" style="--d:0s;color:var(--text-inverse)">
+              那我们把大脑拿出来看，能看到什么？
+            </div>
+
+            <div class="step body center" style="color:var(--text-inverse)">
+              1955 年，爱因斯坦在普林斯顿去世。做尸检的医生<b>没有把大脑放回去</b>，
+              而是把它切成了两百多块，泡在福尔马林里，私藏了四十多年。
+              这件事当时引起了巨大争议。
+            </div>
+
+            <div class="step body center" style="color:var(--text-inverse)">
+              1985 年，有人把这些切片和 11 个普通人的大脑做了对比，
+              报告说：爱因斯坦<b>左侧顶叶</b>的神经胶质细胞比例更高，
+              并推论这可能与他的思考能力有关。
+            </div>
+
+            <div class="step card tight" style="background:#242424;text-align:left;max-width:70vw">
+              <div class="body" style="color:var(--text-inverse)">
+                可这个结论经不起推敲：那 11 位对照者平均只活了 64 岁，
+                而爱因斯坦去世时 76 岁 —— <b>胶质细胞是会随年龄继续分裂的</b>，
+                比例偏高，也可能只是因为神经元老死得更多。
+                戴蒙德本人后来也承认这项研究有局限。
+              </div>
+            </div>
+
+            <div class="step subtitle center" style="color:var(--accent-orange)">
+              先射箭，再画靶 —— 只有一个样本，又在事后反复找，找到什么都不奇怪。
+            </div>
+          </div>
+        `);
+        ctx.steps();
+      },
+
+      /* ---- 8.9 人脑库：所以要很多很多个 ---- */
       function (ctx) {
         ctx.set(`
           <div class="stack gap-md" style="max-width:74vw">
-            <div class="body center" style="color:var(--text-inverse)">
-              那么，研究大脑要用的脑子，从哪里来？
+            <div class="body center anim fade" style="--d:0s;color:var(--text-inverse)">
+              所以，研究大脑要用的脑子，从哪里来？
             </div>
 
             <div class="step body center" style="color:var(--text-inverse)">
@@ -428,7 +468,7 @@
               他们不言不语，却教给了我们关于大脑最要紧的知识。
             </div>
 
-            <div class="quote step">
+            <div class="step quote">
               “If there is a life after death, it is organ donation.”
               <span class="attr">Steven Laureys</span>
             </div>
@@ -437,7 +477,7 @@
         ctx.steps();
       },
 
-      /* ---- 8.9 过渡：把问题抛给下一场 ---- */
+      /* ---- 8.10 过渡：把问题抛给下一场 ---- */
       function (ctx) {
         ctx.set(`
           <h2 class="title bold center anim fade" style="--d:.4s;color:var(--text-inverse);max-width:70vw">
