@@ -106,7 +106,7 @@
 
   PERCEPTION.scene({
     id: 'bci',
-    label: '脑机接口',
+    label: '如何改变脑 · 直接写入',
     states: [
 
       /* ---- 9.0 原理：两条通路，一进一出 ---- */

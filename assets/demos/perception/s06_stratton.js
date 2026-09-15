@@ -63,7 +63,7 @@ PERCEPTION.css('scene-stratton', `
 
 PERCEPTION.scene({
   id: 'stratton',
-  label: '斯特拉顿眼镜',
+  label: '自我进化 · 颠倒的世界',
   states: [
 
     /* ---- 6.0 先猜一猜：揭晓之前先让人押一个答案 ----
@@ -235,7 +235,7 @@ PERCEPTION.scene({
     function (ctx) {
       ctx.set(`
         <h2 class="title center anim fade" style="--d:0s;max-width:70vw">
-          这颗大脑会自己改写自己。<br>那么 —— 我们怎么知道，它此刻到底在做什么？
+          那如果换一条完全不同的通道呢？
         </h2>
       `);
     },

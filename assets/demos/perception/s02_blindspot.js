@@ -75,7 +75,7 @@ PERCEPTION.css('scene-blindspot', `
 
 PERCEPTION.scene({
   id: 'blindspot',
-  label: '盲点测试',
+  label: '看到的世界并不真实',
   noClick: true,          /* 学生正在做测试，误点不该翻页 */
   states: [
 

@@ -368,7 +368,7 @@ function brainSceneIndex() {
 
 PERCEPTION.scene({
   id: 'brain',
-  label: '大脑模型',
+  label: '大脑探秘',
   noClick: true,          /* 本场景全是交互，误点不该翻页 */
   states: [
 

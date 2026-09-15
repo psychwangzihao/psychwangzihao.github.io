@@ -213,7 +213,7 @@
 
   PERCEPTION.scene({
     id: 'eeg',
-    label: '脑电波',
+    label: '如何研究脑 · 客观测量',
     dark: true,
     states: [
 

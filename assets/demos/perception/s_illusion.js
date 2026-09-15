@@ -70,7 +70,7 @@ function ebbinghausSVG(surroundR, dist, proofId) {
 
 PERCEPTION.scene({
   id: 'illusion',
-  label: '大小错觉',
+  label: '如何研究脑 · 主观报告不可信',
   states: [
 
     /* ---- 0：哪个大？ ---- */

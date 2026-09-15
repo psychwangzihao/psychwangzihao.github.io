@@ -197,7 +197,7 @@ function voteBoard(ctx, which, intro) {
 
 PERCEPTION.scene({
   id: 'tree',
-  label: '树倒悖论',
+  label: '世界在我心中',
   states: [
 
     /* ---- 1.0 两个提问。不预设答案，也不先给结论 ---- */

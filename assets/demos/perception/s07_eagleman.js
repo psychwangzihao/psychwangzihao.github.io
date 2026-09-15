@@ -140,7 +140,7 @@ PERCEPTION.css('scene-eagleman', `
 
 PERCEPTION.scene({
   id: 'eagleman',
-  label: 'Eagleman 背心',
+  label: '自我进化 · 换一条通道',
   dark: false,
   states: [
 
@@ -332,7 +332,7 @@ PERCEPTION.scene({
       ctx.set(`
         <div class="stack gap-md" style="max-width:70vw">
           <div class="title center bold anim fade" style="--d:0s">换掉输入，大脑自己就跟上了。</div>
-          <div class="step title center bold">那 —— 能不能不经过感官，<b class="c-orange">直接写进去</b>？</div>
+          <div class="step title center bold">可是 —— 我们凭什么相信自己的判断？</div>
         </div>
       `);
       ctx.steps();

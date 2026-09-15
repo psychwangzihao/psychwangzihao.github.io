@@ -65,7 +65,7 @@ PERCEPTION.css('scene-aphantasia', `
 
 PERCEPTION.scene({
   id: 'aphantasia',
-  label: '心盲症',
+  label: '心中世界每人不同',
   states: [
 
     /* ---- 5.0 指令：闭眼想一朵花（不倒计时，讲者自己掌握节奏）---- */
