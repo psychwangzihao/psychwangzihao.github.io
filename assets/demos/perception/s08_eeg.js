@@ -192,13 +192,16 @@
 
 #sciLines{width:100%;}
 
-/* 留言气泡：这些是「别人说的话」，所以做成对话框的样子 */
+/* 留言气泡：这些是「别人说的话」，所以做成对话框的样子。
+   字号用 --fs-subtitle 而不是 body：这一屏只有四句话，没有别的信息，
+   要让最后一排的人也看清 —— 而且这几句话本身就是「要被攻破的靶子」，
+   大一点才有被点名的感觉。 */
 .bubble{
   position:relative;
   background:#262626;color:var(--text-inverse);
   border:1px solid #3A3A3A;border-radius:20px 20px 20px 6px;
   padding:var(--space-sm) var(--space-md);
-  font-size:var(--fs-body);line-height:1.5;
+  font-size:var(--fs-subtitle);font-weight:var(--fw-medium);line-height:1.45;
 }
 .bubble::before{
   content:'';position:absolute;left:-7px;bottom:0;
@@ -316,15 +319,14 @@
 
       /* ---- 8.5 四句流传很广的话（气泡的形式）----
          用对话框而不是 ①②③④ 的清单：这些是「别人说的话」，
-         一条一条冒出来，更像现场听到，也让讲者一条一条去破。 */
+         一条一条冒出来，更像现场听到，也让讲者一条一条去破。
+         上面原来有一句「下面这几句话，你可能都听过。」，删掉了 ——
+         四句话自己就说明了自己是什么，加一句反而把力气泄了；
+         第一句改成直接出现，进场就是完整一屏。 */
       function (ctx) {
         ctx.set(`
-          <div class="stack gap-md" style="width:100%;align-items:flex-start;max-width:70vw;margin:0 auto">
-            <div class="subtitle anim fade" style="--d:0s;color:var(--text-inverse);align-self:center;margin-bottom:var(--space-sm)">
-              下面这几句话，你可能都听过。
-            </div>
-
-            <div class="bubble">人类只用了大脑的 10%。</div>
+          <div class="stack gap-md" style="width:100%;align-items:flex-start;max-width:74vw;margin:0 auto">
+            <div class="bubble anim fade" style="--d:0s">人类只用了大脑的 10%。</div>
             <div class="bubble step">你是「左脑型」还是「右脑型」？</div>
             <div class="bubble step">心理学？不就是算命那一类吗。</div>
             <div class="bubble step">你学心理的？那你猜猜我现在在想什么。</div>
