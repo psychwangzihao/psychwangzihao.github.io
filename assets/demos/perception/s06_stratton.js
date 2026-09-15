@@ -75,18 +75,10 @@ PERCEPTION.scene({
         answer: 1,
         note: ''
       }));
-      /* 押对了 → 下一按直接跳到「第一天」，跳过「引入」那一屏（内容重复）；
-         押错了 → 先让正确答案留一下，下一按正常进「引入」再讲一遍。 */
-      QUIZ.mount(ctx, {
-        answer: 1,
-        onReveal: function (picked, correct) {
-          if (correct) {
-            ctx.holdNext(function () {
-              ctx.goto(PERCEPTION.scenes.findIndex(function (x) { return x.id === 'stratton'; }), 2);
-            });
-          }
-        }
-      });
+      /* 揭晓之后正常往下走 —— 「1897 年」那一屏每次都出现。
+         （曾经写过「押对了就跳过它」，但那是为了躲开和 quiz note 的重复；
+           note 已经删掉，重复不存在了，没有理由再跳。） */
+      QUIZ.mount(ctx, { answer: 1 });
     },
 
     /* ---- 6.1 引入：1897 年，那副眼镜 ---- */
