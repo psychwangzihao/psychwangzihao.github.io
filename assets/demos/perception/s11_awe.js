@@ -84,10 +84,15 @@ PERCEPTION.scene({
        开场投过两次票，这里要回扣。但**只有当「不会响」占多数时**
        才能说「我们当时说：不会响」—— 不然就是把自己的话塞给全场。 */
     function (ctx) {
-      var v = PERCEPTION.votes || { yes: 0, no: 0 };
-      var OPENING = (v.no > v.yes)
-        ? '我们当时说：不会响。'
-        : '我们当时投出来的，是「会响」。';
+      var v = PERCEPTION.votesFinal();
+      var OPENING;
+      if (v.yes === v.no) {
+        OPENING = '当时认为「会响」和「不会响」的同学，一样多。';
+      } else if (v.no > v.yes) {
+        OPENING = '我们当时说：不会响。';
+      } else {
+        OPENING = '我们当时说：会响。';
+      }
       ctx.set(`
         <div class="aw-dark" data-dark>
           <div class="stack gap-lg" style="max-width:72vw">
@@ -143,26 +148,19 @@ PERCEPTION.scene({
       ctx.set(`
         <div class="aw-dark" data-dark>
           <div class="stack gap-lg" style="max-width:76vw">
-            <div class="aw-kicker anim fade" style="--d:0s">所以</div>
+            <div class="aw-kicker">所以</div>
 
-            <h2 class="title center anim" style="--d:.3s">
+            <h2 class="title center">
               对心灵，对生命，保持敬畏。
             </h2>
 
-            <div class="rule short anim fade" style="--d:.8s"></div>
-
-            <div class="stack gap-md" style="margin-top:var(--space-sm)">
-              <div class="aw-ask">
-                ${ICON.tree('ico lg c-green')}<span>砍树的时候，树会痛吗？</span>
-              </div>
-              <div class="aw-ask step">
-                ${ICON.bird('ico lg c-blue')}<span>小鸟也有意识吗？</span>
-              </div>
+            <div class="step aw-ask" style="margin-top:var(--space-md)">
+              ${ICON.tree('ico lg c-green')}<span>砍树的时候，树会痛吗？</span>
             </div>
-
           </div>
         </div>
       `);
+      ctx.steps();
     },
 
   ],

@@ -23,17 +23,23 @@
 .door{position:absolute;inset:0;z-index:20;overflow:hidden;}
 
 .door-panel{
-  position:absolute;top:0;height:100%;width:50.2%;
+  position:absolute;top:0;height:100%;width:50%;
   background:linear-gradient(160deg,#12498F 0%,#0C3268 60%,#0A2A57 100%);
   transition:transform 1s var(--ease-in-out);
   will-change:transform;
 }
-.door-l{left:0;box-shadow:inset -1px 0 0 rgba(255,255,255,.14),
+.door-l{left:0;box-shadow:inset -2px 0 0 rgba(255,255,255,.14),
                           inset -26px 0 44px -30px rgba(0,0,0,.55);}
-.door-r{right:0;box-shadow:inset 1px 0 0 rgba(255,255,255,.14),
+.door-r{right:0;box-shadow:inset 2px 0 0 rgba(255,255,255,.14),
                           inset 26px 0 44px -30px rgba(0,0,0,.55);}
 .door.open .door-l{transform:translateX(-101%);}
 .door.open .door-r{transform:translateX(101%);}
+
+/* 门牌整体居中在屏幕正中；下面那行字是绝对定位挂上去的，
+   不参与居中的计算 —— 否则一有字，校徽就被顶到中线上面去。 */
+.door-plate{top:50%;}
+.door-note{position:absolute;top:100%;left:50%;transform:translateX(-50%);
+           margin-top:var(--space-lg);white-space:nowrap;}
 
 /* 门牌：校徽 + 提示语，正好骑在门缝上。
    阴影放在这一层（它不动），呼吸动画放在下面的 img 上 ——

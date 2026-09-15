@@ -191,6 +191,23 @@
 .eeg-col .subtitle{margin-bottom:var(--space-sm);}
 
 #sciLines{width:100%;}
+
+/* 留言气泡：这些是「别人说的话」，所以做成对话框的样子 */
+.bubble{
+  position:relative;
+  background:#262626;color:var(--text-inverse);
+  border:1px solid #3A3A3A;border-radius:20px 20px 20px 6px;
+  padding:var(--space-sm) var(--space-md);
+  font-size:var(--fs-body);line-height:1.5;
+}
+.bubble::before{
+  content:'';position:absolute;left:-7px;bottom:0;
+  width:14px;height:14px;background:#262626;
+  border-left:1px solid #3A3A3A;border-bottom:1px solid #3A3A3A;
+  border-radius:0 0 0 14px;transform:skewX(-18deg);
+}
+.bubble:nth-of-type(even){margin-left:8vw;}
+.bubble:nth-of-type(odd){margin-left:2vw;}
 #sciClose{margin-top:var(--space-lg);color:var(--accent-blue);}
 `);
 
@@ -297,32 +314,23 @@
         return function () { a.dispose(); b.dispose(); };
       },
 
-      /* ---- 8.5 四句流传很广的话 ----
-         前两句是「脑科学」的谣言，后两句是对心理学本身的误解，
-         甚至是恶意。面向高中生，要按「有独立思考能力的人」来写 ——
-         扣「伪科学」的帽子没有说服力，得给实例、给数据。 */
+      /* ---- 8.5 四句流传很广的话（气泡的形式）----
+         用对话框而不是 ①②③④ 的清单：这些是「别人说的话」，
+         一条一条冒出来，更像现场听到，也让讲者一条一条去破。 */
       function (ctx) {
         ctx.set(`
-          <div class="subtitle center anim fade" style="--d:0s;color:var(--text-inverse);margin-bottom:var(--space-md)">
-            下面这四句话，你可能都听过。
-          </div>
-
-          <div class="stack" style="gap:var(--space-sm);max-width:76vw">
-            <div class="body center" style="color:var(--text-inverse)">
-              ① 人类只用了大脑的 10%
-            </div>
-            <div class="step body center" style="color:var(--text-inverse)">
-              ② 你是「左脑型」还是「右脑型」
-            </div>
-            <div class="step body center" style="color:var(--text-inverse)">
-              ③ 心理学？不就是算命那一类吗
-            </div>
-            <div class="step body center" style="color:var(--text-inverse)">
-              ④ 你学心理的？那你猜猜我现在在想什么
+          <div class="stack gap-md" style="width:100%;align-items:flex-start;max-width:70vw;margin:0 auto">
+            <div class="subtitle anim fade" style="--d:0s;color:var(--text-inverse);align-self:center;margin-bottom:var(--space-sm)">
+              下面这几句话，你可能都听过。
             </div>
 
-            <div class="step body center" style="margin-top:var(--space-md);color:var(--accent-orange)">
-              四句都值得认真回答一次 —— 一句一句来。
+            <div class="bubble">人类只用了大脑的 10%。</div>
+            <div class="bubble step">你是「左脑型」还是「右脑型」？</div>
+            <div class="bubble step">心理学？不就是算命那一类吗。</div>
+            <div class="bubble step">你学心理的？那你猜猜我现在在想什么。</div>
+
+            <div class="step subtitle" style="color:var(--accent-orange);align-self:center;margin-top:var(--space-md)">
+              这四句，一句一句来回答。
             </div>
           </div>
         `);
@@ -466,6 +474,14 @@
 
             <div class="step body center" style="color:var(--accent-orange);margin-top:var(--space-sm)">
               他们不言不语，却教给了我们关于大脑最要紧的知识。
+            </div>
+
+            <!-- 顺着「人脑库」说到器官捐献，再落回 Laureys ——
+                 顺便解释为什么判定标准是脑死亡而不是心跳停止。 -->
+            <div class="step body center" style="color:var(--text-inverse)">
+              说到捐赠，有一个标准值得知道：今天判定一个人是否死亡，
+              看的是<b class="c-blue">大脑是否停止工作</b>，而不是心跳 ——
+              因为心跳可以靠机器维持，而意识不能。
             </div>
 
             <div class="step quote">

@@ -6,7 +6,9 @@ PERCEPTION.css('scene-tree-hear', `
 #hearStage{width:min(84vw,150vh);max-width:1560px;}
 #hearStage svg{display:block;width:100%;height:auto;}
 
-/* 通路上的每一段：默认压暗，被点到时才亮起来 */
+/* 通路上的每一段：默认压暗，点一下亮一个。
+   这些元素同时带 .step（参与「按一次出一个」的队列），
+   场景 CSS 注入得比 style.css 晚，所以这里的 opacity:.2 会盖掉 .step{opacity:0}。 */
 .hp-st{opacity:.2;transition:opacity .55s var(--ease-out);}
 .hp-st.on{opacity:1;}
 .hp-st path{fill:none;stroke:var(--brain-ink);stroke-width:4.5;
@@ -22,8 +24,18 @@ PERCEPTION.css('scene-tree-hear', `
 
 PERCEPTION.css('scene-tree', `
 #treeQ{max-width:74vw;}
-#voteWrap{margin-top:var(--space-md);width:46vw;min-width:380px;max-width:900px;}
+#voteWrap{margin-top:var(--space-md);width:38vw;min-width:400px;max-width:760px;}
 #bars{margin-top:var(--space-sm);}
+/* 点错了要能减回去 */
+.vote-minus{
+  flex:none;width:2.2em;height:2.2em;line-height:1;
+  font-family:inherit;font-size:var(--fs-body);
+  color:var(--text-tertiary);background:transparent;
+  border:1px solid var(--border-subtle);border-radius:var(--radius-full);
+  cursor:pointer;transition:all var(--dur-fast) var(--ease-out);
+}
+.vote-minus:hover{color:var(--text-primary);border-color:var(--text-tertiary);background:var(--bg-secondary);}
+.vote-minus:active{transform:translateY(1px);}
 
 .cmp-card{width:30vw;min-width:230px;min-height:15vw;}
 .cmp-card ul{list-style:none;margin-top:var(--space-xs);}
@@ -43,9 +55,13 @@ PERCEPTION.css('scene-tree', `
 .tree-tri .ico{margin-right:.4vw;}
 `);
 
-/* 现场举手的票数。挂在 PERCEPTION 上而不是放进状态里：开场要投两次，
-   最后第 11 幕回扣时还要用它。 */
-PERCEPTION.votes = { yes: 0, no: 0 };
+/* 现场举手的票数。**两次统计各存一份**：讲完声音通路之后再投的那次
+   （r2）才是准的，第 11 幕回扣用的是它。 */
+PERCEPTION.votes = { r1: { yes: 0, no: 0 }, r2: { yes: 0, no: 0 } };
+PERCEPTION.votesFinal = function () {
+  var v = PERCEPTION.votes;
+  return (v.r2.yes + v.r2.no) ? v.r2 : v.r1;
+};
 
 /* ---------- 声音的通路 ----------
    声波 → 耳廓 → 耳道 → 鼓膜 → 听小骨 → 耳蜗 → 听神经 → 大脑
@@ -67,43 +83,43 @@ function hearingSpiral(cx, cy, r0, r1, turns, steps) {
 function hearingPathSVG() {
   return `
   <svg viewBox="0 0 980 320" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <g class="hp-st" id="hpWave">
+    <g class="hp-st step" id="hpWave">
       <path d="M34,132 Q62,165 34,198"/>
       <path d="M62,110 Q104,165 62,220"/>
       <path d="M90,88 Q146,165 90,242"/>
       <text x="72" y="292" text-anchor="middle">声波</text>
     </g>
-    <g class="hp-st" id="hpPinna">
+    <g class="hp-st step" id="hpPinna">
       <path d="M216,78 C168,88 158,152 172,206 C182,244 208,256 226,244"/>
       <path d="M210,110 C186,120 182,162 192,198"/>
       <text x="196" y="292" text-anchor="middle">耳廓</text>
     </g>
-    <g class="hp-st" id="hpCanal">
+    <g class="hp-st step" id="hpCanal">
       <path d="M224,126 L326,142"/>
       <path d="M230,208 L326,190"/>
       <text x="272" y="292" text-anchor="middle">耳道</text>
     </g>
-    <g class="hp-st" id="hpDrum">
+    <g class="hp-st step" id="hpDrum">
       <path d="M334,136 C346,158 346,176 334,198"/>
       <text x="338" y="292" text-anchor="middle">鼓膜</text>
     </g>
-    <g class="hp-st" id="hpBones">
+    <g class="hp-st step" id="hpBones">
       <path d="M356,148 L378,138 L386,166 Z"/>
       <path d="M390,140 L412,152 L400,178 Z"/>
       <path d="M418,148 L440,162 L424,184 Z"/>
       <text x="412" y="292" text-anchor="middle">听小骨</text>
     </g>
-    <g class="hp-st" id="hpCochlea">
+    <g class="hp-st step" id="hpCochlea">
       <path d="${hearingSpiral(500, 166, 7, 54, 2.4, 90)}"/>
       <text x="504" y="292" text-anchor="middle">耳蜗</text>
     </g>
-    <g class="hp-st" id="hpNerve">
+    <g class="hp-st step" id="hpNerve">
       <path d="M560,150 C600,142 630,124 664,112"/>
       <path d="M560,166 C600,160 630,144 664,134"/>
       <path d="M560,182 C600,178 630,164 664,156"/>
       <text x="620" y="292" text-anchor="middle">听神经</text>
     </g>
-    <g class="hp-st" id="hpBrain">
+    <g class="hp-st step" id="hpBrain">
       <path d="M700,168 C696,126 726,100 772,96 C822,92 866,118 878,150
                C890,180 874,204 840,212 C806,220 760,218 726,206
                C706,198 698,186 700,168 Z"/>
@@ -119,30 +135,32 @@ function hearingPathSVG() {
 /* 投票面板。第 1.1 和第 1.3 两幕都用它 —— 两次统计长得一样，
    只有上面那行小标签不同（第一次 / 第二次）。票数存在 PERCEPTION.votes 里，
    两次共用一组数字，最后一次为准。 */
-function voteBoard(ctx, tag) {
-  var votes = PERCEPTION.votes;
+function voteBoard(ctx, which, intro) {
+  var votes = PERCEPTION.votes[which];
   ctx.set(`
     <div class="stack gap-lg" style="width:100%">
       <div class="body center anim fade" style="--d:0s;color:var(--text-secondary)">
-        ${tag}统计 —— 觉得「它会响」的，请举手。
+        ${intro}
       </div>
 
       <div id="voteWrap" class="stack gap-sm">
         <div class="row gap-lg anim" style="--d:.3s">
-          <button class="btn primary" id="voteYes">会</button>
+          <button class="btn" id="voteYes">会</button>
           <button class="btn" id="voteNo">不会</button>
         </div>
 
-        <div class="bars anim fade" id="bars" style="--d:.5s;opacity:0">
+        <div class="bars anim fade" id="bars" style="--d:.5s">
           <div class="bar-row">
             <span class="bar-name">会</span>
             <span class="bar-track"><span class="bar" id="barYes"></span></span>
             <span class="bar-num c-blue" id="numYes">0</span>
+            <button class="vote-minus" data-k="yes" title="减一">-</button>
           </div>
           <div class="bar-row">
             <span class="bar-name">不会</span>
             <span class="bar-track"><span class="bar alt" id="barNo"></span></span>
             <span class="bar-num c-orange" id="numNo">0</span>
+            <button class="vote-minus" data-k="no" title="减一">-</button>
           </div>
         </div>
       </div>
@@ -162,6 +180,14 @@ function voteBoard(ctx, tag) {
   }
   ctx.on('#voteYes', 'click', function () { votes.yes++; paint(); });
   ctx.on('#voteNo', 'click', function () { votes.no++; paint(); });
+  /* 点错了要能减回去 —— 每组数字右边一个小「−」 */
+  ctx.each('.vote-minus', function (b) {
+    ctx.on(b, 'click', function () {
+      var k = b.dataset.k;
+      if (votes[k] > 0) votes[k]--;
+      paint();
+    });
+  });
   ctx.on(window, 'keydown', function (e) {
     if (e.isComposing) return;
     if (e.key === 'r' || e.key === 'R') { votes.yes = 0; votes.no = 0; paint(); }
@@ -178,24 +204,25 @@ PERCEPTION.scene({
     function (ctx) {
       ctx.set(`
         <div class="stack gap-xl" style="max-width:74vw">
-          <h1 class="title center anim" style="--d:0s">
+          <h1 class="title center">
             如果现在，窗外有一棵树倒下来了 ——<br>你觉得会怎么样？
           </h1>
 
-          <h1 class="title center anim" style="--d:.6s">
+          <h1 class="step title center">
             从科学上讲，这件事会不会因为你在不在场，而改变？
           </h1>
 
-          <h1 class="hero center anim" style="--d:1.2s;color:var(--accent-blue)">
+          <h1 class="step hero center" style="color:var(--accent-blue)">
             那么：在一片无人的森林里，<br>一棵树倒下了，它还会响吗？
           </h1>
         </div>
       `);
+      ctx.steps();
     },
 
     /* ---- 1.1 第一次统计 ---- */
     function (ctx) {
-      voteBoard(ctx, '第一次');
+      voteBoard(ctx, 'r1', '第一次统计 —— 觉得「它会响」的，请举手。');
     },
 
     /* ---- 1.2 声音的通路：一条一条点亮，走到大脑为止 ---- */
@@ -208,27 +235,18 @@ PERCEPTION.scene({
 
           <div id="hearStage" class="anim fade" style="--d:.2s">${hearingPathSVG()}</div>
 
-          <div class="step takeaway">没有耳朵，就没有「响」。</div>
+          <div class="step takeaway">没有<b class="c-orange">大脑</b>，就没有「响」。</div>
         </div>
       `);
 
-      /* 一段一段亮过去，像一道脉冲沿着通路走。只演一遍，不拦翻页 ——
-         讲者想在哪一段停下来讲都行。 */
-      var STAGES = ['hpWave', 'hpPinna', 'hpCanal', 'hpDrum',
-                    'hpBones', 'hpCochlea', 'hpNerve', 'hpBrain'];
-      STAGES.forEach(function (id, i) {
-        ctx.after(700 + i * 330, function () {
-          var el = ctx.q('#' + id);
-          if (el) el.classList.add('on');
-        });
-      });
-
-      ctx.steps();   /* 收束句按一下才出 */
+      /* 点一下亮一个成分 —— 八个正好对应八次按键，讲者可以每一段停下来讲。
+         （原来是定时自动一段段亮，太快，跟不上讲解。） */
+      ctx.steps();
     },
 
     /* ---- 1.3 第二次统计：这次才是准的 ---- */
     function (ctx) {
-      voteBoard(ctx, '第二次');
+      voteBoard(ctx, 'r2', '第二次统计 —— 现在再举一次手。');
     },
 
     /* ---- 1.4 拆解：声波 ≠ 响 ---- */
