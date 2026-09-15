@@ -64,6 +64,8 @@
   var si = 0, st = 0;          // 场景索引 / 状态索引
   var busy = false;            // 切换防抖
   var nextGate = null;         // 见 ctx.holdNext()
+  var prevGate = null;         // 见 ctx.holdPrev()：往回按时，先把已露出的行收回去
+  var stepPos = {};            // "场景:状态" → 已露出几行。来回走时按原样恢复
   var dispose = null;          // 当前状态的清理函数
   var curEl = null;            // 当前 .scene 元素
   var seen = [];               // 每个场景是否到过（导航圆点用）
@@ -168,10 +170,19 @@
       autoNext: function (ms) { ctx.after(ms, function () { next(); }); },
 
       /** 拦下「下一次前进」，先做别的事（例如揭晓答案），再按才翻页。
+          传 null = 撤销拦截，恢复成正常翻页。
           只生效一次；离开本状态会自动失效。 */
       holdNext: function (fn) {
+        if (!fn) { nextGate = null; return; }
         nextGate = function () { try { fn(); } catch (e) {} };
         kill.push(function () { nextGate = null; });
+      },
+
+      /** holdNext 的回退版本：拦下「上一次后退」。 */
+      holdPrev: function (fn) {
+        if (!fn) { prevGate = null; return; }
+        prevGate = function () { try { fn(); } catch (e) {} };
+        kill.push(function () { prevGate = null; });
       },
 
       /** 把一屏内容拆成「按一次出一行」。
@@ -182,15 +193,27 @@
                 ctx.steps(); */
       steps: function (sel) {
         var items = ctx.qa(sel || '.step');
-        var i = 0;
-        function advance() {
-          if (i >= items.length) return false;
-          items[i].classList.add('on');
-          i++;
-          if (i < items.length) ctx.holdNext(advance);   /* 还有，继续拦 */
-          return true;
+        if (!items.length) return function () {};
+
+        /* 进度按「场景:状态」记下来 —— 这是前进/后退对称的关键：
+           往回走到这一屏时，要恢复成你离开它时的样子，
+           而不是把已经讲过的行全部收回去重来。 */
+        var key = si + ':' + st;
+        var i = stepPos[key] || 0;
+
+        function sync() {
+          stepPos[key] = i;
+          /* 还有没露的行 → 拦住「前进」；已经露了至少一行 → 拦住「后退」。
+             两个方向因此各走一步，按几下过去就按几下回来。 */
+          ctx.holdNext(i < items.length ? advance : null);
+          ctx.holdPrev(i > 0 ? retreat : null);
         }
-        if (items.length) ctx.holdNext(advance);
+        function advance() { items[i].classList.add('on'); i++; sync(); }
+        function retreat() { i--; items[i].classList.remove('on'); sync(); }
+
+        /* 恢复：进来时先把该露的露出来 */
+        for (var k = 0; k < i; k++) items[k].classList.add('on');
+        sync();
         return advance;
       },
 
@@ -312,6 +335,10 @@
 
   function prev() {
     if (busy) return;
+    /* 和 next() 对称：如果这一屏还有「已经露出来的行」，先收回去，
+       而不是直接跳到上一屏把它整屏丢掉。
+       否则前进要按 4 下才过得去的一屏，回退 1 下就跳过去了 —— 不对称。 */
+    if (prevGate) { var g = prevGate; prevGate = null; g(); return; }
     if (st > 0) goto(si, st - 1, -1);
     else if (si > 0) goto(si - 1, SCENES[si - 1].states.length - 1, -1);
   }
