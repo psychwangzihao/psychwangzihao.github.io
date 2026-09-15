@@ -88,12 +88,12 @@ PERCEPTION.scene({
           </div>
 
           <div id="bsSteps">
-            <div class="card tight step">1. 闭上左眼</div>
-            <div class="card tight step">2. 右眼盯住 +</div>
-            <div class="card tight step">3. 调节间距，直到 ● 消失</div>
+            <div class="card tight anim" style="--d:.15s">1. 闭上左眼</div>
+            <div class="card tight anim" style="--d:.3s">2. 右眼盯住 +</div>
+            <div class="card tight anim" style="--d:.45s">3. 调节间距，直到 ● 消失</div>
           </div>
 
-          <div id="bsSlider" class="step anim fade" style="--d:.6s">
+          <div id="bsSlider" class="anim fade" style="--d:.6s">
             <span>两点间距</span>
             <input type="range" id="bsRange" min="8" max="66" value="66">
           </div>
@@ -105,7 +105,6 @@ PERCEPTION.scene({
       function apply() { board.style.gap = range.value + 'vw'; }
       ctx.on(range, 'input', apply);
       apply();
-      ctx.steps();
     },
 
     /* ---- 2.1 揭晓：一行一行来 ---- */
@@ -120,7 +119,7 @@ PERCEPTION.scene({
           </div>
 
           <div id="bsCard" class="card anim" style="--d:.1s">
-            <p class="step"><b>圆点消失时，你看到黑洞了吗？</b></p>
+            <p class="anim fade" style="--d:.3s"><b>圆点消失时，你看到黑洞了吗？</b></p>
             <p class="step muted">没有。你看到的是背景。</p>
             <p class="step">但那里没有感光细胞。<br>谁填的？—— <b class="c-blue">大脑</b>。</p>
           </div>

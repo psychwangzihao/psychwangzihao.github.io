@@ -124,7 +124,7 @@ PERCEPTION.scene({
             <div class="eb-group">${ebbinghausSVG(18, 79, 'ebProofR')}</div>
           </div>
 
-          <p class="step body" style="max-width:62vw;text-align:center;color:var(--text-secondary)">
+          <p class="body anim fade" style="--d:.25s;max-width:62vw;text-align:center;color:var(--text-secondary)">
             你现在<b>已经知道</b>它们一样大了。再看一眼 ——
           </p>
 

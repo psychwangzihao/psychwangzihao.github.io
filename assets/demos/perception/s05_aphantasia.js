@@ -146,7 +146,7 @@ PERCEPTION.scene({
     function (ctx) {
       ctx.set(`
         <div id="aphLines">
-          <div class="card aph-line step">
+          <div class="card aph-line anim" style="--d:0s">
             ${ICON.eye('ico c-blue')}
             <span class="body">我知道花长什么样，能认出来，能画出来。</span>
           </div>

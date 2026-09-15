@@ -91,7 +91,7 @@ PERCEPTION.scene({
       ctx.set(`
         <div class="aw-dark" data-dark>
           <div class="stack gap-lg" style="max-width:72vw">
-            <p class="step body muted">${OPENING}</p>
+            <p class="body muted anim fade" style="--d:0s">${OPENING}</p>
             <p class="step body muted">因为「响」不是声波，是体验 —— 而体验在大脑里。</p>
 
             <p class="small faint anim fade" style="--d:.9s;margin-top:var(--space-md)">

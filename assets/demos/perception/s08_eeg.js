@@ -1,5 +1,5 @@
 /* ============================================================
- * 场景 8：脑电波演示  (id: eeg · 9 个状态 · 暗色)
+ * 场景 8：脑电波演示  (id: eeg · 10 个状态 · 暗色)
  * 目的：展示科学测量，强调脑电不是读心术。
  * 现场会请一位志愿者戴上脑电头环，本场景是他的视觉伴奏，
  * 8.1 就是直接说给志愿者听的指令。
@@ -200,7 +200,29 @@
     dark: true,
     states: [
 
-      /* ---- 8.0 波形展示：基线信号 ---- */
+      /* ---- 8.0 先问他们：你会怎么测？----
+         先把问题打在屏幕上，再拿出仪器。顺序反了就变成「展示设备」，
+         正过来才是「你想不到，所以我们才需要它」。 */
+      function (ctx) {
+        ctx.set(`
+          <div class="stack gap-lg" style="max-width:74vw">
+            <h1 class="title center anim" style="--d:0s;color:var(--text-inverse)">
+              到这里，我们已经说了很多遍「在大脑里」。
+            </h1>
+
+            <h1 class="hero center anim" style="--d:1s;color:var(--accent-blue)">
+              可你怎么知道？
+            </h1>
+
+            <p class="step body center" style="color:var(--text-inverse);max-width:62vw">
+              如果让你来证明这件事 —— 你会怎么<b>测量</b>一个人的大脑在做什么？
+            </p>
+          </div>
+        `);
+        ctx.steps();
+      },
+
+      /* ---- 8.1 波形展示：基线信号 ---- */
       function (ctx) {
         ctx.set(`
           <div id="eegBox" class="anim" style="--d:0s">
@@ -216,7 +238,7 @@
         return function () { wv.dispose(); };
       },
 
-      /* ---- 8.1 放松：切到 α ---- */
+      /* ---- 8.2 放松：切到 α ---- */
       function (ctx) {
         ctx.set(`
           <div id="eegBox" class="anim" style="--d:0s">
@@ -233,7 +255,7 @@
         return function () { wv.dispose(); };
       },
 
-      /* ---- 8.2 心算：切到 β ---- */
+      /* ---- 8.3 心算：切到 β ---- */
       function (ctx) {
         ctx.set(`
           <div id="eegBox" class="anim" style="--d:0s">
@@ -250,7 +272,7 @@
         return function () { wv.dispose(); };
       },
 
-      /* ---- 8.3 对比：两条波形同时跑 ---- */
+      /* ---- 8.4 对比：两条波形同时跑 ---- */
       function (ctx) {
         ctx.set(`
           <div id="eegSplit" class="anim" style="--d:0s">
@@ -275,7 +297,7 @@
         return function () { a.dispose(); b.dispose(); };
       },
 
-      /* ---- 8.4 四句流传很广的话 ----
+      /* ---- 8.5 四句流传很广的话 ----
          前两句是「脑科学」的谣言，后两句是对心理学本身的误解，
          甚至是恶意。面向高中生，要按「有独立思考能力的人」来写 ——
          扣「伪科学」的帽子没有说服力，得给实例、给数据。 */
@@ -307,7 +329,7 @@
         ctx.steps();
       },
 
-      /* ---- 8.5 一句一句回答：每条都给具体、可查的东西 ---- */
+      /* ---- 8.6 一句一句回答：每条都给具体、可查的东西 ---- */
       function (ctx) {
         ctx.set(`
           <div class="stack gap-md" style="max-width:80vw">
@@ -356,11 +378,11 @@
         ctx.steps();
       },
 
-      /* ---- 8.6 落到测量上，并回应那句「学心理的是不是都有病」 ---- */
+      /* ---- 8.7 落到测量上，并回应那句「学心理的是不是都有病」 ---- */
       function (ctx) {
         ctx.set(`
           <div class="stack gap-lg" style="max-width:72vw">
-            <div class="step title bold center" style="color:var(--accent-blue)">
+            <div class="title bold center anim fade" style="--d:0s;color:var(--accent-blue)">
               科学不是猜，是测量。
             </div>
 
@@ -377,7 +399,7 @@
         ctx.steps();
       },
 
-      /* ---- 8.7 人脑库：科学背后是别人的给予 ---- */
+      /* ---- 8.8 人脑库：科学背后是别人的给予 ---- */
       function (ctx) {
         ctx.set(`
           <div class="stack gap-md" style="max-width:74vw">
@@ -415,7 +437,7 @@
         ctx.steps();
       },
 
-      /* ---- 8.8 过渡：把问题抛给下一场 ---- */
+      /* ---- 8.9 过渡：把问题抛给下一场 ---- */
       function (ctx) {
         ctx.set(`
           <h2 class="title bold center anim fade" style="--d:.4s;color:var(--text-inverse);max-width:70vw">

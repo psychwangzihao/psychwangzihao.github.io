@@ -182,16 +182,15 @@ PERCEPTION.scene({
             如果现在，窗外有一棵树倒下来了 ——<br>你觉得会怎么样？
           </h1>
 
-          <h1 class="step title center">
+          <h1 class="title center anim" style="--d:.6s">
             从科学上讲，这件事会不会因为你在不在场，而改变？
           </h1>
 
-          <h1 class="step hero center" style="color:var(--accent-blue)">
+          <h1 class="hero center anim" style="--d:1.2s;color:var(--accent-blue)">
             那么：在一片无人的森林里，<br>一棵树倒下了，它还会响吗？
           </h1>
         </div>
       `);
-      ctx.steps();
     },
 
     /* ---- 1.1 第一次统计 ---- */
