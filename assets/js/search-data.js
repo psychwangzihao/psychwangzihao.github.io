@@ -67,6 +67,9 @@ ninja.data = [{
           section: "News",},{id: "news-gave-a-psychology-outreach-talk-at-yuqian-high-school-lin-an-hangzhou-on-mind-and-brain-science-built-an-interactive-demo-for-it-is-seeing-believing-fourteen-scenes-that-close-on-a-question-i-cannot-answer-does-a-tree-feel-pain",
           title: 'Gave a psychology outreach talk at Yuqian High School (Lin’an, Hangzhou) on mind...',
           description: "",
+          section: "News",},{id: "news-invited-to-speak-at-the-2050-roundtable-the-form-and-substance-of-future-perception-2050-museum-yunqi-town-hangzhou-18-september-2026-presenting-the-mind-s-eye-perception-as-construction-imagination-as-that-same-machinery-running-without-input-and-what-the-2-4-of-people-who-cannot-picture-anything-reveal-about-how-the-rest-of-us-see",
+          title: 'Invited to speak at the 2050 roundtable The Form and Substance of Future...',
+          description: "",
           section: "News",},{
         id: 'social-cv',
         title: 'CV',
