@@ -356,13 +356,23 @@
       return;
     }
 
-    if (k === 'ArrowRight' || k === 'PageDown' || k === ' ' || k === 'Enter' || k === 'n') {
+    /* 场景可以先接管键盘（见 PERCEPTION.keyHook）。返回 true = 这个键我处理了，
+       core 不再管它 —— 「想象光谱」那一幕的计数就是这么做的。 */
+    if (PERCEPTION.keyHook && PERCEPTION.keyHook(k, e)) return;
+
+    /* ⚠️ 这里的键位是**为翻页笔定的**，和别处反着来：
+       很多翻页笔的两个按键发的就是 ↑ / ↓。原来 ↑↓ 是「换场景」，
+       于是按下翻页笔会整幕整幕地跳过去，.step 逐行揭露全被跳过。
+       现在 ↑↓ 和 →← PageUp PageDown 空格 一律 = 翻一页；
+       换场景退到 [ ] 和数字键（排练用笔记本键盘时够用）。 */
+    if (k === 'ArrowDown' || k === 'ArrowRight' || k === 'PageDown' ||
+        k === ' ' || k === 'Enter' || k === 'n') {
       next(); e.preventDefault();
-    } else if (k === 'ArrowLeft' || k === 'PageUp' || k === 'p') {
+    } else if (k === 'ArrowUp' || k === 'ArrowLeft' || k === 'PageUp' || k === 'p') {
       prev(); e.preventDefault();
-    } else if (k === 'ArrowDown') {
+    } else if (k === ']') {
       if (si < SCENES.length - 1) goto(si + 1, 0); e.preventDefault();
-    } else if (k === 'ArrowUp') {
+    } else if (k === '[') {
       if (si > 0) goto(si - 1, 0); e.preventDefault();
     } else if (k === 'f' || k === 'F') {
       toggleFullscreen();
@@ -376,17 +386,19 @@
       toggleDebug();
     } else if (k === 'Home') {
       goto(0, 0); e.preventDefault();
-    } else if (k >= '1' && k <= '9') {
-      goto(parseInt(k, 10), 0); e.preventDefault();
+    } else if (false) {
+      /* 数字键原来在这里跳场景 —— **本场去掉了**。
+         「想象光谱」那一幕要用 1–5 数人数，两边会撞：
+         讲者万一在别的屏上按了数字，会直接跳到某一幕去。
+         换场景现在只走 [ ]（排练时用笔记本键盘）和底部圆点。 */
     } else if (k === '0') {
-      /* 跳到「收束」那一幕。**按 id 找，不要写死下标** ——
-         场景顺序调整过几轮，原来硬编码的 10 已经不指向收束了（会落到「如何改变脑」）。 */
-      var ci = -1;
-      for (var i = 0; i < SCENES.length; i++) if (SCENES[i].id === 'closing') { ci = i; break; }
-      goto(ci >= 0 ? ci : Math.min(9, SCENES.length - 1), 0);
+      /* 跳到「展览」那一幕（本场最后一幕）。按 id 找，不写死下标 —— 顺序还会调。 */
+      var li = -1;
+      for (var j = 0; j < SCENES.length; j++) if (SCENES[j].id === 'exhibition') { li = j; break; }
+      goto(li >= 0 ? li : SCENES.length - 1, 0);
       e.preventDefault();
     } else if (k === '?' || k === '/') {
-      toast('→ 下一状态 · ← 上一状态 · ↑↓ 换场景 · X 黑屏 · F 全屏 · D 调试');
+      toast('↑↓ / →← / 空格 翻页 · [ ] 换幕 · X 黑屏 · F 全屏');
       e.preventDefault();
     }
   });

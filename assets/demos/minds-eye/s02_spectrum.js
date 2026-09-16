@@ -8,41 +8,39 @@
    - 五点量表会得到一条**分布**，而分布里必然有一些人落在最左端
    - 于是「心盲症 2–4%」从一个统计数字，变成这个房间里的一件事实
 
-   讲者在台上点计数（沿用现场举手那套），屏幕上实时长出柱状图。
-   不用手机扫码投票：现场网络、扫码率、投影延迟都是风险，
-   而举手计数三十秒就完了。
+   ⚠️ **现场没有鼠标**，所以计数完全走键盘：
+       1–5        = 给对应那一档加一个人
+       0 / 删除键 = 撤回（减掉最近记的那一档）
+       R          = 清零
+   屏幕上那排 ± 按钮已经去掉了 —— 摆一排按钮会像网页表单，
+   而这一幕应该像一件装置。按键提示做得很小很暗，观众基本不会注意。
 
-   按 R 清零重投。
+   按 1 就加 1 分、按 3 就加 3 分，是最直接的映射：
+   讲者举一次手就按一下，不用先选列再按加号。
    ============================================================ */
 PERCEPTION.css('scene-spectrum', `
 #spBoard{
   display:flex;align-items:flex-end;justify-content:center;
-  gap:2.2vw;width:100%;margin-top:var(--space-md);
+  gap:2.4vw;width:100%;margin-top:var(--space-md);
 }
-.sp-col{display:flex;flex-direction:column;align-items:center;gap:.6vw;width:11vw;}
+.sp-col{display:flex;flex-direction:column;align-items:center;gap:.7vw;width:11.5vw;}
 .sp-num{
   font-family:var(--font-mono);font-size:var(--fs-subtitle);
   font-weight:var(--fw-bold);line-height:1;
+  transition:color var(--dur-fast) var(--ease-out);
+}
+.sp-bar-wrap{
+  width:100%;height:28vh;display:flex;align-items:flex-end;
+  border-bottom:1px solid var(--rule);
 }
 .sp-bar{
   width:100%;background:var(--mx-blue);
-  transition:height var(--dur-slow) var(--ease-out);
-  min-height:2px;
+  transition:height var(--dur-slow) var(--ease-out);min-height:2px;
 }
 /* 最左那一格是这一屏真正要说的话，单独给颜色 */
 .sp-col.zero .sp-bar{background:var(--mx-yellow);}
-.sp-bar-wrap{
-  width:100%;height:26vh;display:flex;align-items:flex-end;
-  border-bottom:1px solid var(--rule);
-}
-.sp-btns{display:flex;gap:.3vw;}
-.sp-btn{
-  font-family:var(--font-mono);font-size:var(--fs-small);font-weight:var(--fw-bold);
-  width:2.2vw;height:2.2vw;line-height:1;
-  background:transparent;color:var(--text-secondary);
-  border:1px solid var(--rule);cursor:pointer;
-}
-.sp-btn:hover{background:var(--text-primary);color:var(--bg-primary);}
+/* 最近记的那一档亮一下：讲者一眼知道下一次「撤回」减的是谁 */
+.sp-col.last .sp-num{color:var(--mx-yellow);}
 .sp-label{
   font-size:var(--fs-tiny);color:var(--text-tertiary);
   text-align:center;line-height:1.35;height:3.2em;
@@ -51,9 +49,9 @@ PERCEPTION.css('scene-spectrum', `
   font-size:var(--fs-title);font-weight:var(--fw-bold);line-height:1.4;
   text-align:center;
 }
-.sp-hold{
-  font-size:var(--fs-hero);font-weight:var(--fw-bold);
-  letter-spacing:.16em;line-height:1.3;
+.sp-keys{
+  font-family:var(--font-mono);font-size:var(--fs-tiny);
+  letter-spacing:.18em;color:var(--text-tertiary);opacity:.55;text-align:center;
 }
 `);
 
@@ -92,11 +90,7 @@ PERCEPTION.scene({
           <div class="sp-col${n === 1 ? ' zero' : ''}" data-n="${n}">
             <div class="sp-num" data-count="${n}">0</div>
             <div class="sp-bar-wrap"><div class="sp-bar" data-bar="${n}" style="height:0"></div></div>
-            <div class="sp-btns">
-              <button class="sp-btn" data-dec="${n}">−</button>
-              <button class="sp-btn" data-inc="${n}">+</button>
-            </div>
-            <div class="sp-label">${n}<br>${SP_LABELS[n - 1]}</div>
+            <div class="sp-label">${n} &nbsp;${SP_LABELS[n - 1]}</div>
           </div>`;
       }).join('');
 
@@ -105,38 +99,38 @@ PERCEPTION.scene({
           <div class="mx-tag anim" style="--d:0s">02 / 想象</div>
           <p class="sp-ask anim" style="--d:.1s">睁开眼睛。刚才那个画面，有多清楚？</p>
           <div id="spBoard">${cols}</div>
-          <p class="small faint anim fade" style="--d:.8s">
-            报一个数 —— 对着你刚才真的看见（或没看见）的东西。按 R 清零重来。
-          </p>
+          <p class="sp-keys anim fade" style="--d:.9s">1–5 记数 · 0 撤回 · R 清零</p>
         </div>
       `);
 
       var board = ctx.q('#spBoard');
-      var redraw = function () {
+      var last = 0;
+
+      function redraw() {
         var max = Math.max(1, SP[1], SP[2], SP[3], SP[4], SP[5]);
         [1, 2, 3, 4, 5].forEach(function (n) {
           board.querySelector('[data-count="' + n + '"]').textContent = SP[n];
-          board.querySelector('[data-bar="' + n + '"]').style.height =
-            (SP[n] / max * 100) + '%';
+          board.querySelector('[data-bar="' + n + '"]').style.height = (SP[n] / max * 100) + '%';
+          board.querySelector('[data-n="' + n + '"]').classList.toggle('last', n === last);
         });
-      };
+      }
 
-      ctx.on(board, 'click', function (e) {
-        var t = e.target;
-        if (t.dataset.inc) { SP[+t.dataset.inc]++; redraw(); }
-        else if (t.dataset.dec) { SP[+t.dataset.dec] = Math.max(0, SP[+t.dataset.dec] - 1); redraw(); }
-      });
-
-      /* R = 清零。讲者如果这一场投了两次（讲完心盲再投一次），用得上。 */
-      var onKey = function (e) {
-        if (e.key === 'r' || e.key === 'R') {
-          SP = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }; redraw();
+      /* 键盘计数。挂 PERCEPTION.keyHook，而不是自己监听 window ——
+         core 的翻页键（翻页笔的 ↑↓ / PageUp / PageDown / 空格）不能被抢走。 */
+      PERCEPTION.keyHook = function (k) {
+        if (k >= '1' && k <= '5') { SP[+k]++; last = +k; redraw(); return true; }
+        if (k === '0' || k === 'Backspace') {
+          if (last) { SP[last] = Math.max(0, SP[last] - 1); redraw(); }
+          return true;
         }
+        if (k === 'r' || k === 'R') {
+          SP = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }; last = 0; redraw(); return true;
+        }
+        return false;
       };
-      window.addEventListener('keydown', onKey);
 
       redraw();
-      return function () { window.removeEventListener('keydown', onKey); };
+      return function () { PERCEPTION.keyHook = null; };
     },
 
     /* ---- 2.2 把「2–4%」变成这个房间里的一件事实 ---- */
@@ -144,7 +138,7 @@ PERCEPTION.scene({
       var zero = SP[1];
       var total = SP[1] + SP[2] + SP[3] + SP[4] + SP[5];
 
-      /* 没投过票（排练时按快了）就降级成一句话，不要显示「0 个人」 */
+      /* 没记过数（排练时按快了）就降级成一句话，不要显示「0 个人」 */
       var line = (total >= 5 && zero > 0)
         ? '刚才，这个房间里有 <b style="color:var(--mx-yellow)">' + zero + '</b> 个人，' +
           '什么也没有看见。'
