@@ -15,13 +15,15 @@
  ******************************************************************************/
 
 // ── Prose ────────────────────────────────────────────────────────────────────
-// Only paragraphs that are direct page content. Body copy inside cards, tables
-// and lists is already bounded by its container, and the short intros on
-// /demos/ and /news/ are meant to line up with the cards below them rather
-// than stop short of the edge — so those are deliberately left at full width.
+// The homepage wraps its content in `.clearfix` (al-folio's about layout), so
+// the selector has to go through that div. Body copy inside cards and tables is
+// already bounded by its container, and the short intros on /demos/ and /news/
+// are meant to line up with the cards below them rather than stop short of the
+// edge — those are deliberately left at full width.
 
 .post .post-description,
-.post article > p {
+.post article > p,
+.post article .clearfix > p {
   max-width: 40em;      // ≈ 640px at 16px ≈ 78 characters per line
 }
 
