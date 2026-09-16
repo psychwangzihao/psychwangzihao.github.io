@@ -1,0 +1,47 @@
+/*******************************************************************************
+ * Site-specific overrides
+ *
+ * All deliberate departures from the al-folio defaults live here, and only
+ * here. The upstream partials stay untouched, so a future theme upgrade is a
+ * diff rather than a merge.
+ *
+ * Two things are being fixed:
+ *   1. Measure. The default container gives ~900px of text at 16px, roughly
+ *      110 characters per line — well past the 60–75 that reads comfortably.
+ *      Only running prose is narrowed; cards, tables and lists keep full width.
+ *   2. Homepage furniture is oversized: the portrait takes 30% of the text
+ *      column, and the contact icons render at 64px — heavier than any heading
+ *      on the page.
+ ******************************************************************************/
+
+// ── Prose ────────────────────────────────────────────────────────────────────
+// Only paragraphs that are direct page content. Body copy inside cards, tables
+// and lists is already bounded by its container, and the short intros on
+// /demos/ and /news/ are meant to line up with the cards below them rather
+// than stop short of the edge — so those are deliberately left at full width.
+
+.post .post-description,
+.post article > p {
+  max-width: 40em;      // ≈ 640px at 16px ≈ 78 characters per line
+}
+
+.post article p {
+  line-height: 1.65;    // 1.5 is tight for running text, in either language
+}
+
+// ── Homepage furniture ───────────────────────────────────────────────────────
+
+.profile {
+  @media (min-width: 576px) {
+    width: 220px;       // was 30% (=270px), which crowded the text column
+  }
+
+  img {
+    border-radius: 6px;
+  }
+}
+
+// Was 4rem (64px) — three of those outweigh everything else on the page.
+.social .contact-icons {
+  font-size: 1.9rem;
+}

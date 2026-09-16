@@ -34,3 +34,6 @@
 @use "font-awesome/brands";
 @use "font-awesome/solid";
 @use "font-awesome/regular";
+
+/* 本站自己的覆盖，放最后 —— 顺序决定谁盖住谁。见 _sass/_custom.scss */
+@use "custom";
