@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Gave an interactive talk, <strong><a href="/dots/">Connecting the Dots</a></strong>, to the incoming cohort of the Department of Psychology, Zhejiang University — an interactive visual journey across interdisciplinary science, the 2050 Gathering, studying abroad, and consciousness research. <strong>It was also my 20th birthday!</strong>
+Gave <strong><a href="/dots/">Connecting the Dots</a></strong>, an interactive talk, to the incoming cohort of the Department of Psychology at Zhejiang University. It covers interdisciplinary science, the 2050 Gathering, studying abroad, and consciousness research. It was also my 20th birthday.

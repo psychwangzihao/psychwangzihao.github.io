@@ -379,9 +379,14 @@
     } else if (k >= '1' && k <= '9') {
       goto(parseInt(k, 10), 0); e.preventDefault();
     } else if (k === '0') {
-      goto(Math.min(10, SCENES.length - 1), 0); e.preventDefault();
+      /* 跳到「收束」那一幕。**按 id 找，不要写死下标** ——
+         场景顺序调整过几轮，原来硬编码的 10 已经不指向收束了（会落到「如何改变脑」）。 */
+      var ci = -1;
+      for (var i = 0; i < SCENES.length; i++) if (SCENES[i].id === 'closing') { ci = i; break; }
+      goto(ci >= 0 ? ci : Math.min(9, SCENES.length - 1), 0);
+      e.preventDefault();
     } else if (k === '?' || k === '/') {
-      toast('→ 下一状态 · ← 上一状态 · ↑↓ 换场景 · B 黑屏 · F 全屏 · D 调试');
+      toast('→ 下一状态 · ← 上一状态 · ↑↓ 换场景 · X 黑屏 · F 全屏 · D 调试');
       e.preventDefault();
     }
   });
@@ -408,7 +413,7 @@
   function toggleBlack() {
     blackOn = !blackOn;
     blackout.classList.toggle('on', blackOn);
-    toast(blackOn ? '黑屏（再按 B 恢复）' : '');
+    toast(blackOn ? '黑屏（再按 X 恢复）' : '');
   }
 
   function toggleDebug() {

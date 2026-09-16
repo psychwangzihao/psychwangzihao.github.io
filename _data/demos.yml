@@ -29,9 +29,9 @@
   slug: dots
   audience: Incoming psychology undergraduates
   summary: >
-    An interactive talk told as a star map. Every star is a connection between a
+    An interactive talk told as a star map. Each star is a connection between a
     person and a thing — Zhejiang University, psychology, the 2050 Gathering,
-    Oxford, CO-LAB. Click one and the story behind that line unfolds.
+    Oxford, CO-LAB. Click a star to open its chapter.
   run_url: /assets/demos/dots/
   date_added: 2026-09-08
 
@@ -40,10 +40,10 @@
   slug: perception
   audience: High school students
   summary: >
-    A psychology outreach lecture in fourteen scenes, built to be driven live from
-    the lectern. It opens with a tree falling in an empty forest and ends at brain
-    interfaces, the blind spot, aphantasia and EEG along the way — arguing that the
-    world is real, but you can only reach it through your brain's translation of it.
+    A fourteen-scene psychology outreach lecture, built to be driven live from the
+    lectern. It opens with a tree falling in an empty forest and closes on brain
+    interfaces, taking in the blind spot, aphantasia and EEG. The argument: the
+    world is real, but it reaches you only through the brain's translation of it.
   run_url: /assets/demos/perception/
   date_added: 2026-09-14
 
@@ -58,7 +58,7 @@
     Look at a natural scene, then judge whether a short Chinese description matches
     it. Text length climbs from 1 to 10 characters, so the measure is where reading
     breaks down. Four rhythmic conditions (4 / 2 / 1 / 0.5 Hz) test whether a steady
-    beat shifts that curve.
+    beat moves that curve.
   contacts:
     - Zihao Wang
   run_url: /assets/demos/coconnect/
