@@ -2,21 +2,25 @@
    场景 1：不存在的边  (id: kanizsa · 3 个状态)
 
    一个 Kanizsa 三角，先用不够多的方块给出来。
-   观众照样一眼看出"有个三角形"——**而那块白色的三角形，
+   观众照样一眼看出「有个三角形」——**而那块白色的三角形，
    四条边一条都没画。**
 
    这一幕把两件事压成一次：
      ① 分辨率不够，你还是看见了   → 你补的
      ② 你补的不只是分辨率，还补了一条**根本不存在的边**
 
-   所以它不是"错觉"。错觉这个词暗示你被骗了一次；
+   所以它不是「错觉」。错觉这个词暗示你被骗了一次；
    这里要讲的是你**每时每刻**都在做这件事。
    ============================================================ */
 PERCEPTION.css('scene-kanizsa', `
+/* 画布按**视口高度**定尺寸，不要按宽度。
+   按宽度（44vw）时在 1600x900 上整屏会溢出 28px —— 宽屏下方块图会太高。
+   高度定死、宽度由 820:700 的比例自己算，任何投影比例都不会顶出去。 */
 #kzCanvas{
-  width:44vw;max-width:820px;height:auto;
+  height:48vh;width:auto;
   margin:var(--space-sm) 0 var(--space-md);
 }
+@media (max-width:860px){ #kzCanvas{height:auto;width:84vw;} }
 .kz-q{
   font-size:var(--fs-title);font-weight:var(--fw-bold);
   line-height:1.35;letter-spacing:.02em;text-align:center;
@@ -76,7 +80,7 @@ PERCEPTION.scene({
         <div class="stack gap-lg mx-grid" style="width:100%;align-items:center">
           <div class="mx-tag anim" style="--d:0s">01 / 分辨率</div>
           <h2 class="kz-q anim" style="--d:.1s;max-width:66vw">
-            这不是"错觉"。
+            这不是「错觉」。
           </h2>
           <p class="step kz-line">
             错觉这个词暗示你偶尔被骗一次。<br>

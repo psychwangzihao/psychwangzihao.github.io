@@ -74,7 +74,7 @@ var MX = (function () {
      关键在几何：**切口的直边正好落在三角形三条边上** ——
      所以相邻两个圆盘的切口边缘是共线的，大脑就把中间连成了一条边。
      中间那块三角形，四条边一条都没画。 */
-  function kanizsa(w, h) {
+  function kanizsa(w, h, outline) {
     var cv = document.createElement('canvas');
     cv.width = w; cv.height = h;
     var g = cv.getContext('2d');
@@ -114,6 +114,21 @@ var MX = (function () {
       g.fill('evenodd');                           /* 叠到的地方被挖掉 */
       g.restore();
     });
+
+    /* outline=true：把那条**不存在**的边描出来。
+       用来做「你看见的 / 实际画出来的」左右对照 ——
+       两边的圆盘一模一样，只差一条没有画上去的线。 */
+    if (outline) {
+      g.save();
+      g.beginPath();
+      tri.forEach(function (P, i) { i ? g.lineTo(P.x, P.y) : g.moveTo(P.x, P.y); });
+      g.closePath();
+      g.strokeStyle = '#FFCD00';
+      g.lineWidth = Math.max(2, Math.min(w, h) * 0.006);
+      g.setLineDash([w * 0.022, w * 0.016]);
+      g.stroke();
+      g.restore();
+    }
     return cv;
   }
 

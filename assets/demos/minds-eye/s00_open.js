@@ -6,7 +6,7 @@
    当着全场解析出来。观众会发现自己早就认出了它 —— 而屏幕上的方块
    在头几百毫秒里根本不足以构成那四个数字。
 
-   这一幕要观众记住一件事：你以为你在"看"，其实你在"解"。
+   这一幕要观众记住一件事：你以为你在「看」，其实你在「解」。
    ============================================================ */
 PERCEPTION.css('scene-open', `
 #openCanvas{
@@ -53,7 +53,7 @@ PERCEPTION.scene({
       var canvas = ctx.q('#openCanvas');
       var cancel = null;
       MX.load('./media/2050-logo.png', function (img) {
-        /* 先给一版最粗的，让观众先"认出"它 */
+        /* 先给一版最粗的，让观众先「认出」它 */
         MX.paint(canvas, img, 9);
         cancel = MX.resolve(canvas, img, 9, canvas.width, 2000);
       });
