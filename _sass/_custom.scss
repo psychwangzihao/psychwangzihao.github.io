@@ -5,14 +5,22 @@
  * here. The upstream partials stay untouched, so a future theme upgrade is a
  * diff rather than a merge.
  *
- * Two things are being fixed:
+ * Three things:
  *   1. Measure. The default container gives ~900px of text at 16px, roughly
  *      110 characters per line — well past the 60–75 that reads comfortably.
- *      Only running prose is narrowed; cards, tables and lists keep full width.
- *   2. Homepage furniture is oversized: the portrait takes 30% of the text
- *      column, and the contact icons render at 64px — heavier than any heading
- *      on the page.
+ *   2. Homepage furniture was oversized: the portrait took 30% of the text
+ *      column, and the contact icons rendered at 64px — heavier than any
+ *      heading on the page.
+ *   3. The COCOnnect page is a document (headings, lists, a table) and shipped
+ *      with the browser defaults for all three: 32px headings with no space
+ *      above them, lists 190px wider than the paragraphs beside them, and a
+ *      table whose columns almost touched.
  ******************************************************************************/
+
+// One text column for the whole site. Must be in `rem`, not `em`: `em`
+// resolves against each element's own font size, so the same "40em" is 640px
+// on a paragraph but 864px on a heading.
+$measure: 40rem;   // 640px
 
 // ── Prose ────────────────────────────────────────────────────────────────────
 // The homepage wraps its content in `.clearfix` (al-folio's about layout), so
@@ -24,7 +32,7 @@
 .post .post-description,
 .post article > p,
 .post article .clearfix > p {
-  max-width: 40em;      // ≈ 640px at 16px ≈ 78 characters per line
+  max-width: $measure;  // ≈ 78 characters per line
 }
 
 .post article p {
@@ -46,4 +54,79 @@
 // Was 4rem (64px) — three of those outweigh everything else on the page.
 .social .contact-icons {
   font-size: 1.9rem;
+}
+
+// ── Document pages ───────────────────────────────────────────────────────────
+// Currently only /demos/coconnect/, which is written as a document: headings,
+// bullet lists and a table. Every selector below is a DIRECT child of
+// `article` on purpose — pages that keep those same elements inside cards
+// (the CV, whose tables live in `.card`, and whose lists are `.list-group`)
+// are left completely untouched.
+
+.post article {
+  h2 {
+    font-size: 1.35rem;      // Bootstrap's 32px was twice the body size and
+    font-weight: 600;        // made seven sections shout over the text
+    line-height: 1.4;
+    margin: 2.4rem 0 0.5rem; // it had no top margin at all, so headings sat
+    max-width: $measure;     // directly on the paragraph above them
+  }
+
+  > ul,
+  > ol {
+    max-width: $measure;     // were 830px vs the paragraphs' 640px
+    padding-left: 1.4em;     // was 2em, which pushed the text 40px off the
+                             // left edge every other block lines up on
+  }
+
+  > ul > li,
+  > ol > li {
+    line-height: 1.65;       // 1.5 here vs 1.65 in the paragraphs
+    margin-bottom: 0.25rem;
+  }
+
+  > table {
+    max-width: $measure;
+    margin: 0.5rem 0 1.4rem;
+    border-collapse: collapse;
+
+    th,
+    td {
+      padding: 0.45rem 1.5rem 0.45rem 0;   // columns were almost touching
+      border-bottom: 1px solid var(--global-divider-color);
+      text-align: left;
+    }
+
+    th {
+      font-weight: 600;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+  }
+
+  > hr {
+    max-width: $measure;
+    margin-left: 0;          // Bootstrap centres `hr`; it belongs on the
+    margin-right: 0;         // same left edge as everything else
+  }
+}
+
+// Label/value rows at the top of the COCOnnect page. A fixed label column
+// keeps the three values on one vertical line — they used to start wherever
+// the label happened to end.
+.coconnect-meta {
+  max-width: $measure;
+  margin: 0.5rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.8;
+  color: var(--global-text-color-light);
+
+  > div > span {
+    display: inline-block;
+    min-width: 5em;
+    color: var(--global-text-color);
+    font-weight: 500;
+  }
 }

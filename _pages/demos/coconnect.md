@@ -5,20 +5,22 @@ permalink: /demos/coconnect/
 nav: false
 ---
 
-<a href="/demos/" style="font-size: 0.9rem; color: var(--global-theme-color);">← 回到 demos</a>
+<a href="/demos/" style="font-size: 0.875rem; color: var(--global-theme-color);">← 回到 demos</a>
 
-<div style="margin-bottom: 0.5rem; margin-top: 1rem;">
+<div style="margin-bottom: 0.25rem; margin-top: 1rem;">
   <span style="font-size: 0.75rem; background: #d97a00; color: #fff; padding: 0.15rem 0.5rem; border-radius: 12px;">Active</span>
-  <span style="font-size: 0.85rem; color: var(--global-text-color-light); margin-left: 0.5rem;">Reading &amp; Language</span>
+  <span style="font-size: 0.8125rem; color: var(--global-text-color-light); margin-left: 0.5rem;">Reading &amp; Language</span>
 </div>
 
-**联系**：<a href="mailto:psychwangzihao@zju.edu.cn">Zihao Wang</a><br>
-**图片素材**：<a href="https://cocodataset.org/">MS COCO 2017</a>（公开数据集）<br>
-**界面语言**：中文（Y / N / D 三选作答）<br>
+<div class="coconnect-meta">
+  <div><span>联系</span><a href="mailto:psychwangzihao@zju.edu.cn">Zihao Wang</a></div>
+  <div><span>图片素材</span><a href="https://cocodataset.org/">MS COCO 2017</a>（公开数据集）</div>
+  <div><span>界面语言</span>中文（Y / N / D 三选作答）</div>
+</div>
 
-<div style="margin: 1.2rem 0;">
-  <a href="/assets/demos/coconnect/" style="display: inline-block; padding: 0.65rem 1.8rem; font-size: 0.95rem; font-weight: 600; background: #d97a00; color: #fff; border-radius: 7px; text-decoration: none;">开始实验 →</a>
-  <span style="font-size: 0.82rem; color: var(--global-text-color-light); margin-left: 0.6rem;">全部在浏览器里跑 · 数据在本地下载</span>
+<div style="margin: 1.4rem 0 0;">
+  <a href="/assets/demos/coconnect/" style="display: inline-block; padding: 0.65rem 1.8rem; font-size: 0.9375rem; font-weight: 600; background: #d97a00; color: #fff; border-radius: 7px; text-decoration: none;">开始实验 →</a>
+  <span style="font-size: 0.8125rem; color: var(--global-text-color-light); margin-left: 0.6rem;">全部在浏览器里跑 · 数据在本地下载</span>
 </div>
 
 ---
