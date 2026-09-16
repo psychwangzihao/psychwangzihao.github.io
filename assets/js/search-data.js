@@ -64,7 +64,7 @@ ninja.data = [{
           section: "News",},{id: "news-gave-an-interactive-talk-connecting-the-dots-to-the-incoming-cohort-of-the-department-of-psychology-zhejiang-university-an-interactive-visual-journey-across-interdisciplinary-science-the-2050-gathering-studying-abroad-and-consciousness-research-it-was-also-my-20th-birthday",
           title: 'Gave an interactive talk, Connecting the Dots, to the incoming cohort of the...',
           description: "",
-          section: "News",},{id: "news-gave-a-psychology-science-outreach-talk-at-yuqian-high-school-lin-an-hangzhou-bringing-mind-and-brain-science-to-high-school-students-built-an-interactive-demo-for-the-talk-眼见为实吗-is-seeing-believing-fourteen-hands-on-scenes-asking-a-single-question-is-seeing-believing-and-closing-on-one-i-can-t-answer-does-a-tree-feel-pain",
+          section: "News",},{id: "news-gave-a-psychology-science-outreach-talk-at-yuqian-high-school-lin-an-hangzhou-bringing-mind-and-brain-science-to-high-school-students-built-an-interactive-demo-for-the-talk-is-seeing-believing-fourteen-hands-on-scenes-asking-a-single-question-is-seeing-believing-and-closing-on-one-i-can-t-answer-does-a-tree-feel-pain",
           title: 'Gave a psychology science-outreach talk at Yuqian High School (Lin’an, Hangzhou), bringing mind...',
           description: "",
           section: "News",},{
