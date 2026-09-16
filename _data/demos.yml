@@ -1,0 +1,61 @@
+# Demos
+#
+# 两个类别（在页面上分两段显示，各有自己的颜色）：
+#   presentation —— 讲座 / 演示，蓝色。给别人看的，点开就能翻。
+#   experiment   —— 可以跑的心理实验，橙色。有自己的详情页，说明清楚再开跑。
+#
+# 字段：
+#   type:        presentation | experiment（决定归到哪一段、用什么颜色）
+#   title:       标题
+#   title_en:    （可选）英文副标题，显示成 "· <title_en>"
+#   slug:        URL 安全的短名，实验用来拼详情页 /demos/<slug>/
+#   audience:    （presentation）这场讲给谁听
+#   category:    （experiment）研究方向，显示在详情页上
+#   status:      （experiment）in development | active | archived
+#   summary:     卡片上的一两句话，别写长
+#   contacts:    可以找谁问
+#   run_url:     直接打开跑起来的地址；空着就只链到详情页
+#   detail_url:  （可选）详情页
+#   date_added:  YYYY-MM-DD
+#   updated:     （可选）YYYY-MM-DD
+
+# ---------------- Presentations ----------------
+- type: presentation
+  title: Connecting the Dots
+  slug: dots
+  audience: 心理系本科新生
+  summary: >
+    一场点着星图讲的互动演讲。每一颗星是一个人和一件事的连接 ——
+    浙大、心理学、2050、牛津、CO-LAB —— 点开一颗，讲一段为什么会有这条线。
+  run_url: /assets/demos/dots/
+  date_added: 2026-09-08
+
+- type: presentation
+  title: 眼见为实吗？
+  title_en: Is Seeing Believing?
+  slug: perception
+  audience: 高中生
+  summary: >
+    面向高中的心理学科普讲座，14 幕、65 页，全程可以按着讲。
+    从「森林里倒下的树会不会响」开始，经盲点、心盲症、脑电，
+    一路走到脑机接口 —— 结论是：世界是真的，但你必须经过大脑的翻译才能碰到它。
+  run_url: /assets/demos/perception/
+  date_added: 2026-09-14
+
+# ---------------- Experiments ----------------
+- type: experiment
+  title: COCOnnect
+  title_en: Picture–Text Matching
+  slug: coconnect
+  category: Reading & Language
+  status: active
+  summary: >
+    看一眼自然场景图片，判断下面那段中文说的东西在不在图里。
+    文字从 1 个字逐级加到 10 个字，测的是「读到多长就读不动了」；
+    还可以选 4 / 2 / 1 / 0.5 Hz 的节拍辅助，看节律会不会改变这条曲线。
+  contacts:
+    - Zihao Wang
+  run_url: /assets/demos/coconnect/
+  detail_url: /demos/coconnect/
+  date_added: 2026-08-08
+  updated: 2026-09-16

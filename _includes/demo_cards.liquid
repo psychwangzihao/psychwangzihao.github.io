@@ -1,0 +1,118 @@
+{% comment %}
+  Demos 列表：两个类别各一段 —— presentations（蓝）/ experiments（橙）。
+  颜色只在这里定义一次，卡片和分组标题都从 --dm-accent 取；
+  暗色模式下 navy 会糊在深底上，所以单独提亮一档。
+{% endcomment %}
+<style>
+  .dm-sec { margin-bottom: 2.5rem; }
+  .dm-sec--presentation { --dm-accent: #0076df; --dm-tint: rgba(0, 118, 223, .06); }
+  .dm-sec--experiment   { --dm-accent: #d97a00; --dm-tint: rgba(217, 122, 0, .07); }
+  html[data-theme="dark"] .dm-sec--presentation { --dm-accent: #58a6ff; }
+  html[data-theme="dark"] .dm-sec--experiment   { --dm-accent: #f0a44a; }
+
+  .dm-head {
+    display: flex; align-items: baseline; gap: .6rem;
+    margin: 0 0 1rem 0; padding-bottom: .5rem;
+    border-bottom: 2px solid var(--dm-accent);
+  }
+  .dm-head .dm-dot {
+    width: .6rem; height: .6rem; border-radius: 50%;
+    background: var(--dm-accent); flex: none;
+  }
+  .dm-head .dm-h {
+    font-size: 1.15rem; font-weight: 600; margin: 0;
+    color: var(--dm-accent);
+  }
+  .dm-head .dm-count {
+    font-size: .8rem; color: var(--global-text-color-light); margin-left: auto;
+  }
+
+  .dm-card {
+    display: block; text-decoration: none;
+    margin-bottom: 1rem; padding: 1.15rem 1.4rem;
+    border: 1px solid var(--global-divider-color);
+    border-left: 4px solid var(--dm-accent);
+    border-radius: 8px;
+    background: var(--global-card-bg-color);
+    transition: background .15s, transform .15s, box-shadow .15s;
+  }
+  .dm-card:hover {
+    background: var(--dm-tint);
+    transform: translateX(2px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .07);
+    text-decoration: none;
+  }
+  .dm-title {
+    font-size: 1.08rem; font-weight: 600; margin: 0 0 .35rem 0;
+    color: var(--global-text-color);
+  }
+  .dm-title .dm-en {
+    font-size: .85rem; font-weight: 400;
+    color: var(--global-text-color-light);
+  }
+  .dm-badge {
+    display: inline-block; font-size: .68rem; font-weight: 500;
+    padding: .1rem .5rem; border-radius: 10px; margin-left: .5rem;
+    vertical-align: middle; white-space: nowrap;
+    color: #fff; background: var(--dm-accent);
+  }
+  .dm-badge--soft {
+    color: var(--dm-accent);
+    background: var(--dm-tint);
+    border: 1px solid var(--dm-accent);
+  }
+  .dm-summary {
+    font-size: .9rem; line-height: 1.55; margin: 0 0 .6rem 0;
+    color: var(--global-text-color);
+  }
+  .dm-go {
+    font-size: .85rem; font-weight: 500; color: var(--dm-accent);
+  }
+  .dm-card:hover .dm-go { text-decoration: underline; }
+</style>
+
+{% assign sections = "presentation,Presentations · 讲座演示|experiment,Experiments · 心理实验" | split: "|" %}
+{% for section in sections %}
+  {% assign parts = section | split: "," %}
+  {% assign kind = parts[0] %}
+  {% assign heading = parts[1] %}
+  {% assign items = site.data.demos | where: "type", kind %}
+  {% if items.size > 0 %}
+  <section class="dm-sec dm-sec--{{ kind }}">
+    <div class="dm-head">
+      <span class="dm-dot"></span>
+      <h3 class="dm-h" id="{{ kind }}">{{ heading }}</h3>
+      <span class="dm-count">{{ items.size }} 项</span>
+    </div>
+
+    {% for item in items %}
+    {% assign status_label = item.status %}
+    {% if status_label == "in development" %}{% assign status_label = "In development" %}
+    {% elsif status_label == "active" %}{% assign status_label = "Active" %}
+    {% elsif status_label == "archived" %}{% assign status_label = "Archived" %}{% endif %}
+    {% assign href = item.detail_url | default: item.run_url %}
+
+    <a class="dm-card" href="{{ href }}">
+      <p class="dm-title">
+        {{ item.title }}
+        {% if item.title_en %}<span class="dm-en">· {{ item.title_en }}</span>{% endif %}
+        {% if item.audience %}<span class="dm-badge dm-badge--soft">{{ item.audience }}</span>{% endif %}
+        {% if item.status %}<span class="dm-badge">{{ status_label }}</span>{% endif %}
+      </p>
+      {% if item.summary %}<p class="dm-summary">{{ item.summary | strip }}</p>{% endif %}
+      {% if item.detail_url %}
+        <span class="dm-go">查看详情与说明 →</span>
+      {% elsif kind == "presentation" %}
+        <span class="dm-go">打开演示 →</span>
+      {% else %}
+        <span class="dm-go">开始实验 →</span>
+      {% endif %}
+    </a>
+    {% endfor %}
+  </section>
+  {% endif %}
+{% endfor %}
+
+{% if site.data.demos.size == 0 %}
+<p><em>还没有内容。</em></p>
+{% endif %}
