@@ -12,7 +12,7 @@ nav: false
   <span style="font-size: 0.8125rem; color: var(--global-text-color-light); margin-left: 0.5rem;">Reading &amp; Language</span>
 </div>
 
-<div class="coconnect-meta">
+<div class="page-meta">
   <div><span>联系</span><a href="mailto:psychwangzihao@zju.edu.cn">Zihao Wang</a></div>
   <div><span>图片素材</span><a href="https://cocodataset.org/">MS COCO 2017</a>（公开数据集）</div>
   <div><span>界面语言</span>中文（Y / N / D 三选作答）</div>

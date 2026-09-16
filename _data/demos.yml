@@ -47,6 +47,21 @@
   run_url: /assets/demos/perception/
   date_added: 2026-09-14
 
+- type: presentation
+  title: The Mind's Eye
+  slug: minds-eye
+  audience: Artists, designers, technologists
+  status: in development
+  summary: >
+    A talk for the 2050 roundtable "The Form and Substance of Future Perception"
+    (Hangzhou, 18 September 2026). Its argument: seeing is construction, and
+    imagination is that same machinery running with no input at all — which is
+    why an artwork delivers a different object to every viewer, and why the
+    2–4% of people who cannot picture anything have something to tell us about
+    how the rest of us see.
+  detail_url: /demos/minds-eye/
+  date_added: 2026-09-18
+
 # ---------------- Experiments ----------------
 - type: experiment
   title: COCOnnect

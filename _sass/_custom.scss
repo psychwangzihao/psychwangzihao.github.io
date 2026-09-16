@@ -113,10 +113,10 @@ $measure: 40rem;   // 640px
   }
 }
 
-// Label/value rows at the top of the COCOnnect page. A fixed label column
-// keeps the three values on one vertical line — they used to start wherever
-// the label happened to end.
-.coconnect-meta {
+// Label/value rows at the top of a detail page. A fixed label column
+// keeps the values on one vertical line — on the COCOnnect page they used
+// to start wherever the label happened to end.
+.page-meta {
   max-width: $measure;
   margin: 0.5rem 0 0;
   font-size: 0.875rem;
