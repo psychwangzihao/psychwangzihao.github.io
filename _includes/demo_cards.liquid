@@ -1,7 +1,8 @@
 {% comment %}
-  Demos 列表：两个类别各一段 —— presentations（蓝）/ experiments（橙）。
-  颜色只在这里定义一次，卡片和分组标题都从 --dm-accent 取；
-  暗色模式下 navy 会糊在深底上，所以单独提亮一档。
+  Demos listing: one block per category — presentations (blue) / experiments (orange).
+  The colour is defined once here as --dm-accent; both the section header and the
+  cards read from it. Navy goes muddy on a dark background, so each colour is
+  lightened one step in dark mode.
 {% endcomment %}
 <style>
   .dm-sec { margin-bottom: 2.5rem; }
@@ -71,7 +72,7 @@
   .dm-card:hover .dm-go { text-decoration: underline; }
 </style>
 
-{% assign sections = "presentation,Presentations · 讲座演示|experiment,Experiments · 心理实验" | split: "|" %}
+{% assign sections = "presentation,Presentations|experiment,Experiments" | split: "|" %}
 {% for section in sections %}
   {% assign parts = section | split: "," %}
   {% assign kind = parts[0] %}
@@ -82,7 +83,7 @@
     <div class="dm-head">
       <span class="dm-dot"></span>
       <h3 class="dm-h" id="{{ kind }}">{{ heading }}</h3>
-      <span class="dm-count">{{ items.size }} 项</span>
+      <span class="dm-count">{{ items.size }} item{% if items.size != 1 %}s{% endif %}</span>
     </div>
 
     {% for item in items %}
@@ -101,11 +102,11 @@
       </p>
       {% if item.summary %}<p class="dm-summary">{{ item.summary | strip }}</p>{% endif %}
       {% if item.detail_url %}
-        <span class="dm-go">查看详情与说明 →</span>
+        <span class="dm-go">Read more &amp; run it →</span>
       {% elsif kind == "presentation" %}
-        <span class="dm-go">打开演示 →</span>
+        <span class="dm-go">Open presentation →</span>
       {% else %}
-        <span class="dm-go">开始实验 →</span>
+        <span class="dm-go">Run experiment →</span>
       {% endif %}
     </a>
     {% endfor %}
@@ -114,5 +115,5 @@
 {% endfor %}
 
 {% if site.data.demos.size == 0 %}
-<p><em>还没有内容。</em></p>
+<p><em>Nothing here yet.</em></p>
 {% endif %}

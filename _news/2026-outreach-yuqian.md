@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Gave a psychology science-outreach talk at <strong>Yuqian High School</strong> (Lin'an, Hangzhou), bringing mind and brain science to high-school students. Built an interactive demo for the talk, <strong><a href="/demos/perception/">眼见为实吗？ / Is Seeing Believing?</a></strong> — fourteen hands-on scenes asking a single question — is seeing believing? — and closing on one I can't answer: does a tree feel pain?
+Gave a psychology science-outreach talk at <strong>Yuqian High School</strong> (Lin'an, Hangzhou), bringing mind and brain science to high-school students. Built an interactive demo for the talk, <strong><a href="/demos/perception/">Is Seeing Believing?</a></strong> — fourteen hands-on scenes asking a single question — is seeing believing? — and closing on one I can't answer: does a tree feel pain?
