@@ -16,12 +16,12 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/news/";
           },
-        },{id: "nav-playground",
-          title: "playground",
-          description: "Self-made psychological experiment programs. Read about the science behind each one, and run the interactive ones directly in your browser.",
+        },{id: "nav-demos",
+          title: "demos",
+          description: "Things I have built and can be opened in a browser — talks I give, and experiments you can run.",
           section: "Navigation",
           handler: () => {
-            window.location.href = "/playground/";
+            window.location.href = "/demos/";
           },
         },{id: "nav-publications",
           title: "publications",
