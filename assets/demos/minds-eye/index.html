@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>心的眼睛 · The Mind's Eye</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+  <!-- 舞台：所有场景都渲染在这里 -->
+  <div id="stage"></div>
+
+  <!-- 顶部进度条 -->
+  <div id="progress"><i id="progressFill"></i></div>
+
+  <!-- 底部场景导航（圆点） -->
+  <nav id="navbar" aria-label="场景导航"><div id="dots"></div></nav>
+
+  <!-- 黑屏层（按 X，翻页笔的黑屏键常发 . 也支持） -->
+  <div id="blackout"></div>
+
+  <!-- 调试面板（按 D 或 ?debug=1） -->
+  <div id="debug"></div>
+
+  <!-- 全屏按钮 -->
+  <button id="fsbtn" title="全屏 / 退出全屏 (F)">⛶</button>
+
+  <!-- 轻提示 -->
+  <div id="toast"></div>
+
+  <!-- 2050 的记号：整场常驻，很小很暗，只是一个在场的标志 -->
+  <img id="mx-mark" src="./media/2050-logo.png" alt="2050">
+
+  <script src="./icons.js"></script>
+  <script src="./core.js"></script>
+  <script src="./pixel.js"></script>
+
+  <!-- 顺序 = 讲稿顺序。改这里就是改讲稿结构。
+       分辨率（你补出来的）→ 不存在的边 → 想象光谱 → 心盲 → 每幅画都不同
+       → 一场关于想象的科学艺术展 → 收 -->
+  <script src="./s00_open.js"></script>
+  <script src="./s01_kanizsa.js"></script>
+  <script src="./s02_spectrum.js"></script>
+</body>
+</html>
