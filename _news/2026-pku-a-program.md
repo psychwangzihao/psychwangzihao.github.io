@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Admitted to the 2026 <strong>Senior Mentor Team</strong> of the Talented Youth Initiative as a Peer Mentor, School of Psychological and Cognitive Sciences, Peking University.
+Selected as a <strong>Peer Mentor</strong> for the 2026 cohort of the <strong>Talented Youth Initiative</strong>, School of Psychological and Cognitive Sciences, Peking University.
