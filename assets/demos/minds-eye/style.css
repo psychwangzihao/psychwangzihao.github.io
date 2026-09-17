@@ -523,3 +523,88 @@ body.dark-scene #dots .lbl{color:#8A8A8A;}
   transition:background var(--dur-fast) var(--ease-out),color var(--dur-fast) var(--ease-out);
 }
 .mx-btn:hover{background:var(--mx-yellow);color:var(--bg-primary);border-color:var(--mx-yellow);}
+
+/* ---------------- 正文页的通用排法 ----------------
+   后面十来幕大多是同一形状：一个很小的小标题、一两句主句、几行按次出的正文。
+   把它抽出来，场景文件里就只剩内容，不用每幕重写一遍样式。 */
+.doc-lead{
+  font-size:var(--fs-title);font-weight:var(--fw-bold);
+  line-height:1.45;text-align:center;max-width:76vw;
+}
+.doc-body{
+  font-size:var(--fs-subtitle);line-height:1.7;
+  text-align:center;max-width:64vw;color:var(--text-secondary);
+}
+.doc-body.hi{color:var(--text-primary);}
+.doc-body.warn{color:var(--mx-yellow);}
+
+/* 竖排列表：一行一条，可逐行出 */
+.doc-list{
+  display:flex;flex-direction:column;gap:1.1vw;
+  width:64vw;text-align:left;
+}
+.doc-list > div{
+  font-size:var(--fs-body);line-height:1.6;
+  padding-left:1.6vw;position:relative;
+}
+.doc-list > div::before{
+  content:'';position:absolute;left:0;top:.62em;
+  width:.7vw;height:.7vw;background:var(--mx-blue);
+}
+.doc-list.gaps > div::before{background:var(--mx-yellow);}
+.doc-list.art > div::before{background:var(--mx-cream);}
+.doc-list b{font-weight:var(--fw-bold);}
+.doc-list small{display:block;color:var(--text-tertiary);font-size:var(--fs-small);margin-top:.2vw;}
+
+/* 一排小卡片（三四个并列的图/字） */
+.doc-cards{display:flex;gap:2vw;justify-content:center;align-items:stretch;width:100%;}
+.doc-card{
+  width:19vw;display:flex;flex-direction:column;gap:.6vw;
+  border-top:.35vw solid var(--mx-blue);padding-top:.8vw;
+}
+.doc-card i{font-style:normal;font-family:var(--font-mono);
+  font-size:var(--fs-tiny);color:var(--text-tertiary);letter-spacing:.2em;}
+.doc-card b{font-size:var(--fs-body);font-weight:var(--fw-bold);}
+.doc-card span{font-size:var(--fs-small);line-height:1.55;color:var(--text-secondary);}
+
+/* 横向量程条：给「每种感官只取一小段」用 */
+.range-row{display:flex;align-items:center;gap:1.2vw;width:66vw;}
+.range-row .nm{
+  width:9vw;text-align:right;font-size:var(--fs-small);
+  color:var(--text-secondary);flex:none;
+}
+.range-row .bar{
+  flex:1;height:1.1vw;background:var(--bg-card);position:relative;overflow:hidden;
+}
+.range-row .bar i{position:absolute;top:0;bottom:0;display:block;}
+.range-row .val{
+  width:15vw;font-family:var(--font-mono);font-size:var(--fs-tiny);
+  color:var(--text-tertiary);flex:none;
+}
+
+/* ---------------- 纯词条列表 ----------------
+   屏幕上不放句子。只放名词、数字。解释由讲者说。
+   这一套比 .doc-list 更空：没有小字、字号更大、行距更松，
+   所以三四个词条就能撑住一屏。 */
+.doc-terms{
+  display:flex;flex-direction:column;gap:1.5vw;
+  width:60vw;
+}
+.doc-terms > div{
+  font-size:var(--fs-subtitle);line-height:1.45;
+  padding-left:2.2vw;position:relative;
+  color:var(--text-primary);
+}
+.doc-terms > div::before{
+  content:'';position:absolute;left:0;top:.72em;
+  width:.55vw;height:.55vw;background:var(--mx-blue);
+}
+.doc-terms.gaps > div::before{background:var(--mx-yellow);}
+.doc-terms.art  > div::before{background:var(--mx-cream);}
+.doc-terms b{font-weight:var(--fw-bold);}
+
+/* 词条右对齐的版本（名词在左、数字在右） */
+.doc-terms.kv > div{display:flex;justify-content:space-between;gap:3vw;}
+.doc-terms.kv > div i{
+  font-style:normal;font-family:var(--font-mono);color:var(--mx-yellow);
+}

@@ -78,9 +78,9 @@ var MX = (function () {
     var cv = document.createElement('canvas');
     cv.width = w; cv.height = h;
     var g = cv.getContext('2d');
-    g.fillStyle = '#0B0B0C';
-    g.fillRect(0, 0, w, h);
-
+    /* 不铺底色 —— 留透明。演示里那层深色是场景自己的背景，
+       铺在这里反而会：① 导出透明底 PNG 时边缘留一圈暗描边；
+       ② 将来换浅色背景时糊上一层黑。 */
     var R = Math.min(w, h) * 0.175;              /* 圆盘半径 */
     var L = R * 2.35;                            /* 等边三角形边长 */
     var hh = L * Math.sqrt(3) / 2;
