@@ -377,13 +377,20 @@
       return;
     }
 
-    if (k === 'ArrowRight' || k === 'PageDown' || k === ' ' || k === 'Enter' || k === 'n') {
+    /* ⚠️ 这里的键位是**为翻页笔定的**，和别处反着来：
+       很多翻页笔的两个按键发的就是 ↑ / ↓。原来 ↑↓ 是「换场景」，
+       于是一按翻页笔就整幕跳过去，.step 逐行揭露全被跳过 ——
+       屏幕上明明有内容，讲者按了却没出来，直接跳到下一幕。
+       现在 ↑↓ 和 →← PageUp PageDown 空格 一律 = 翻一页；
+       换场景退到 [ ]（排练时用笔记本键盘够用）。 */
+    if (k === 'ArrowDown' || k === 'ArrowRight' || k === 'PageDown' ||
+        k === ' ' || k === 'Enter' || k === 'n') {
       next(); e.preventDefault();
-    } else if (k === 'ArrowLeft' || k === 'PageUp' || k === 'p') {
+    } else if (k === 'ArrowUp' || k === 'ArrowLeft' || k === 'PageUp' || k === 'p') {
       prev(); e.preventDefault();
-    } else if (k === 'ArrowDown') {
+    } else if (k === ']') {
       if (si < SCENES.length - 1) goto(si + 1, 0); e.preventDefault();
-    } else if (k === 'ArrowUp') {
+    } else if (k === '[') {
       if (si > 0) goto(si - 1, 0); e.preventDefault();
     } else if (k === 'f' || k === 'F') {
       toggleFullscreen();
@@ -397,17 +404,8 @@
       toggleDebug();
     } else if (k === 'Home') {
       goto(0, 0); e.preventDefault();
-    } else if (k >= '1' && k <= '9') {
-      goto(parseInt(k, 10), 0); e.preventDefault();
-    } else if (k === '0') {
-      /* 跳到「收束」那一幕。**按 id 找，不要写死下标** ——
-         场景顺序调整过几轮，原来硬编码的 10 已经不指向收束了（会落到「如何改变脑」）。 */
-      var ci = -1;
-      for (var i = 0; i < SCENES.length; i++) if (SCENES[i].id === 'closing') { ci = i; break; }
-      goto(ci >= 0 ? ci : Math.min(9, SCENES.length - 1), 0);
-      e.preventDefault();
     } else if (k === '?' || k === '/') {
-      toast('→ 下一状态 · ← 上一状态 · ↑↓ 换场景 · X 黑屏 · F 全屏 · D 调试');
+      toast('↑↓ / →← / 空格 翻页 · [ ] 换幕 · X 黑屏 · F 全屏');
       e.preventDefault();
     }
   });
