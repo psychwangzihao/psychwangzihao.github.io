@@ -1,5 +1,5 @@
 /* ============================================================
- * 场景：只拥有感  (id: onlysense · 3 个状态)
+ * 场景：只拥有感  (id: onlysense · 2 个状态)
  *
  * 「我们知道什么」这一节的开头。屏幕上只放词，判断留给讲者。
  *
@@ -7,9 +7,6 @@
  * 3.2 是全篇唯一一处把问题指向机器的地方，只问不答。
  * ============================================================ */
 PERCEPTION.css('scene-onlysense', `
-#soBoth{display:flex;flex-direction:column;align-items:center;gap:var(--space-md);}
-#soBoth .s{font-size:var(--fs-title);font-weight:var(--fw-bold);line-height:1.3;}
-#soBoth .ln{width:14vw;height:1px;background:var(--border-subtle);}
 `);
 
 PERCEPTION.scene({
@@ -30,19 +27,6 @@ PERCEPTION.scene({
         </div>
       `);
       ctx.steps();
-    },
-
-    /* ---- 同时 ---- */
-    function (ctx) {
-      ctx.set(`
-        <div class="stack gap-xl">
-          <div id="soBoth">
-            <div class="s c-blue anim" style="--d:.1s">无比真实</div>
-            <div class="ln anim fade" style="--d:.35s"></div>
-            <div class="s c-orange anim" style="--d:.55s">无比虚假</div>
-          </div>
-        </div>
-      `);
     },
 
     /* ---- 转向机器 ---- */
