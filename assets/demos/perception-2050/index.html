@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>感知 · 2050</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+  <div id="stage"></div>
+  <div id="progress"><i id="progressFill"></i></div>
+  <nav id="navbar" aria-label="场景导航"><div id="dots"></div></nav>
+  <div id="blackout"></div>
+  <div id="debug"></div>
+  <button id="fsbtn" title="全屏 / 退出全屏 (F)">⛶</button>
+  <div id="toast"></div>
+
+  <img id="p2050" src="./media/2050-logo.png" alt="2050">
+
+  <script src="./icons.js"></script>
+  <script src="./core.js"></script>
+  <script src="./viz.js"></script>
+  <script src="./quiz.js"></script>
+
+  <!-- ⚠️ 每一行右边是它在脑图上的出处。对不上的就不该在这里。
+       每一幕都带 part；连续同 part 的幕在底部导航上归成一个块。 -->
+
+  <script src="./s00_title.js"></script>       <!-- ── 开场 ── -->
+
+  <!-- ── 一 · 人如何感 ── 突破感知的范围 ──────── -->
+  <script src="./s_trans.js"></script>         <!-- 感 = 转译 / 刺激→感受器→电信号→感受 -->
+  <script src="./s_window.js"></script>        <!-- 窗口 380–750nm · 耳朵 · 别的物种 -->
+  <script src="./s02_blindspot.js"></script>   <!-- 盲点 · 现场做 -->
+
+  <!-- ── 二 · 人有何感 ── 突破感知的类别 ──────── -->
+  <script src="./s07_eagleman.js"></script>    <!-- David Eagleman · 背心 -->
+
+  <!-- ── 三 · 我们知道什么 ─────────────────────── -->
+  <script src="./s_onlysense.js"></script>     <!-- 无知的自觉 · 只拥有感 · 机器有知吗 -->
+
+  <!-- ── 感知的多样性 ── 一幕三屏 ────────────── -->
+  <script src="./s_d1_color.js"></script>      <!-- 色盲 · 一个维度 / 只差色相 / 只差明度 / 四色视 -->
+
+  <!-- ── 四 · 想象 ─────────────────────────────── -->
+  <script src="./s_dress.js"></script>         <!-- 那条裙子 · 知生成感 -->
+  <script src="./s_imagine.js"></script>       <!-- 感→知 / 知→感 · 同一台机器 · 现场报数 -->
+
+  <!-- ── 心盲 ───────────────────────────────────── -->
+  <script src="./s05_aphantasia.js"></script>  <!-- 心盲 2–4% · Know but cannot feel -->
+
+  <script src="./s_end.js"></script>           <!-- ── 收 ── -->
+</body>
+</html>
