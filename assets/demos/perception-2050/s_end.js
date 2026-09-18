@@ -4,8 +4,7 @@
  * 1 是全场唯一一处把结论放上屏幕的地方 —— 因为那三种情境本身
  * 是分享者的论述，不是实验结果，摊开来观众才知道差别在哪。
  *
- * 2 交回一个问题，不给答案。
- * 3 只说展。不发招募。
+ * 2 收。只放「谢谢大家」和二维码 —— 不解释。
  * ============================================================ */
 PERCEPTION.css('scene-end', `
 #seTbl{width:62vw;display:flex;flex-direction:column;gap:var(--space-sm);}
@@ -41,7 +40,7 @@ PERCEPTION.scene({
     function (ctx) {
       ctx.set(`
         <div class="stack gap-lg">
-          <div class="title anim" style="--d:0s">审美发生在哪一步</div>
+          <div class="title anim" style="--d:0s">审美与感知</div>
           <div id="seTbl">
             <div class="r a anim" style="--d:.15s">
               <span class="k">A</span><span class="w">自然 · 摩天大楼</span><span class="v a">只有感</span>
@@ -57,26 +56,12 @@ PERCEPTION.scene({
       `);
     },
 
-    /* ---- 交回一个问题 ---- */
-    function (ctx) {
-      ctx.set(`
-        <div class="stack gap-xl">
-          <h2 id="seQ" class="anim" style="--d:0s">
-            一件作品<br>只存在于某一段感知里，<br>
-            <em>那它是要给谁看的？</em>
-          </h2>
-        </div>
-      `);
-    },
-
-    /* ---- 展 ---- */
+    /* ---- 收：只有一句谢和一个码 ---- */
     function (ctx) {
       ctx.set(`
         <div class="stack gap-lg">
-          <div class="rule anim fade" style="--d:0s;width:16vw"></div>
-          <img id="seQR" class="anim" style="--d:.15s" src="./media/qr-wechat.png" alt="微信">
-          <div class="subtitle anim" style="--d:.3s">一起做一件关于感知的作品</div>
-          <div class="small faint anim" style="--d:.45s">2026 · 杭州</div>
+          <div class="hero anim" style="--d:0s">谢谢大家</div>
+          <img id="seQR" class="anim" style="--d:.25s" src="./media/qr-wechat.png" alt="微信">
         </div>
       `);
     },

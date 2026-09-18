@@ -24,10 +24,8 @@ PERCEPTION.scene({
       ctx.set(`
         <div class="stack gap-lg">
           <div class="stack gap-lg">
-            <div class="title step">审慎</div>
-            <div class="title step">退一步</div>
-            <div class="title step">只剩下感</div>
-            <div class="subtitle muted step">感本身，就是一种意义</div>
+            <div class="title step">无知的意味</div>
+            <div class="title step">感本身的意义</div>
           </div>
         </div>
       `);
