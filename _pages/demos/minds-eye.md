@@ -19,8 +19,8 @@ nav: false
 </div>
 
 <div style="margin: 1.4rem 0 0;">
-  <a href="https://consciousness-observers.github.io/projects/imagine/" style="display: inline-block; padding: 0.65rem 1.8rem; font-size: 0.9375rem; font-weight: 600; background: #0076df; color: #fff; border-radius: 7px; text-decoration: none;">The exhibition project →</a>
-  <span style="font-size: 0.8125rem; color: var(--global-text-color-light); margin-left: 0.6rem;">Imagine — on CO-LAB</span>
+  <a href="/assets/demos/perception-2050/" style="display: inline-block; padding: 0.65rem 1.8rem; font-size: 0.9375rem; font-weight: 600; background: #d97a00; color: #fff; border-radius: 7px; text-decoration: none;">Open the demo ↗</a>
+  <a href="https://consciousness-observers.github.io/projects/imagine/" style="display: inline-block; padding: 0.65rem 1.8rem; font-size: 0.9375rem; font-weight: 600; background: #0076df; color: #fff; border-radius: 7px; text-decoration: none; margin-left: 0.6rem;">The exhibition project →</a>
 </div>
 
 ---
@@ -59,4 +59,4 @@ Write to <a href="mailto:psychwangzihao@zju.edu.cn">psychwangzihao@zju.edu.cn</a
 
 ## Status
 
-**In development.** The talk is scheduled for 18 September 2026; an interactive version for the browser is being built.
+The talk was given at the 2050 roundtable on 18 September 2026. The interactive version runs in the browser — eleven scenes, several of them things the audience does rather than things they are told.
