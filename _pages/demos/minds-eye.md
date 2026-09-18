@@ -26,11 +26,13 @@ nav: false
 
 ## What the talk argued
 
-Seeing is not receiving. It is construction: the eye delivers far less than what you experience, and the rest is supplied by the brain. This is easy to say and hard to believe, so the talk was built around things the audience did rather than claims they were asked to accept.
+Sensation is a translation, not a recording. Receptors turn a physical quantity into electrical signals, and the brain turns those into an experience — so the question is never what is out there, but what this particular machine receives and what it leaves out.
 
-From there comes the turn. If perception is machinery that builds an experience out of insufficient input, what happens when you run that machinery with **no input at all**? That is imagination — and it is the same machinery, which is why a remembered place can be inspected, rotated, and walked through.
+The talk follows that seam in four steps. **The window is narrow**: 380–750 nm out of a spectrum that runs from gamma rays to radio, 20 Hz to 20 kHz out of everything that vibrates, and a blind spot in each eye that nobody ever notices. **The window is not fixed**: a vest that turns sound into vibration on the torso, an electrode array on the tongue, a click and its echo — channels can be added, at the price of ten to seventy-three hours of training. **Sensation can do without knowledge**: suspend the knowing, and what remains is at once entirely real and entirely made. **And knowledge can run backwards**: what you assume about the light in a photograph changes the colour you see, though the cones are identical — imagination running the same machinery from the other end.
 
-Which raises the question the talk ended on. **What if it produces nothing?** Roughly 2–4% of people cannot picture anything: they know what an apple looks like, they recognise one instantly, they can draw one — but closing their eyes yields no image. Aphantasia is not a deficit of imagination. It is a different way of having a mind, and it is one of the sharpest instruments we have for understanding how everyone else's works.
+Then the question the talk was built around. **Where in that chain does aesthetic experience happen?** Three cases, laid side by side: a landscape, which asks for sensation alone; a painting plus its explanation, which asks for both; a page of text, which must pass through knowledge before it can turn back into sensation. All three are genuinely aesthetic; they differ only in how much of each they need.
+
+Running alongside: colour vision is not one thing. Dichromats lose exactly one dimension. Two painters with colour deficiency gave up colour altogether and moved to black and white. About 12% of women carry a fourth cone type, and almost none can use it. And separately, roughly 2–4% of people cannot picture anything at all — they know what an apple looks like, they can draw one, and closing their eyes yields nothing.
 
 ## Why this is a conversation with art and design
 
@@ -58,4 +60,4 @@ Write to <a href="mailto:psychwangzihao@zju.edu.cn">psychwangzihao@zju.edu.cn</a
 
 ## Status
 
-The talk was given at the 2050 roundtable on 18 September 2026. The interactive version runs in the browser — eleven scenes, several of them things the audience does rather than things they are told.
+The talk was given at the 2050 roundtable on 18 September 2026. The interactive version runs in the browser: eleven scenes, the blind spot among them done live on three different backgrounds.
