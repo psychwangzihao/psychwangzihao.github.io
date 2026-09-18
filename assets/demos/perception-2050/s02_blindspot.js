@@ -8,9 +8,14 @@ PERCEPTION.css('scene-blindspot', `
    换成绿底之后，"消失的位置仍然是绿的"这件事观众才看得见。 */
 #bsBoard{
   --bs-bg:#FFFFFF;
-  background:var(--bs-bg);border-radius:var(--radius-xl);
-  box-shadow:var(--shadow-md);padding:var(--space-md);
-  width:100%;height:30vh;min-height:190px;
+  background:var(--bs-bg);
+  /* 撑满左右：.stack 是 shrink-to-fit 且居中，底板一旦比它宽，
+     浏览器就自动把底板居中到视口 —— 左右各溢出等量，正好满幅。
+     ⚠️ 别再补一句 margin-left:calc(50% - 50vw)，那会多减一份，
+        底板整体左移，十字会被切在屏幕外。 */
+  width:100vw;
+  padding:var(--space-md);
+  height:32vh;min-height:200px;
   position:relative;overflow:hidden;
 }
 /* 交互态：十字**钉死在左边**，只有蓝点动。
@@ -19,14 +24,16 @@ PERCEPTION.css('scene-blindspot', `
   position:absolute;top:50%;line-height:1;user-select:none;
   transform:translateY(-50%);
 }
-#bsFix{left:14%;font-size:var(--fs-hero);font-weight:var(--fw-bold);}
-#bsDot{font-size:var(--fs-hero);color:var(--accent-blue);left:34%;}
+#bsFix{left:10%;font-size:var(--fs-hero);font-weight:var(--fw-bold);}
+#bsDot{font-size:var(--fs-hero);color:var(--accent-blue);left:88%;}
 #bsDot.blink{animation:softPulse 2s var(--ease-in-out) infinite;}
 
 /* 揭晓态：板子缩回正常大小，两点靠近，回到普通横排 */
 #bsBoard.board{
   display:flex;align-items:center;justify-content:center;
   gap:12vw;width:auto;height:auto;
+  margin-left:0;padding:var(--space-md) var(--space-lg);
+  border-radius:var(--radius-xl);box-shadow:var(--shadow-md);
 }
 #bsBoard.board #bsFix,
 #bsBoard.board #bsDot{
@@ -88,7 +95,8 @@ PERCEPTION.css('scene-blindspot', `
 
 /* 三种底色共用一个蓝点位置：换底色时它不动，
    观众还盯着十字，底下的颜色就换了。 */
-var _bsPos = 0;
+/* 初始在**最远**：讲者再按现场的房间往里收 */
+var _bsPos = 100;
 
 function bsStage(ctx, color) {
   ctx.set(`
@@ -108,7 +116,7 @@ function bsStage(ctx, color) {
 
       <div id="bsSlider">
         <span>两点间距</span>
-        <input type="range" id="bsRange" min="0" max="100" value="0">
+        <input type="range" id="bsRange" min="0" max="100" value="100">
       </div>
     </div>
   `);
@@ -118,7 +126,7 @@ function bsStage(ctx, color) {
   /* 只改蓝点的位置，十字不动。0–100 映射到 26%–80%。 */
   function apply() {
     _bsPos = +range.value;
-    dot.style.left = (26 + _bsPos * 0.54) + '%';
+    dot.style.left = (30 + _bsPos * 0.58) + '%';
   }
   ctx.on(range, 'input', apply);
   apply();
@@ -131,13 +139,10 @@ PERCEPTION.scene({
   noClick: true,          /* 学生正在做测试，误点不该翻页 */
   states: [
 
-    /* ---- 2.0–2.2 三种底色：白 / 绿 / 黄 ----
-       翻页笔按一下换一种。三屏的蓝点位置是同一个，不会跳回原点。 */
+    /* ---- 2.0 滑动：先把盲点做出来（白底）---- */
     function (ctx) { bsStage(ctx, '#FFFFFF'); },
-    function (ctx) { bsStage(ctx, '#2FA84F'); },
-    function (ctx) { bsStage(ctx, '#F5C518'); },
 
-    /* ---- 2.1 揭晓：一行一行来 ---- */
+    /* ---- 2.1 揭晓：先把这个悖论说清楚 ---- */
     function (ctx) {
       ctx.set(`
         <div id="bsReveal">
@@ -168,6 +173,11 @@ PERCEPTION.scene({
       ctx.after(1500, function () { ctx.q('#bsSpot').classList.add('on'); });
       ctx.steps();
     },
+
+    /* ---- 2.2–2.3 三色体验：讲完之后，换底色给观众看 ----
+       蓝点位置跨屏保持，翻页笔按一下换一种，不会跳回原点。 */
+    function (ctx) { bsStage(ctx, '#2FA84F'); },
+    function (ctx) { bsStage(ctx, '#F5C518'); },
 
   ],
 });
