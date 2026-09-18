@@ -47,13 +47,19 @@
   --font-mono:"JetBrains Mono","SF Mono",Menlo,Consolas,monospace;
 
   /* 字号阶梯（vw 适配投影；clamp 的 px 下限保护小屏） */
-  --fs-hero:clamp(34px,5vw,96px);
-  --fs-title:clamp(26px,3.5vw,68px);
-  --fs-subtitle:clamp(19px,2.5vw,48px);
-  --fs-body:clamp(15px,1.8vw,34px);
-  --fs-small:clamp(13px,1.4vw,26px);
-  --fs-tiny:clamp(11px,1.2vw,22px);
-  --fs-data:clamp(13px,1.6vw,30px);
+  /* 字号阶梯。取 vw 和 vh 里**小的那个**，上限再放宽一倍 ——
+     原来只按 vw 走、上限卡在 1920 宽附近，于是屏幕一超过 1920
+     字就不再变大（3840 的长条屏上正文只占屏宽 0.9%，后排看不清）。
+     加 vh 这一项是为了**又宽又矮**的长条屏：那里 vw 会算出很大的字，
+     竖向根本放不下，取 min 就自动收住了。
+     16:9 的普通投影仪上 vw 项仍然胜出，一个字都不变。 */
+  --fs-hero:clamp(34px,min(5vw,17vh),192px);
+  --fs-title:clamp(26px,min(3.5vw,12vh),134px);
+  --fs-subtitle:clamp(19px,min(2.5vw,8.6vh),96px);
+  --fs-body:clamp(15px,min(1.8vw,6.3vh),69px);
+  --fs-small:clamp(13px,min(1.4vw,4.9vh),54px);
+  --fs-tiny:clamp(11px,min(1.2vw,4.1vh),46px);
+  --fs-data:clamp(13px,min(1.6vw,5.5vh),61px);
 
   --fw-light:300;
   --fw-regular:400;
