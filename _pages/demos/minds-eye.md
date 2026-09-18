@@ -8,7 +8,6 @@ nav: false
 <a href="/demos/" style="font-size: 0.875rem; color: var(--global-theme-color);">← Back to demos</a>
 
 <div style="margin-bottom: 0.25rem; margin-top: 1rem;">
-  <span style="font-size: 0.75rem; background: #d97a00; color: #fff; padding: 0.15rem 0.5rem; border-radius: 12px;">In development</span>
   <span style="font-size: 0.8125rem; color: var(--global-text-color-light); margin-left: 0.5rem;">Art &amp; Perception</span>
 </div>
 
@@ -25,13 +24,13 @@ nav: false
 
 ---
 
-## What the talk argues
+## What the talk argued
 
-Seeing is not receiving. It is construction: the eye delivers far less than what you experience, and the rest is supplied by the brain. This is easy to say and hard to believe, so the talk is built around things the audience does rather than claims they are asked to accept.
+Seeing is not receiving. It is construction: the eye delivers far less than what you experience, and the rest is supplied by the brain. This is easy to say and hard to believe, so the talk was built around things the audience did rather than claims they were asked to accept.
 
 From there comes the turn. If perception is machinery that builds an experience out of insufficient input, what happens when you run that machinery with **no input at all**? That is imagination — and it is the same machinery, which is why a remembered place can be inspected, rotated, and walked through.
 
-Which raises the question the talk ends on. **What if it produces nothing?** Roughly 2–4% of people cannot picture anything: they know what an apple looks like, they recognise one instantly, they can draw one — but closing their eyes yields no image. Aphantasia is not a deficit of imagination. It is a different way of having a mind, and it is one of the sharpest instruments we have for understanding how everyone else's works.
+Which raises the question the talk ended on. **What if it produces nothing?** Roughly 2–4% of people cannot picture anything: they know what an apple looks like, they recognise one instantly, they can draw one — but closing their eyes yields no image. Aphantasia is not a deficit of imagination. It is a different way of having a mind, and it is one of the sharpest instruments we have for understanding how everyone else's works.
 
 ## Why this is a conversation with art and design
 
@@ -39,7 +38,7 @@ An artwork does not deliver an experience. It supplies conditions, and the viewe
 
 That has a practical consequence for anyone who makes things. **You cannot control what a viewer sees. You can only control the conditions you give them.** And the range of machinery you are addressing is wider than usually assumed: the audience includes people who will walk through your installation with no inner image at all.
 
-The talk is an opening move toward a collaboration with the School of Intermedia Art, China Academy of Art, and Zhejiang University: using research on imagination to inform how perceptual work is designed, and using perceptual work to carry the science back out.
+The talk opened a conversation with the School of Intermedia Art, China Academy of Art, and Zhejiang University: using research on imagination to inform how perceptual work is designed, and using perceptual work to carry the science back out.
 
 ## The exhibition
 
