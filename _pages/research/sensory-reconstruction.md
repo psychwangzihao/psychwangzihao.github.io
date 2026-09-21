@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: rpage
 title: Sensory reconstruction
 permalink: /research/sensory-reconstruction/
 nav: false

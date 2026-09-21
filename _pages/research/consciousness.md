@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: rpage
 title: Consciousness
 permalink: /research/consciousness/
 nav: false

@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: rpage
 title: Brain-state toolkit
 permalink: /research/brain-state/
 nav: false
@@ -25,13 +25,39 @@ nav: false
   通过聚类分析</strong>得到脑状态分级。输入是静息态功能磁共振数据，输出是脑状态。
 </p>
 
-<h2>目前阶段</h2>
 
-<p style="font-size: .93rem; line-height: 1.75; max-width: 52rem;">
-  <strong>前期学习与准备。</strong>参考文献如下：
-</p>
+<style>
+  .refs {
+    border: 1px solid var(--global-divider-color);
+    border-left: 3px solid #6a7f9c;
+    border-radius: 6px; background: var(--global-card-bg-color);
+    max-width: 52rem;
+  }
+  .refs > summary {
+    cursor: pointer; list-style: none; padding: .7rem 1rem;
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: .7rem;
+  }
+  .refs > summary::-webkit-details-marker { display: none; }
+  .refs > summary::after {
+    content: '+'; margin-left: auto; color: var(--global-text-color-light);
+  }
+  .refs[open] > summary::after { content: '−'; }
+  .refs-h { font-weight: 600; color: var(--global-text-color); }
+  .refs-l { font-size: .85em; color: var(--global-text-color-light); }
+  .refs-body {
+    border-top: 1px solid var(--global-divider-color);
+    padding: .9rem 1rem 1rem; font-size: .87em; line-height: 1.75;
+  }
+</style>
 
-<div style="font-size: .87rem; line-height: 1.9; max-width: 52rem;">
+
+
+<details class="refs">
+<summary>
+  <span class="refs-h">目前阶段</span>
+  <span class="refs-l">前期学习与准备 · 参考文献 4 篇</span>
+</summary>
+<div class="refs-body">
 
 <p style="margin-bottom: .8rem;">
   Xin, X., Yu, J., Wang, C., &amp; Gao, X. (2026). The dynamic interplay between brain entropy and
@@ -59,3 +85,4 @@ nav: false
 </p>
 
 </div>
+</details>

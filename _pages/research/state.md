@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: rpage
 title: State
 permalink: /research/consciousness/state/
 nav: false

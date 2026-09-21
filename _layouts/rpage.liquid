@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="{{ site.lang }}">
+  <head>
+    {% include head.liquid %}
+  </head>
+
+  <!-- 组会/答辩用的全屏页：没有顶部那条导航、没有页脚，内容占满视口并垂直居中。
+       返回上一层的入口只有正文里的「← xxx」链接 —— 这是刻意的，全屏时
+       屏幕上的每个字都应该是内容。 -->
+  <body class="r-body-page">
+    <style>
+      /* ⚠️ 关键就在这一行：抬的是**根字号**，不是某个容器。
+         页面正文里的字号全是 rem，跟着根字号一起放大 —— 只调容器的话
+         那些 rem 还是按 16px 算，一点都不会变大。 */
+      html { font-size: clamp(15px, 1.30vw, 26px); }
+
+      body.r-body-page {
+        background: var(--global-bg-color);
+        margin: 0;
+      }
+      .r-wrap {
+        min-height: 100vh;
+        box-sizing: border-box;
+        display: flex; flex-direction: column; justify-content: center;
+        padding: 5vh clamp(1.5rem, 4.5vw, 4.5rem);
+        max-width: 1580px;
+        margin: 0 auto;
+      }
+      .r-head { margin-bottom: .6rem; }
+      .r-title {
+        font-weight: 600; line-height: 1.2;
+        margin: 0 0 .4em; color: var(--global-text-color);
+      }
+      .r-desc { line-height: 1.6; margin: 0; color: var(--global-text-color-light); }
+      /* 正文里写死的段宽也跟着根字号走，不用改页面 */
+      .r-body p, .r-body li { line-height: 1.75; }
+      .r-body h2 { margin: 1.5em 0 .55em; }
+      /* 页脚那条（Copyright / Powered by）全屏时不要 */
+      footer.fixed-bottom, .fixed-bottom { display: none; }
+    </style>
+
+    <div class="r-wrap">
+      <header class="r-head">
+        <h1 class="r-title">{{ page.title }}</h1>
+        {% if page.description %}<p class="r-desc">{{ page.description }}</p>{% endif %}
+      </header>
+      <article class="r-body">
+        {{ content }}
+      </article>
+    </div>
+
+    {% include scripts.liquid %}
+  </body>
+</html>

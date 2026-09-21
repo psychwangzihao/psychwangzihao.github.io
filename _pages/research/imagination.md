@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: rpage
 title: Imagination
 permalink: /research/imagination/
 nav: false
