@@ -37,6 +37,26 @@
       .r-body h2 { margin: 1.5em 0 .55em; }
       /* 页脚那条（Copyright / Powered by）全屏时不要 */
       footer.fixed-bottom, .fixed-bottom { display: none; }
+
+      /* 右上角「真·全屏」按钮：平时很淡，鼠标移上去才实。投影时
+         不会抢内容，但伸手就能按到。 */
+      .r-fs {
+        position: fixed; top: .7rem; right: .9rem; z-index: 60;
+        display: flex; padding: .35rem; border: 0; border-radius: .35rem;
+        background: transparent; color: var(--global-text-color-light);
+        opacity: .22; cursor: pointer;
+        transition: opacity .18s, background .18s;
+      }
+      .r-fs:hover, .r-fs:focus-visible { opacity: 1; background: rgba(128,128,128,.14); }
+      .r-fs svg { width: 1.15rem; height: 1.15rem; display: block; }
+      .r-fs .ic-out { display: none; }
+      body.r-fs-on .r-fs .ic-in  { display: none; }
+      body.r-fs-on .r-fs .ic-out { display: block; }
+
+      /* 全屏演示时鼠标不动就藏起来，免得停在标题上 */
+      body.r-fs-on.r-idle { cursor: none; }
+      body.r-fs-on.r-idle .r-fs { opacity: 0; }
+      body.r-fs-on #back-to-top, body.r-fs-on .back-to-top { display: none !important; }
     </style>
 
     <div class="r-wrap">
@@ -48,6 +68,63 @@
         {{ content }}
       </article>
     </div>
+
+    <button id="rfs" class="r-fs" title="全屏 / 退出全屏（F）" aria-label="全屏">
+      <svg class="ic-in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/>
+      </svg>
+      <svg class="ic-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 8h3a2 2 0 0 0 2-2V3M21 8h-3a2 2 0 0 1-2-2V3M3 16h3a2 2 0 0 1 2 2v3M21 16h-3a2 2 0 0 0-2 2v3"/>
+      </svg>
+    </button>
+
+    <script>
+      (function () {
+        var btn = document.getElementById('rfs');
+        var root = document.documentElement;
+
+        function isFs() {
+          return !!(document.fullscreenElement || document.webkitFullscreenElement);
+        }
+        function toggle() {
+          if (isFs()) {
+            (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+          } else {
+            var req = root.requestFullscreen || root.webkitRequestFullscreen;
+            // 有些浏览器不接受 Promise（Safari 老版），所以不直接 .catch
+            if (req) { var p = req.call(root); if (p && p.catch) p.catch(function () {}); }
+          }
+        }
+
+        btn.addEventListener('click', toggle);
+
+        ['fullscreenchange', 'webkitfullscreenchange'].forEach(function (ev) {
+          document.addEventListener(ev, function () {
+            document.body.classList.toggle('r-fs-on', isFs());
+          });
+        });
+
+        document.addEventListener('keydown', function (e) {
+          if (e.metaKey || e.ctrlKey || e.altKey) return;
+          if (e.key === 'f' || e.key === 'F') { e.preventDefault(); toggle(); }
+        });
+
+        // 全屏且鼠标静止 2.5 秒后隐藏光标（退出全屏立刻恢复）
+        var t;
+        function wake() {
+          document.body.classList.remove('r-idle');
+          clearTimeout(t);
+          t = setTimeout(function () {
+            if (isFs()) document.body.classList.add('r-idle');
+          }, 2500);
+        }
+        ['mousemove', 'mousedown', 'keydown'].forEach(function (ev) {
+          document.addEventListener(ev, wake, { passive: true });
+        });
+      })();
+    </script>
 
     {% include scripts.liquid %}
   </body>
