@@ -4,7 +4,7 @@ title: demos
 permalink: /demos/
 description: Talks I have given and experiments I have written, both openable in a browser.
 nav: true
-nav_order: 2
+nav_order: 3
 ---
 
 <div style="margin-bottom: 1.5rem;">

@@ -1,0 +1,89 @@
+# ============================================================
+#  Research 板块的数据
+#
+#  每个节点一个 parent 字段，页面靠它取自己的子卡片：
+#    _includes/research_cards.liquid  里 where: "parent", page.rnode
+#  所以「加一个节点」只需要在这里加一条，不用碰页面。
+#
+#  status: active | inactive | done
+#      —— active 会显示绿点，inactive 灰点，done 空心点
+# ============================================================
+
+# ---------- 顶级：Consciousness ----------
+- id: consciousness
+  parent: root
+  title: Consciousness
+  note: As it is, not as it ought to be
+  status: active
+  summary: >
+    Two questions, kept apart. What consciousness is made of — imagery, inner
+    speech, the content that can be reported. And what state a brain is in when
+    it has any content at all. The first is measured behaviourally and with
+    stimulation; the second is modelled from resting-state imaging.
+  url: /research/consciousness/
+  go: Enter →
+
+# ---------- 第二级 ----------
+- id: content
+  parent: consciousness
+  title: Content
+  note: What is in consciousness
+  status: active
+  summary: >
+    What a person can report — and what they cannot. Two projects, one on
+    imagery and one on sensation: both ask where the signal fails, not whether
+    the machinery is intact.
+  url: /research/consciousness/content/
+  go: Enter →
+
+- id: state
+  parent: consciousness
+  title: State
+  note: What kind of brain is having it
+  status: active
+  summary: >
+    Consciousness has contents, and it also has a level and a mode. This line
+    builds measurement tools for that second thing out of resting-state imaging.
+  url: /research/consciousness/state/
+  go: Enter →
+
+# ---------- 第三级：意识内容 ----------
+- id: imagination
+  parent: content
+  title: Imagination
+  note: Visual mental imagery in aphantasia
+  status: active
+  summary: >
+    Roughly 1–4% of people cannot picture anything. Their visual cortex responds
+    normally to imagery; what is missing is the coupling that would make the
+    signal reachable. The question is where in that chain the failure sits — and
+    the answer requires a paradigm that can read an imagery signal without the
+    participant ever seeing one.
+  url: /research/imagination/
+  go: Open the timeline →
+
+- id: sensation
+  parent: content
+  title: Sensation
+  note: Sensory reconstruction through brain plasticity
+  status: inactive
+  summary: >
+    Not yet started. If a channel is lost or absent, can another one carry the
+    information — and does the brain learn to read it as the missing modality?
+    The literature so far: a virtual body part that becomes one's own, a vest
+    that turns sound into touch, and a textile that delivers full-body haptics.
+  url: /research/sensory-reconstruction/
+  go: Read more →
+
+# ---------- 第三级：意识状态 ----------
+- id: brainstate
+  parent: state
+  title: A brain-state measurement toolkit
+  title_en: from resting-state fMRI
+  status: active
+  summary: >
+    Building a toolkit that measures brain state — rather than brain anatomy or
+    a single connectivity score — out of resting-state fMRI, by combining several
+    metrics into one computational model.
+  url: /research/brain-state/
+  go: Read more →

@@ -1,0 +1,80 @@
+{% comment %}
+  Research listing. 每一页只渲染「属于这一层」的卡片：
+
+      {% include research_cards.liquid parent="root" %}
+
+  数据在 _data/research.yml；加节点只改那个文件。
+  状态点：active 绿 / inactive 灰 / done 空心。
+{% endcomment %}
+
+{% assign items = site.data.research | where: "parent", include.parent %}
+
+<style>
+  .rs-card {
+    display: block; text-decoration: none;
+    margin-bottom: 1.15rem; padding: 1.3rem 1.5rem;
+    border: 1px solid var(--global-divider-color);
+    border-left: 4px solid var(--rs-accent, #6a7f9c);
+    border-radius: 8px;
+    background: var(--global-card-bg-color);
+    transition: background .15s, transform .15s, box-shadow .15s;
+  }
+  .rs-card:hover {
+    background: rgba(106, 127, 156, .05);
+    transform: translateX(2px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .07);
+    text-decoration: none;
+  }
+  html[data-theme="dark"] .rs-card:hover { background: rgba(140, 165, 200, .09); }
+
+  .rs-title {
+    font-size: 1.12rem; font-weight: 600; margin: 0 0 .3rem 0;
+    color: var(--global-text-color);
+  }
+  .rs-title .rs-en {
+    font-size: .85rem; font-weight: 400;
+    color: var(--global-text-color-light);
+  }
+  .rs-note {
+    font-size: .78rem; letter-spacing: .02em;
+    color: var(--global-text-color-light);
+    margin: 0 0 .7rem 0;
+  }
+  .rs-summary {
+    font-size: .91rem; line-height: 1.6; margin: 0 0 .7rem 0;
+    color: var(--global-text-color);
+  }
+  .rs-go { font-size: .85rem; font-weight: 500; color: var(--rs-accent, #6a7f9c); }
+  .rs-card:hover .rs-go { text-decoration: underline; }
+
+  /* 状态点 */
+  .rs-dot {
+    display: inline-block; width: .5rem; height: .5rem;
+    border-radius: 50%; margin-right: .45rem; vertical-align: middle;
+    position: relative; top: -.05rem;
+  }
+  .rs-dot--active   { background: #3d9970; }
+  .rs-dot--inactive { background: #b9b3aa; }
+  .rs-dot--done     { background: transparent; border: 1.5px solid #b9b3aa; }
+  html[data-theme="dark"] .rs-dot--active   { background: #57c08d; }
+  html[data-theme="dark"] .rs-dot--inactive { background: #6e6a64; }
+  html[data-theme="dark"] .rs-dot--done     { border-color: #6e6a64; }
+</style>
+
+{% for item in items %}
+<div class="rs-item">
+<a class="rs-card" href="{{ item.url | relative_url }}">
+  <p class="rs-title">
+    <span class="rs-dot rs-dot--{{ item.status | default: 'active' }}"></span>{{ item.title }}
+    {% if item.title_en %}<span class="rs-en">· {{ item.title_en }}</span>{% endif %}
+  </p>
+  {% if item.note %}<p class="rs-note">{{ item.note }}</p>{% endif %}
+  {% if item.summary %}<p class="rs-summary">{{ item.summary | strip }}</p>{% endif %}
+  {% if item.go %}<span class="rs-go">{{ item.go }}</span>{% endif %}
+</a>
+</div>
+{% endfor %}
+
+{% if items.size == 0 %}
+<p><em>Nothing here yet.</em></p>
+{% endif %}
