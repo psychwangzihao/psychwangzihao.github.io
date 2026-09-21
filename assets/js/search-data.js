@@ -9,7 +9,14 @@ ninja.data = [{
     handler: () => {
       window.location.href = "/";
     },
-  },{id: "nav-news",
+  },{id: "nav-research",
+          title: "research",
+          description: "What I am working on, and where each line currently stands.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/research/";
+          },
+        },{id: "nav-news",
           title: "news",
           description: "",
           section: "Navigation",
@@ -70,7 +77,7 @@ ninja.data = [{
           section: "News",},{id: "news-selected-as-a-peer-mentor-for-the-2026-cohort-of-the-talented-youth-initiative-school-of-psychological-and-cognitive-sciences-peking-university",
           title: 'Selected as a Peer Mentor for the 2026 cohort of the Talented Youth...',
           description: "",
-          section: "News",},{id: "news-gave-a-talk-at-the-2050-roundtable-the-form-and-substance-of-future-perception-2050-museum-yunqi-town-hangzhou-18-september-2026-presenting-the-mind-s-eye-perception-as-construction-imagination-as-that-same-machinery-running-without-input-and-what-the-2-4-of-people-who-cannot-picture-anything-reveal-about-how-the-rest-of-us-see",
+          section: "News",},{id: "news-gave-a-talk-at-the-2050-roundtable-the-form-and-substance-of-future-perception-2050-museum-yunqi-town-hangzhou-18-september-2026-presenting-the-mind-s-eye-perception-as-construction-imagination-as-that-same-machinery-running-without-input-and-what-the-2-4-of-people-who-cannot-picture-anything-reveal-about-how-the-rest-of-us-see-reported-in-the-2050-coverage",
           title: 'Gave a talk at the 2050 roundtable The Form and Substance of Future...',
           description: "",
           section: "News",},{
