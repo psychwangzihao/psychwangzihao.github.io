@@ -12,20 +12,18 @@ nav: false
 <div style="margin-bottom: 1.6rem;">
   <span style="font-size: .72rem; background: #3d9970; color: #fff; padding: .15rem .5rem; border-radius: 12px;">Active</span>
   <span style="font-size: .72rem; background: #d97a00; color: #fff; padding: .15rem .5rem; border-radius: 12px; margin-left: .35rem;">Current</span>
-  <span style="font-size: .85rem; color: var(--global-text-color-light); margin-left: .6rem;">合作者：刘江豪（巴黎脑科学院）</span>
 </div>
 
 <h2>科学问题</h2>
 
 <p style="font-size: .93rem; line-height: 1.75; max-width: 52rem;">
-  心盲症（aphantasia）指清醒状态下缺乏视觉心理意象的体验。合作方基于 7T 功能磁共振的单被试水平分析
-  （10 名心盲者、10 名对照）发现：<strong>想象任务中视觉皮层的激活强度与对照组没有差异</strong>；
+  心盲症（aphantasia）指清醒状态下缺乏视觉心理意象的体验。过往研究发现：<strong>想象任务中视觉皮层的激活强度与对照组没有差异</strong>；
   但<strong>想象与感知的神经表征相关缺失</strong>（对照组显著为正）；且<strong>左侧前额叶与视觉皮层的功能连接显著降低</strong>，
   右侧腹侧注意网络功能连接反而增强。弥散张量成像进一步显示钩状束各向异性降低、内侧颞叶皮层增厚。
 </p>
 
 <p style="font-size: .93rem; line-height: 1.75; max-width: 52rem;">
-  据此，合作方提出<strong>「生成—整合—放大」三步模型</strong>：视觉想象先在视觉皮层生成基础特征，继而整合为物体水平的表征，
+  据此，我们提出<strong>「生成—整合—放大」三步模型</strong>：视觉想象先在视觉皮层生成基础特征，继而整合为物体水平的表征，
   最终经前额叶通路放大并进入全局工作空间、形成有意识的体验。
 </p>
 
@@ -143,9 +141,9 @@ nav: false
 </summary>
 <div class="tl-detail">
   <ul>
-    <li>与合作方确定机制与模型假设</li>
-    <li>讨论确定 Gabor 感知—想象交互范式（一致 / 不一致 90°）、480 Hz 显示器、逐帧掉帧监测且掉帧率 &lt;5%、MATLAB + Psychtoolbox、眼动控制</li>
-    <li>完成伦理材料：申请表、研究方案与项目摘要、行为与脑电版及 TMS 版两份知情同意书、量表与筛查表</li>
+    <li>提出假设</li>
+    <li>确定 Gabor 感知—想象交互范式、480 Hz 显示器、逐帧掉帧监测且掉帧率 &lt;5%、MATLAB + Psychtoolbox、眼动控制</li>
+    <li>完成伦理申请</li>
   </ul>
 </div>
 </details>
@@ -159,7 +157,7 @@ nav: false
   <span class="tl-track">行为线</span>
 </summary>
 <div class="tl-detail">
-  <p>线下与线上全流程跑通。程序、显示器、按键与记录链路在真机上走完一遍。</p>
+  <p>全流程跑通，完成小样本预实验。</p>
 </div>
 </details>
 </div>
@@ -173,8 +171,9 @@ nav: false
 </summary>
 <div class="tl-detail">
   <ul>
-    <li>正常被试行为数据开始采集（近阈限 Gabor 检测 + 想象任务，d′ 与 criterion）</li>
+    <li>正常被试行为数据开始采集</li>
     <li>学习 TMS 操作，确认定位方案</li>
+    <li>准备招募心盲被试</li>
   </ul>
 </div>
 </details>
@@ -188,7 +187,10 @@ nav: false
   <span class="tl-track">TMS + 分析</span>
 </summary>
 <div class="tl-detail">
-  <p>TMS 线下跑通（导航、rMT 测定、刺激参数、安全流程），同时开始分析前一段的行为数据。</p>
+  <ul>
+    <li>TMS 跑通</li>
+    <li>分析行为数据</li>
+  </ul>
 </div>
 </details>
 </div>
@@ -202,8 +204,8 @@ nav: false
 </summary>
 <div class="tl-detail">
   <ul>
-    <li><strong>计划与中国美院、浙大科普中心合作</strong>，通过合作艺术展出、科普宣讲等方式，找到<strong>约 100 位心盲被试</strong>并建立心盲被试联络群</li>
-    <li>常模的 TMS 数据开始采集</li>
+    <li>采集常模 TMS 数据</li>
+    <li>招募心盲被试并采集其行为数据</li>
   </ul>
 </div>
 </details>
@@ -227,52 +229,95 @@ nav: false
 <details>
 <summary>
   <span class="tl-when">11/5 – 11/25</span>
-  <span class="tl-h">行为实验全部数据采集完成（正常 + 心盲）</span>
+  <span class="tl-h">全线推进</span>
   <span class="tl-track">全线</span>
 </summary>
 <div class="tl-detail">
   <ul>
-    <li>完成行为实验的<strong>全部</strong>数据采集（正常与心盲）</li>
     <li>主要精力放在 <strong>RIFT 的 baseline</strong></li>
     <li>同步进行 TMS、行为数据的数据分析</li>
   </ul>
-  <p><strong>寒假开始前</strong>：至少要完成 RIFT 的验证，最好能完成 RIFT 的 baseline 实验。</p>
-  <p><strong>寒假结束前</strong>：至少要完成行为、TMS 的数据采集，最好能完成采集和数据分析。</p>
-</div>
-</details>
-</div>
-
-<div class="tl-item" data-track="gate">
-<details>
-<summary>
-  <span class="tl-when">最快 11/30，最慢下学期初</span>
-  <span class="tl-h">正式开始 RIFT 实验</span>
-  <span class="tl-track">闸门</span>
-</summary>
-<div class="tl-detail">
-  <p>条件是：</p>
-  <ul>
-    <li>行为实验<strong>已完成数据采集和分析</strong></li>
-    <li>TMS <strong>已完成数据采集和分析</strong></li>
-    <li>RIFT 的 <strong>baseline 实验通过</strong></li>
-  </ul>
 </div>
 </details>
 </div>
 
 </div>
 
-<p style="font-size: .93rem; line-height: 1.75; max-width: 52rem; margin-top: 1.2rem;">
-  RIFT 在我系实验室尚处于建立阶段，文献里也只有约一半被试能产生稳定的标记信号。如果 RIFT 无法实现，
-  就<strong>用非 RIFT 的行为范式结合核磁—脑电范式推进心盲症研究</strong>。
-</p>
+<h2>目标</h2>
 
-<h2>后续研究目标</h2>
+<style>
+  .goal { max-width: 54rem; }
+  .goal-card {
+    border: 1px solid var(--global-divider-color);
+    border-left: 4px solid #d97a00;
+    border-radius: 8px; background: var(--global-card-bg-color);
+    padding: 1.15rem 1.5rem 1.25rem; margin-bottom: 1rem;
+  }
+  .goal-when { display: flex; align-items: baseline; gap: .55rem; margin-bottom: .95rem; }
+  .goal-when b {
+    font-size: 1.7rem; font-weight: 700; color: #d97a00;
+    font-family: var(--font-mono, monospace); line-height: 1;
+  }
+  .goal-when span { font-size: .92rem; color: var(--global-text-color-light); }
+  .goal-list { list-style: none; margin: 0; padding: 0; display: grid; gap: .5rem; }
+  .goal-list li {
+    position: relative; padding-left: 1.35rem;
+    font-size: .94rem; line-height: 1.6; color: var(--global-text-color);
+  }
+  .goal-list li::before {
+    content: ''; position: absolute; left: 0; top: .6em;
+    width: .42rem; height: .42rem; background: #d97a00;
+  }
+  .goal-note {
+    margin: 1.05rem 0 0; padding-top: .8rem;
+    border-top: 1px dashed var(--global-divider-color);
+    font-size: .85rem; color: var(--global-text-color-light);
+  }
+  .goal-rows { display: grid; gap: .45rem; }
+  .goal-row {
+    display: grid; grid-template-columns: 15rem 1.2rem 1fr;
+    align-items: baseline; gap: .4rem;
+    font-size: .9rem; line-height: 1.6;
+    padding: .55rem .95rem; border-radius: 6px;
+    background: rgba(0, 0, 0, .022);
+  }
+  html[data-theme="dark"] .goal-row { background: rgba(255, 255, 255, .038); }
+  .goal-row span { color: var(--global-text-color-light); }
+  .goal-row i { font-style: normal; color: var(--global-text-color-light); }
+  .goal-row b { font-weight: 600; color: var(--global-text-color); }
+  @media (max-width: 700px) {
+    .goal-row { grid-template-columns: 1fr; gap: .15rem; }
+    .goal-row i { display: none; }
+  }
+</style>
 
-<p style="font-size: .93rem; line-height: 1.75; max-width: 52rem;">
-  如果 RIFT 能跑通，后续就可以用它进一步追问「想象」到底如何发生。最终目标是提出一个<strong>计算模型</strong>
-  来解释人脑想象的神经科学原理——目前的猜想是<strong>扩散生成模型</strong>。
-</p>
+<div class="goal">
+  <div class="goal-card">
+    <div class="goal-when"><b>12/1</b><span>前完成</span></div>
+    <ul class="goal-list">
+      <li>行为 + TMS 全部实验的数据采集与分析</li>
+      <li>搭建好 RIFT 环境</li>
+      <li>脑状态研究的文献阅读与前期学习</li>
+      <li>参加中国认知科学学会意识科学分会 2026 学术年会</li>
+    </ul>
+    <p class="goal-note">如因不可抗力，可放宽至寒假前完成。</p>
+  </div>
+
+  <div class="goal-rows">
+    <div class="goal-row">
+      <span>如果 RIFT 无法实现</span><i>→</i>
+      <b>采用行为范式结合核磁—脑电范式推进心盲症研究</b>
+    </div>
+    <div class="goal-row">
+      <span>RIFT / 核磁—脑电正式实验</span><i>→</i>
+      <b>均设置在寒假</b>
+    </div>
+    <div class="goal-row">
+      <span>论文写作</span><i>→</i>
+      <b>12/1 前完成即启动；否则之后再写</b>
+    </div>
+  </div>
+</div>
 
 <h2>参考文献</h2>
 
