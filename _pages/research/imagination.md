@@ -9,31 +9,25 @@ nav: false
 
 <h1 style="margin-top: 1rem;">心盲症视觉想象的意识通达机制</h1>
 
-<div style="margin-bottom: .4rem;">
+<div style="margin-bottom: 1.6rem;">
   <span style="font-size: .72rem; background: #3d9970; color: #fff; padding: .15rem .5rem; border-radius: 12px;">Active</span>
   <span style="font-size: .72rem; background: #d97a00; color: #fff; padding: .15rem .5rem; border-radius: 12px; margin-left: .35rem;">Current</span>
-  <span style="font-size: .82rem; color: var(--global-text-color-light); margin-left: .5rem;">
-    与刘江豪（巴黎脑科学院）合作 · 2026 年 9 月 – 2028 年 9 月
-  </span>
+  <span style="font-size: .85rem; color: var(--global-text-color-light); margin-left: .6rem;">合作者：刘江豪（巴黎脑科学院）</span>
 </div>
 
-<div style="margin: 1.4rem 0 2rem; padding: 1.1rem 1.4rem; border-left: 3px solid #d97a00;
-            background: rgba(217,122,0,.045); border-radius: 6px; max-width: 52rem;">
-  <p style="margin: 0 0 .55rem; font-size: .92rem; line-height: 1.7;">
-    <strong>这一个学期的全部工作，都不是在开始 RIFT 实验，而是在把它的前提条件一条一条做出来。</strong>
-    行为、TMS、RIFT 三条线并行，任何一条没跑通，正式实验都不会开始。
-  </p>
-  <p style="margin: 0; font-size: .92rem; line-height: 1.7;">
-    如果 RIFT 做不出来，退路是清楚的：用非 RIFT 的行为范式结合核磁—脑电范式，同样能推进心盲症研究。
-    如果做出来了，它就不只是一个测量工具，而是用来追问<strong>「想象」到底如何发生</strong>的范式。
-  </p>
-</div>
+<h2>科学问题</h2>
 
-## 问题在哪一环
+<p style="font-size: .93rem; line-height: 1.75; max-width: 52rem;">
+  心盲症（aphantasia）指清醒状态下缺乏视觉心理意象的体验。合作方基于 7T 功能磁共振的单被试水平分析
+  （10 名心盲者、10 名对照）发现：<strong>想象任务中视觉皮层的激活强度与对照组没有差异</strong>；
+  但<strong>想象与感知的神经表征相关缺失</strong>（对照组显著为正）；且<strong>左侧前额叶与视觉皮层的功能连接显著降低</strong>，
+  右侧腹侧注意网络功能连接反而增强。弥散张量成像进一步显示钩状束各向异性降低、内侧颞叶皮层增厚。
+</p>
 
-心盲症（aphantasia）指清醒状态下缺乏视觉心理意象的体验，人群比例约 1–4%。合作方基于 7T 功能磁共振的单被试水平分析（10 名心盲者、10 名对照）发现三件事：**想象任务中视觉皮层的激活强度与对照组没有差异**；但**想象与感知的神经表征相关缺失**（对照组显著为正）；且**左侧前额叶与视觉皮层的功能连接显著降低**，右侧腹侧注意网络功能连接反而增强。弥散张量成像进一步显示钩状束各向异性降低、内侧颞叶皮层增厚。
-
-据此提出**「生成—整合—放大」三步模型**：视觉想象先在视觉皮层生成基础特征，继而整合为物体水平的表征，最终经前额叶通路放大并进入全局工作空间、形成有意识的体验。
+<p style="font-size: .93rem; line-height: 1.75; max-width: 52rem;">
+  据此，合作方提出<strong>「生成—整合—放大」三步模型</strong>：视觉想象先在视觉皮层生成基础特征，继而整合为物体水平的表征，
+  最终经前额叶通路放大并进入全局工作空间、形成有意识的体验。
+</p>
 
 <div style="margin: 1.6rem 0; overflow-x: auto;">
 <table style="width: 100%; max-width: 52rem; border-collapse: collapse; font-size: .88rem;">
@@ -68,17 +62,16 @@ nav: false
 </table>
 </div>
 
-<p style="font-size: .92rem; line-height: 1.75; max-width: 52rem;">
-  关键在「视觉皮层激活强度大体正常」——那说明生成环节大体完好；而「想象与感知表征相关缺失」与「额—视觉连接降低」共同指向<strong>表征整合</strong>与<strong>视觉—前额叶耦合</strong>。
-  本研究的目标，就是在行为与脑电层面把「表征未整合」和「整合后未能通达」这两种可能分开。
+<p style="font-size: .93rem; line-height: 1.75; max-width: 52rem;">
+  关键在「视觉皮层激活强度大体正常」——那说明生成环节大体完好；而「想象与感知表征相关缺失」与「额—视觉连接降低」
+  共同指向<strong>表征整合</strong>与<strong>视觉—前额叶耦合</strong>。
+  本研究的目标是在行为与脑电层面把「表征未整合」和「整合后未能通达」这两种可能分开。
 </p>
 
----
-
-## 时间轴
+<h2>时间轴</h2>
 
 <style>
-  .tl { position: relative; margin: 1.8rem 0 1rem; padding-left: 1.6rem; max-width: 54rem; }
+  .tl { position: relative; margin: 1.6rem 0 1rem; padding-left: 1.6rem; max-width: 54rem; }
   .tl::before {
     content: ''; position: absolute; left: .34rem; top: .5rem; bottom: .5rem;
     width: 2px; background: var(--global-divider-color);
@@ -127,14 +120,14 @@ nav: false
     white-space: nowrap; flex: none;
   }
   .tl-detail {
-    padding: 0 1rem 1rem; font-size: .89rem; line-height: 1.7;
+    padding: .8rem 1rem 1rem; font-size: .89rem; line-height: 1.7;
     color: var(--global-text-color); border-top: 1px solid var(--global-divider-color);
-    margin-top: 0; padding-top: .8rem;
   }
   .tl-detail ul { margin: 0; padding-left: 1.1rem; }
   .tl-detail li { margin-bottom: .35rem; }
   .tl-detail p { margin: 0 0 .6rem; }
-  /* 并行的那条：往右缩进一点，视觉上表示它和主线并排跑 */
+  .tl-detail p:last-child { margin-bottom: 0; }
+  /* 并行的那条：往右缩进，视觉上表示它和主线并排跑 */
   .tl-item[data-track="rift"] { margin-left: 1.6rem; }
   .tl-item[data-track="rift"]::before { left: -3.2rem; }
 </style>
@@ -150,11 +143,9 @@ nav: false
 </summary>
 <div class="tl-detail">
   <ul>
-    <li>与合作方（刘江豪，巴黎脑科学院）确定机制假设与「生成—整合—放大」三步模型</li>
-    <li><strong>8/19 讨论</strong>（胡玉正、刘江豪）：7T 结果与 Perky 范式改进版；<strong>TMS 靶点定为左侧前额叶</strong>，胡玉正团队提供导航定位支持</li>
-    <li><strong>9/10 RIFT 研讨会</strong>（刘江豪、徐理道等）：确定 Gabor 感知—想象交互范式（一致 / 不一致 90°）、480 Hz 显示器、逐帧掉帧监测且掉帧率 &lt;5%、MATLAB + Psychtoolbox、眼动控制</li>
+    <li>与合作方确定机制与模型假设</li>
+    <li>讨论确定 Gabor 感知—想象交互范式（一致 / 不一致 90°）、480 Hz 显示器、逐帧掉帧监测且掉帧率 &lt;5%、MATLAB + Psychtoolbox、眼动控制</li>
     <li>完成伦理材料：申请表、研究方案与项目摘要、行为与脑电版及 TMS 版两份知情同意书、量表与筛查表</li>
-    <li>阅读 RIFT 方法学文献（Çelik et al., 2025），开始搭建环境</li>
   </ul>
 </div>
 </details>
@@ -168,7 +159,7 @@ nav: false
   <span class="tl-track">行为线</span>
 </summary>
 <div class="tl-detail">
-  <p>线下与线上全流程跑通。这一段的目标不是收数据，是把程序、显示器、按键与记录链路在真机上走完一遍——上一个项目在这里吃过大亏，不能等到被试坐下了才发现设备不对。</p>
+  <p>线下与线上全流程跑通。程序、显示器、按键与记录链路在真机上走完一遍。</p>
 </div>
 </details>
 </div>
@@ -183,7 +174,7 @@ nav: false
 <div class="tl-detail">
   <ul>
     <li>正常被试行为数据开始采集（近阈限 Gabor 检测 + 想象任务，d′ 与 criterion）</li>
-    <li>学习 TMS 操作，确认左侧前额叶靶点的定位方案</li>
+    <li>学习 TMS 操作，确认定位方案</li>
   </ul>
 </div>
 </details>
@@ -223,11 +214,11 @@ nav: false
 <summary>
   <span class="tl-when">9/21 – 11/4</span>
   <span class="tl-h">RIFT 环境搭建</span>
-  <span class="tl-track">并行 · RIFT 线</span>
+  <span class="tl-track">并行线</span>
 </summary>
 <div class="tl-detail">
   <p>与上面三条线并行。目标是在 480 Hz 显示器上稳定复现 RIFT 信号，确定正式实验可用的参数取值范围（信噪比、掉帧率、刺激大小）。</p>
-  <p><strong>如果在这个窗口内确认 RIFT 做不了，就及时放弃</strong>，不要拖到十一月才发现——退路见下。</p>
+  <p><strong>如果在这个窗口内确认 RIFT 做不了，就及时放弃</strong>。</p>
 </div>
 </details>
 </div>
@@ -245,10 +236,8 @@ nav: false
     <li>主要精力放在 <strong>RIFT 的 baseline</strong></li>
     <li>同步进行 TMS、行为数据的数据分析</li>
   </ul>
-  <p style="margin-top: .6rem;">
-    <strong>寒假结束前</strong>：至少要完成行为、TMS 的数据采集，最好能完成采集和数据分析。<br>
-    <strong>寒假开始前</strong>：至少要完成 RIFT 的验证，最好能完成 RIFT 的 baseline 实验。
-  </p>
+  <p><strong>寒假开始前</strong>：至少要完成 RIFT 的验证，最好能完成 RIFT 的 baseline 实验。</p>
+  <p><strong>寒假结束前</strong>：至少要完成行为、TMS 的数据采集，最好能完成采集和数据分析。</p>
 </div>
 </details>
 </div>
@@ -256,12 +245,12 @@ nav: false
 <div class="tl-item" data-track="gate">
 <details>
 <summary>
-  <span class="tl-when">最快 11/30 · 最慢下学期初</span>
+  <span class="tl-when">最快 11/30，最慢下学期初</span>
   <span class="tl-h">正式开始 RIFT 实验</span>
   <span class="tl-track">闸门</span>
 </summary>
 <div class="tl-detail">
-  <p>启动条件是三条同时满足：</p>
+  <p>条件是：</p>
   <ul>
     <li>行为实验<strong>已完成数据采集和分析</strong></li>
     <li>TMS <strong>已完成数据采集和分析</strong></li>
@@ -273,25 +262,19 @@ nav: false
 
 </div>
 
----
-
-## 做不成怎么办
-
-<p style="font-size: .92rem; line-height: 1.75; max-width: 52rem;">
-  RIFT 在这个实验室尚处于建立阶段，文献里也只有约一半被试能产生稳定的标记信号。所以退路是提前想好的：
-  <strong>用非 RIFT 的行为范式结合核磁—脑电范式推进心盲症研究</strong>。行为范式本身（近阈限 Gabor 检测 + 想象）
-  并不依赖 RIFT 就能区分 H1 与 H2/H3；RIFT 提供的是<em>无意识水平上</em>的那一层证据，而不是唯一证据。
+<p style="font-size: .93rem; line-height: 1.75; max-width: 52rem; margin-top: 1.2rem;">
+  RIFT 在我系实验室尚处于建立阶段，文献里也只有约一半被试能产生稳定的标记信号。如果 RIFT 无法实现，
+  就<strong>用非 RIFT 的行为范式结合核磁—脑电范式推进心盲症研究</strong>。
 </p>
 
-## 最终目标
+<h2>后续研究目标</h2>
 
-<p style="font-size: .92rem; line-height: 1.75; max-width: 52rem;">
-  如果 RIFT 能跑通，后续就可以用它进一步追问「想象」到底如何发生。最终目标是提出一个<strong>计算模型</strong>来解释人脑想象的神经科学原理——
-  目前的猜想是<strong>漂移扩散模型</strong>（drift-diffusion）：把想象信号的生成、整合与通达，看成证据在一条决策轴上累积到阈值的过程，
-  H1／H2／H3 三种假设就落在累积速率、起始点与阈值的不同参数上。
+<p style="font-size: .93rem; line-height: 1.75; max-width: 52rem;">
+  如果 RIFT 能跑通，后续就可以用它进一步追问「想象」到底如何发生。最终目标是提出一个<strong>计算模型</strong>
+  来解释人脑想象的神经科学原理——目前的猜想是<strong>扩散生成模型</strong>。
 </p>
 
-## 参考文献
+<h2>参考文献</h2>
 
 <div style="font-size: .87rem; line-height: 1.9; max-width: 52rem;">
 
@@ -299,7 +282,6 @@ nav: false
   Çelik, Ü. G., Arora, K., Kenemans, J. L., Van der Stigchel, S., Gayet, S., &amp; Chota, S. (2025).
   Tracking attention using RIFT with a consumer-monitor setup. <em>bioRxiv</em>.
   <a href="https://doi.org/10.1101/2025.10.03.680199">10.1101/2025.10.03.680199</a>
-  <br><span style="color: var(--global-text-color-light); font-size: .82rem;">RIFT 方法学：用消费者显示器（360 Hz）稳定测到注意调制，是环境搭建的直接参照</span>
 </p>
 
 <p style="margin-bottom: .8rem;">
