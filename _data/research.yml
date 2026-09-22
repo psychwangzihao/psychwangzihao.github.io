@@ -74,9 +74,12 @@
   parent: state
   title: A brain-state measurement toolkit
   title_en: from resting-state fMRI
+  note: Following up the Gao lab's line · to 11/25
   status: active
   summary: >
     Building a toolkit that measures brain state out of resting-state fMRI, by
-    combining several metrics into one computational model.
+    combining several metrics into one computational model. The groundwork runs
+    to 25 November: read the six papers that define the paradigm, and run the
+    same pipeline once by hand.
   url: /research/brain-state/
-  go: Read more →
+  go: Open the plan →
