@@ -78,8 +78,6 @@
   status: active
   summary: >
     Building a toolkit that measures brain state out of resting-state fMRI, by
-    combining several metrics into one computational model. The groundwork runs
-    to 25 November: read the six papers that define the paradigm, and run the
-    same pipeline once by hand.
+    combining several metrics into one computational model.
   url: /research/brain-state/
-  go: Open the plan →
+  go: Open →
