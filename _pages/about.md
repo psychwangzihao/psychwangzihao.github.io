@@ -20,11 +20,7 @@ latest_posts:
   enabled: false
 ---
 
-**Welcome!** I am Zihao Wang, an undergraduate student at <a href='https://www.zju.edu.cn/english/'>Zhejiang University</a>.
-
-I am a **B.Sc. candidate in Psychology** in the **Qiushi Honor's Program** at <a href='http://ckc.zju.edu.cn/ckcen/'>Chu Kochen Honors College, Zhejiang University</a> (expected June 2029).
-
-In **Spring 2027** I will be an exchange student in the <a href='https://as.cornell.edu/'>College of Arts and Sciences</a> at **Cornell University**, taking coursework in **Cognitive Science**.
+I am Zihao Wang, an undergraduate at <a href='https://www.zju.edu.cn/english/'>Zhejiang University</a>, reading Psychology in the **Qiushi Honor's Program** at <a href='http://ckc.zju.edu.cn/ckcen/'>Chu Kochen Honors College</a> (B.Sc. expected June 2029). In **Spring 2027** I will be at **Cornell University**, in the <a href='https://as.cornell.edu/'>College of Arts and Sciences</a>, taking coursework in **Cognitive Science**.
 
 My primary research interest is **mental imagery** — in particular its absence in **aphantasia**. I am also drawn to broader questions about **consciousness** (self-model; absence). I aim to understand the cognitive and neural mechanisms underlying conscious experience, using approaches from cognitive neuroscience.
 
@@ -32,4 +28,19 @@ I initiated <a href='https://consciousness-observers.github.io'>Consciousness Ob
 
 Currently, I conduct research under the mentorship of **Dr. Yuzheng Hu** at the <a href='http://www.psych.zju.edu.cn/psychen/main.htm'>Department of Psychology and Behavioral Sciences, Zhejiang University</a>. I am also a member of the <a href='https://jianghao-liu.github.io/irca/'>Interdisciplinary Reading Club of Aphantasia (IRCA)</a>.
 
-You're welcome to check out my <a href='/cv/'>CV</a> for more details. I'm always open to collaboration and discussion — **feel free to reach out!**
+<div class="home-lines">
+  <a class="home-line" href="/research/imagination/" style="--hl: var(--r-on);">
+    <span class="home-line-t">Imagination</span>
+    <span class="home-line-n">Mental imagery, and its absence in aphantasia</span>
+  </a>
+  <a class="home-line" href="/research/inner-speech/" style="--hl: var(--r-info);">
+    <span class="home-line-t">Inner speech</span>
+    <span class="home-line-n">A single case of acquired inner-speech loss in reading</span>
+  </a>
+  <a class="home-line" href="/research/brain-state/" style="--hl: var(--r-now);">
+    <span class="home-line-t">Brain state</span>
+    <span class="home-line-n">Measuring state out of resting-state fMRI</span>
+  </a>
+</div>
+
+You're welcome to check out my <a href='/cv/'>CV</a> for more details. I'm always open to collaboration and discussion.

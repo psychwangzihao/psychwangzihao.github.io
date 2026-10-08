@@ -28,25 +28,25 @@ nav: false
 
 Sensation is a translation, not a recording. Receptors turn a physical quantity into electrical signals, and the brain turns those into an experience — so the question is never what is out there, but what this particular machine receives and what it leaves out.
 
-The talk follows that seam in four steps. **The window is narrow**: 380–750 nm out of a spectrum that runs from gamma rays to radio, 20 Hz to 20 kHz out of everything that vibrates, and a blind spot in each eye that nobody ever notices. **The window is not fixed**: a vest that turns sound into vibration on the torso, an electrode array on the tongue, a click and its echo — channels can be added, at the price of ten to seventy-three hours of training. **Sensation can do without knowledge**: suspend the knowing, and what remains is at once entirely real and entirely made. **And knowledge can run backwards**: what you assume about the light in a photograph changes the colour you see, though the cones are identical — imagination running the same machinery from the other end.
+Four steps along that seam. **The window is narrow**: 380–750 nm out of a spectrum running from gamma rays to radio; 20 Hz to 20 kHz out of everything that vibrates; and a blind spot in each eye that nobody notices. **The window is not fixed**: a vest that turns sound into vibration on the torso, an electrode array on the tongue — channels can be added, at ten to seventy-three hours of training. **Sensation can do without knowledge**: suspend the knowing, and what remains is at once entirely real and entirely made. **And knowledge runs backwards**: what you assume about the light in a photograph changes the colour you see, though the cones are identical.
 
-Then the question the talk was built around. **Where in that chain does aesthetic experience happen?** Three cases, laid side by side: a landscape, which asks for sensation alone; a painting plus its explanation, which asks for both; a page of text, which must pass through knowledge before it can turn back into sensation. All three are genuinely aesthetic; they differ only in how much of each they need.
+Which leads to the question the talk was built around: **where in that chain does aesthetic experience happen?** A landscape asks for sensation alone; a painting with its explanation asks for both; a page of text must pass through knowledge before it can turn back into sensation. All three are genuinely aesthetic — they differ only in how much of each they need.
 
-Running alongside: colour vision is not one thing. Dichromats lose exactly one dimension. Two painters with colour deficiency gave up colour altogether and moved to black and white. About 12% of women carry a fourth cone type, and almost none can use it. And separately, roughly 2–4% of people cannot picture anything at all — they know what an apple looks like, they can draw one, and closing their eyes yields nothing.
+Colour vision, meanwhile, is not one thing: dichromats lose exactly one dimension; two colour-deficient painters gave up colour for black and white; about 12% of women carry a fourth cone type, and almost none can use it. And roughly 2–4% of people cannot picture anything at all — they know what an apple looks like, they can draw one, and closing their eyes yields nothing.
 
 ## Why this is a conversation with art and design
 
-An artwork does not deliver an experience. It supplies conditions, and the viewer's perceptual machinery does the rest — which is why a few strokes read as a face, and why the same canvas is a different object in every head in the room.
+An artwork does not deliver an experience. It supplies conditions, and the viewer's machinery does the rest — which is why a few strokes read as a face, and why the same canvas is a different object in every head in the room.
 
-That has a practical consequence for anyone who makes things. **You cannot control what a viewer sees. You can only control the conditions you give them.** And the range of machinery you are addressing is wider than usually assumed: the audience includes people who will walk through your installation with no inner image at all.
+The practical consequence: **you cannot control what a viewer sees; you can only control the conditions you give them.** And the range of machinery you are addressing is wider than usually assumed — the audience includes people who will walk through your installation with no inner image at all.
 
-The talk opened a conversation with the School of Intermedia Art, China Academy of Art, and Zhejiang University: using research on imagination to inform how perceptual work is designed, and using perceptual work to carry the science back out.
+The talk opened a conversation with the School of Intermedia Art, China Academy of Art, and Zhejiang University: using research on imagination to inform how perceptual work is designed, and perceptual work to carry the science back out.
 
 ## The exhibition
 
 Under discussion with the School of Intermedia Art (China Academy of Art) and Zhejiang University: an exhibition in Hangzhou on consciousness, absent imagination, and first-person experience.
 
-Three lines run through it — the evidence of neuroscience, the suspension of phenomenology, and the translation of art. Visitors would move through rooms that temporarily deprive or confuse vision and hearing, so that the everyday world of an aphantasic is something they can feel rather than merely read about.
+Three lines run through it — the evidence of neuroscience, the suspension of phenomenology, and the translation of art. Visitors would move through rooms that temporarily deprive or confuse vision and hearing, so that the everyday world of an aphantasic is something they can feel rather than read about.
 
 ## Get involved
 

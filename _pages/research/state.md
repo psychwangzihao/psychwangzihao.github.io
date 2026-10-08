@@ -6,10 +6,9 @@ nav: false
 rnode: state
 ---
 
-<a href="/research/consciousness/" style="font-size: .875rem; color: var(--global-theme-color);">← Consciousness</a>
+<a class="r-back" href="/research/consciousness/">← Consciousness</a>
 
-
-<p style="font-size: .95rem; line-height: 1.8; color: var(--global-text-color); max-width: 52rem; margin-top: 1.4rem;">
+<p class="r-p">
   Content is what appears; state is the condition a brain is in while anything appears at all.
   Anaesthesia, sleep, wakefulness and the many gradations in between are the obvious cases, but
   the same variation exists within a single resting scan. This line treats that variation as

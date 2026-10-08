@@ -6,9 +6,9 @@ nav: false
 rnode: content
 ---
 
-<a href="/research/consciousness/" style="font-size: .875rem; color: var(--global-theme-color);">← Consciousness</a>
+<a class="r-back" href="/research/consciousness/">← Consciousness</a>
 
-<p style="font-size: 1.02rem; line-height: 1.65; color: var(--global-text-color); max-width: 52rem; margin-top: 1.4rem;">
+<p class="r-p r-p--lead">
   What is in consciousness, and what is not?
 </p>
 

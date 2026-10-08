@@ -6,9 +6,9 @@ nav: false
 rnode: consciousness
 ---
 
-<a href="/research/" style="font-size: .875rem; color: var(--global-theme-color);">← Research</a>
+<a class="r-back" href="/research/">← Research</a>
 
-<p style="font-size: 1.02rem; line-height: 1.65; color: var(--global-text-color); max-width: 52rem; margin-top: 1.4rem;">
+<p class="r-p r-p--lead">
   <strong>What is a person actually conscious of, and what state of brain is having that experience?</strong>
 </p>
 

@@ -130,3 +130,534 @@ $measure: 40rem;   // 640px
     font-weight: 500;
   }
 }
+
+/*******************************************************************************
+ * Research section
+ *
+ * The seven research pages are the only part of the site set as a *document*
+ * rather than as a card list. Before this file they each carried their own
+ * inline font sizes (.85–1.05rem) and their own measure (46 / 52 / 54 / 56 /
+ * 58 / 66rem) — seven pages that read as seven designs.
+ *
+ * One scale, one measure, one set of components. Pages now only write markup.
+ *
+ *   .r-p        running text          .r-box      a framed block
+ *   .r-h2       section heading       .r-tl       the vertical timeline
+ *   .r-tag      a status chip         .r-read     the reading-list table
+ ******************************************************************************/
+
+:root {
+  --r-measure: 52rem;   // one text column for the whole section
+  --r-lead: 1.02rem;
+  --r-body: .95rem;
+  --r-small: .9rem;
+  --r-tiny: .78rem;
+
+  // Accents. Every one of these used to be a hard-coded hex in the page body,
+  // which meant they neither adapted to dark mode nor could be changed once.
+  --r-on: #3d9970;      // active / completed
+  --r-now: #d97a00;     // in progress, needs attention
+  --r-off: #b9b3aa;     // dormant
+  --r-info: #6a7f9c;    // neutral structural
+  --r-done: #cfcabf;    // finished, receding
+  --r-ink: #3c3a36;
+}
+
+html[data-theme="dark"] {
+  --r-on: #57c08d;
+  --r-now: #e0a13c;
+  --r-off: #6e6a64;
+  --r-info: #8ca5c8;
+  --r-done: #575450;
+  --r-ink: #d8d5cf;
+}
+
+.r-body {
+  h2 { margin: 1.6em 0 .5em; }
+}
+
+.r-p {
+  font-size: var(--r-body);
+  line-height: 1.8;
+  max-width: var(--r-measure);
+  color: var(--global-text-color);
+  margin: 0 0 .55rem;
+
+  &:last-child { margin-bottom: 0; }
+}
+
+.r-p--lead { font-size: var(--r-lead); margin-top: 1.4rem; }
+
+// ── Status chips ────────────────────────────────────────────────────────────
+.r-tags { margin: .6rem 0 1.5rem; }
+
+.r-tag {
+  display: inline-block;
+  font-size: .72rem;
+  padding: .15rem .55rem;
+  border-radius: 12px;
+  color: #fff;
+  background: var(--r-info);
+
+  & + .r-tag { margin-left: .35rem; }
+
+  &.is-on   { background: var(--r-on); }
+  &.is-now  { background: var(--r-now); }
+  &.is-off  { background: var(--r-off); }
+}
+
+// ── Framed blocks ───────────────────────────────────────────────────────────
+.r-box {
+  border: 1px solid var(--global-divider-color);
+  border-left: 3px solid var(--r-info);
+  border-radius: 8px;
+  background: var(--global-card-bg-color);
+  padding: 1rem 1.15rem;
+  max-width: var(--r-measure);
+  margin: .9rem 0 1.2rem;
+
+  &.is-done { border-left-color: var(--r-on); }
+  &.is-now  { border-left-color: var(--r-now); }
+
+  h3 {
+    font-size: var(--r-body);
+    font-weight: 600;
+    margin: 0 0 .55rem;
+    color: var(--global-text-color);
+  }
+
+  .r-when {
+    font-family: var(--font-mono, monospace);
+    font-size: var(--r-tiny);
+    font-weight: 400;
+    color: var(--global-text-color-light);
+    margin-left: .5rem;
+  }
+
+  p  { font-size: var(--r-small); line-height: 1.75; margin: 0; }
+  p + p { margin-top: .5rem; }
+
+  ul { margin: 0; padding-left: 1.15rem; font-size: var(--r-small); line-height: 1.75; }
+  li { margin-bottom: .28rem; &:last-child { margin-bottom: 0; } }
+}
+
+// Plain running notes — the older research pages used inline styles for these.
+.r-note {
+  font-size: var(--r-body);
+  line-height: 1.75;
+  max-width: var(--r-measure);
+  margin: 0 0 .5rem;
+}
+
+.r-dir {
+  font-size: var(--r-small);
+  line-height: 1.7;
+  max-width: var(--r-measure);
+  color: var(--global-text-color-light);
+  margin: .6rem 0 0;
+}
+
+// ── Timeline ────────────────────────────────────────────────────────────────
+.r-tl {
+  position: relative;
+  margin: 1.2rem 0 1rem;
+  padding-left: 1.6rem;
+  max-width: 54rem;
+
+  &::before {
+    content: '';
+    position: absolute; left: .34rem; top: .5rem; bottom: .5rem;
+    width: 2px; background: var(--global-divider-color);
+  }
+}
+
+.r-tl-item {
+  position: relative;
+  margin-bottom: 1.1rem;
+
+  &::before {
+    content: '';
+    position: absolute; left: -1.6rem; top: .95rem;
+    width: .72rem; height: .72rem; border-radius: 50%;
+    background: var(--tl-c, var(--r-info));
+    border: 2px solid var(--global-bg-color);
+    box-sizing: content-box;
+  }
+
+  &[data-t="done"] { --tl-c: var(--r-done); }
+  &[data-t="rift"] { --tl-c: var(--r-on); }
+  &[data-t="now"]  { --tl-c: var(--r-now); }
+  &[data-t="end"]  { --tl-c: var(--r-now); }
+
+  // The parallel track sits indented, so it reads as running alongside.
+  &[data-t="rift"] {
+    margin-left: 1.6rem;
+    &::before { left: -3.2rem; }
+  }
+
+  details {
+    border: 1px solid var(--global-divider-color);
+    border-left: 3px solid var(--tl-c, var(--r-info));
+    border-radius: 6px;
+    background: var(--global-card-bg-color);
+    transition: background .15s;
+  }
+
+  details[open] { background: rgba(0, 0, 0, .015); }
+  html[data-theme="dark"] details[open] { background: rgba(255, 255, 255, .05); }
+
+  summary {
+    cursor: pointer;
+    padding: .8rem 1rem;
+    list-style: none;
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: .6rem;
+
+    &::-webkit-details-marker { display: none; }
+
+    &::after {
+      content: '+';
+      margin-left: auto;
+      color: var(--global-text-color-light);
+      font-size: 1rem; font-weight: 400;
+    }
+  }
+
+  details[open] summary::after { content: '−'; }
+}
+
+.r-tl-when {
+  font-family: var(--font-mono, monospace);
+  font-size: var(--r-tiny);
+  color: var(--global-text-color-light);
+  white-space: nowrap;
+  flex: none;
+}
+
+.r-tl-h {
+  font-size: .97rem;
+  font-weight: 600;
+  color: var(--global-text-color);
+}
+
+.r-tl-flag {
+  font-size: .68rem;
+  padding: .06rem .42rem;
+  border-radius: 9px;
+  border: 1px solid var(--tl-c, var(--r-off));
+  color: var(--tl-c, var(--r-off));
+  white-space: nowrap;
+  flex: none;
+}
+
+.r-tl-detail {
+  padding: .8rem 1rem 1rem;
+  font-size: var(--r-small);
+  line-height: 1.7;
+  color: var(--global-text-color);
+  border-top: 1px solid var(--global-divider-color);
+
+  ul { margin: 0; padding-left: 1.1rem; }
+  li { margin-bottom: .35rem; &:last-child { margin-bottom: 0; } }
+  p  { margin: 0; }
+}
+
+// ── Reading-list table (brain-state) ────────────────────────────────────────
+// Six rows must fit one screen when projected. Two columns of three, not one
+// column of six.
+.r-read {
+  width: 100%;
+  max-width: 66rem;
+  border-collapse: collapse;
+  font-size: .85rem;
+  margin: .3rem 0 0;
+
+  td {
+    width: 50%;
+    padding: .17rem .6rem .17rem 0;
+    vertical-align: top;
+    border-bottom: 1px solid var(--global-divider-color);
+    line-height: 1.35;
+  }
+
+  tr:last-child td { border-bottom: 0; }
+
+  .r-read-n {
+    display: inline-block; width: 1.15rem; text-align: center;
+    color: var(--global-text-color-light);
+    font-size: .8rem; font-weight: 400;
+    font-family: var(--font-mono, monospace);
+  }
+
+  .r-read-y {
+    display: inline-block; width: 3.4rem; margin-right: .15rem;
+    font-weight: 600;
+    font-family: var(--font-mono, monospace);
+    font-size: .82rem;
+  }
+
+  .r-read-w { color: var(--global-text-color-light); }
+}
+
+// Meta row at the top of a research page (brain-state)
+.r-meta {
+  display: flex; flex-wrap: wrap; align-items: baseline;
+  gap: .3rem 1rem;
+  max-width: 56rem;
+  margin: .55rem 0 .35rem;
+
+  .r-desc {
+    font-size: 1rem; line-height: 1.55; margin: 0;
+    color: var(--global-text-color);
+  }
+
+  .r-tag { background: var(--r-on); }
+}
+
+.r-ddl {
+  display: inline-block;
+  font-size: .72rem;
+  font-family: var(--font-mono, monospace);
+  background: var(--r-now);
+  color: #fff;
+  padding: .15rem .55rem;
+  border-radius: 12px;
+  margin-left: .6rem;
+  vertical-align: middle;
+}
+
+// A bulleted list inside the running text (the "which of these is it?" lists).
+.r-list {
+  font-size: var(--r-small);
+  line-height: 1.75;
+  max-width: var(--r-measure);
+  margin: .8rem 0 .9rem;
+  padding-left: 1.15rem;
+
+  li { margin-bottom: .3rem; &:last-child { margin-bottom: 0; } }
+}
+
+// The "← Content" link at the top of every research page.
+.r-back {
+  display: inline-block;
+  font-size: .875rem;
+  line-height: 1.25;
+  margin: 0 0 .2rem;
+  color: var(--global-theme-color);
+}
+
+// Reference list at the foot of a research page.
+.r-refs {
+  font-size: .87rem;
+  line-height: 1.9;
+  max-width: var(--r-measure);
+
+  p { margin: 0 0 .8rem; &:last-child { margin-bottom: 0; } }
+  a { word-break: break-all; }
+}
+
+/*******************************************************************************
+ * News — as a timeline
+ *
+ * al-folio ships /news/ as a bordered Bootstrap table: thirteen entries, all
+ * visually equal, no sense of time passing. A rule down the date column and a
+ * dot per entry reads as a sequence instead, and costs nothing in markup.
+ ******************************************************************************/
+.news {
+  .table-responsive { position: relative; }
+
+  .table-responsive::before {
+    content: '';
+    position: absolute; left: .31rem; top: .6rem; bottom: .6rem;
+    width: 2px; background: var(--global-divider-color);
+  }
+
+  .table {
+    border-collapse: separate;
+    border-spacing: 0;
+
+    tr, th, td { border: 0; }
+
+    th {
+      position: relative;
+      width: 7.6rem !important;   // the inline 20% is overridden on purpose
+      padding: .5rem .8rem .5rem 1.15rem;
+      font-family: var(--font-mono, monospace);
+      font-size: .78rem;
+      font-weight: 500;
+      color: var(--global-text-color-light);
+      white-space: nowrap;
+      vertical-align: baseline;
+
+      &::before {
+        content: '';
+        position: absolute; left: .05rem; top: .95rem;
+        width: .42rem; height: .42rem; border-radius: 50%;
+        background: var(--r-info);
+      }
+    }
+
+    td {
+      padding: .5rem .8rem .5rem 0;
+      font-size: .95rem;
+      line-height: 1.7;
+      vertical-align: baseline;
+    }
+
+    tr:first-child th::before { background: var(--r-now); }
+  }
+}
+
+/*******************************************************************************
+ * Homepage — the three research lines
+ *
+ * The homepage was prose and a portrait. Three links, one per line of work,
+ * give the page something to look at and say what he does before the reader
+ * has finished the first paragraph.
+ ******************************************************************************/
+.home-lines {
+  display: grid;
+  gap: .55rem;
+  grid-template-columns: 1fr;
+  margin: 1.6rem 0 .4rem;
+  max-width: 40rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.home-line {
+  display: block;
+  padding: .7rem .85rem;
+  border: 1px solid var(--global-divider-color);
+  border-top: 3px solid var(--hl, var(--r-info));
+  border-radius: 7px;
+  background: var(--global-card-bg-color);
+  text-decoration: none;
+  transition: background .15s, transform .15s;
+
+  &:hover {
+    background: rgba(106, 127, 156, .06);
+    transform: translateY(-1px);
+    text-decoration: none;
+  }
+
+  .home-line-t {
+    display: block;
+    font-size: .92rem;
+    font-weight: 600;
+    color: var(--global-text-color);
+    line-height: 1.35;
+  }
+
+  .home-line-n {
+    display: block;
+    margin-top: .2rem;
+    font-size: .76rem;
+    line-height: 1.45;
+    color: var(--global-text-color-light);
+  }
+}
+
+html[data-theme="dark"] .home-line:hover { background: rgba(140, 165, 200, .1); }
+
+/*******************************************************************************
+ * Cards — one component for both listings
+ *
+ * The research listing and the demos listing were built as separate includes
+ * and drifted: the same card with two names, two paddings (1.05 vs 1.15rem),
+ * two title sizes (1.08 vs 1.12rem) and the accent colour hard-coded in three
+ * places. They are the same object; now they share one definition.
+ *
+ * Each section sets --c-accent (and optionally --c-tint); everything else
+ * inherits.
+ ******************************************************************************/
+.c-card {
+  display: block;
+  text-decoration: none;
+  margin-bottom: 1rem;
+  padding: 1.15rem 1.4rem;
+  border: 1px solid var(--global-divider-color);
+  border-left: 4px solid var(--c-accent, var(--r-info));
+  border-radius: 8px;
+  background: var(--global-card-bg-color);
+  transition: background .15s, transform .15s, box-shadow .15s;
+
+  &:hover {
+    background: var(--c-tint, rgba(106, 127, 156, .06));
+    transform: translateX(2px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .07);
+    text-decoration: none;
+  }
+}
+
+.c-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 .35rem;
+  color: var(--global-text-color);
+
+  .c-en { font-size: .85rem; font-weight: 400; color: var(--global-text-color-light); }
+}
+
+.c-note    { font-size: .78rem; letter-spacing: .02em; color: var(--global-text-color-light); margin: 0 0 .45rem; }
+.c-summary { font-size: .91rem; line-height: 1.55; margin: 0 0 .55rem; color: var(--global-text-color); }
+.c-go      { font-size: .85rem; font-weight: 500; color: var(--c-accent, var(--r-info)); }
+
+.c-card:hover .c-go { text-decoration: underline; }
+
+.c-badge {
+  display: inline-block;
+  font-size: .68rem;
+  font-weight: 500;
+  padding: .1rem .5rem;
+  border-radius: 10px;
+  margin-left: .5rem;
+  vertical-align: middle;
+  white-space: nowrap;
+  color: #fff;
+  background: var(--c-accent, var(--r-info));
+
+  &.is-soft {
+    color: var(--c-accent, var(--r-info));
+    background: var(--c-tint, rgba(106, 127, 156, .08));
+    border: 1px solid var(--c-accent, var(--r-info));
+  }
+}
+
+// Status dot, used by the research listing.
+.c-dot {
+  display: inline-block;
+  width: .5rem; height: .5rem;
+  border-radius: 50%;
+  margin-right: .45rem;
+  vertical-align: middle;
+  position: relative; top: -.05rem;
+
+  &.is-active   { background: var(--r-on); }
+  &.is-inactive { background: var(--r-off); }
+  &.is-done     { background: transparent; border: 1.5px solid var(--r-off); }
+}
+
+// Section header for the demos listing (the category blocks).
+.dm-sec {
+  margin-bottom: 2.5rem;
+
+  &--presentation { --c-accent: #0076df; --c-tint: rgba(0, 118, 223, .06); }
+  &--experiment   { --c-accent: #d97a00; --c-tint: rgba(217, 122, 0, .07); }
+}
+
+html[data-theme="dark"] {
+  .dm-sec--presentation { --c-accent: #58a6ff; }
+  .dm-sec--experiment   { --c-accent: #f0a44a; }
+}
+
+.dm-head {
+  display: flex; align-items: baseline; gap: .6rem;
+  margin: 0 0 1rem; padding-bottom: .5rem;
+  border-bottom: 2px solid var(--c-accent);
+
+  .dm-dot   { width: .6rem; height: .6rem; border-radius: 50%; background: var(--c-accent); flex: none; }
+  .dm-h     { font-size: 1.15rem; font-weight: 600; margin: 0; color: var(--c-accent); }
+  .dm-count { font-size: .8rem; color: var(--global-text-color-light); margin-left: auto; }
+}
