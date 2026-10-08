@@ -155,15 +155,6 @@ nav: false
   </ul>
 </div>
 
-<div class="im-box im-box--now">
-  <h3>准备科研汇报<span class="im-when">10/12 – 10/26</span></h3>
-  <p>
-    结合一项最新的颅内脑电研究——Zhao 等用高密度 ECoG 刻画了想象与出声言语在运动动力学上的
-    「共享规划 + 模态特异表征」层级组织（<em>Nature Neuroscience</em>, 2026）——报告本项目第一轮的设计、结果与反思。
-    核心问题尚未得到回答，但过程中积累的分析经验与方法学发现值得汇报。
-  </p>
-</div>
-
 <h2 class="im-h2">下一步</h2>
 
 <div class="im-box im-box--now">
@@ -209,18 +200,6 @@ nav: false
     <li>国庆假期 7 天连续施测：33 人完成（每人约 2 小时），30 人可用</li>
     <li>已完成全量分析、稳健性检查与方法学专题</li>
   </ul>
-</div>
-</details>
-</div>
-
-<div class="tl-item" data-t="now">
-<details>
-<summary>
-  <span class="tl-when">10/12 – 10/26</span>
-  <span class="tl-h">准备科研汇报</span>
-</summary>
-<div class="tl-detail">
-  <p>见上方「准备科研汇报」。</p>
 </div>
 </details>
 </div>
@@ -290,13 +269,6 @@ nav: false
 <h2 class="im-h2">参考文献</h2>
 
 <div style="font-size: .87rem; line-height: 1.9; max-width: 52rem;">
-
-<p style="margin-bottom: .8rem;">
-  Zhao, Z., Wang, Z., Liu, Y., Qian, Y., Yin, Y., Gao, X., Yuan, B., Tong, S. X., Tian, X., Chen, G.,
-  Li, Y., Lu, J., &amp; Wu, J. (2026). A neural architecture for imagined and overt speech motor dynamics.
-  <em>Nature Neuroscience</em>.
-  <a href="https://doi.org/10.1038/s41593-026-02456-0">10.1038/s41593-026-02456-0</a>
-</p>
 
 <p style="margin-bottom: .8rem;">
   Zeman, A., Dewar, M., &amp; Della Sala, S. (2015). Lives without imagery – Congenital aphantasia.

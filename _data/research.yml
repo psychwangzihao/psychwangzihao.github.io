@@ -58,6 +58,19 @@
   url: /research/imagination/
   go: Open the timeline →
 
+- id: reading
+  parent: content
+  title: Inner speech in reading
+  note: A single case of acquired inner-speech loss
+  status: active
+  summary: >
+    A rare case in which silent reading comprehension broke down after speed-reading
+    training: text became understandable only when read aloud or followed to an
+    external beat. Twelve tasks across three writing systems probe where in the
+    chain the loss sits.
+  url: /research/inner-speech/
+  go: Open →
+
 - id: sensation
   parent: content
   title: Sensation
