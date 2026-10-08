@@ -69,7 +69,17 @@
           {% endif %}
 
           {% if entry.institution %}
-            <h6 class="ml-1 ml-md-4" style="font-size: 0.95rem">{{ entry.institution }}</h6>
+            <h6 class="ml-1 ml-md-4 cv-inst" style="font-size: 0.95rem">
+              {%- if entry.logo -%}
+                <img
+                  class="cv-logo {{ entry.logoClass }}"
+                  src="{{ entry.logo | relative_url }}"
+                  alt="{{ entry.institution }} logo"
+                  loading="lazy"
+                >
+              {%- endif -%}
+              <span>{{ entry.institution }}</span>
+            </h6>
           {% endif %}
 
           {% if entry.area %}

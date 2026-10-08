@@ -37,6 +37,37 @@ layout: default
     {% endif %}
   </header>
 
+  <style>
+    /* 教育条目里的校徽：跟着正文字号缩放，深浅色都读得清 */
+    .cv-inst { display: flex; align-items: center; gap: .5rem; }
+    .cv-logo { height: 1.5em; width: auto; flex: none; }
+    /* Cornell 的印章是纯黑描边，深色主题下要翻白 */
+    html[data-theme="dark"] .cv-logo--invert { filter: invert(1) brightness(1.6); }
+    /* 浙大的校徽是深蓝，深色底上提亮一档 */
+    html[data-theme="dark"] .cv-logo--boost { filter: brightness(1.95) saturate(1.15); }
+    /* 牛津的徽是深蓝底白字的小方块，圆一点角免得太硬 */
+    .cv-logo--tile { border-radius: 3px; }
+
+    /* 「Failures」板块：外框沿用 CV 的 card，内部条目左竖线分隔 */
+    .cv-fail-item {
+      border-left: 3px solid var(--global-divider-color);
+      padding: .1rem 0 .1rem 1rem; margin-bottom: 1.5rem;
+    }
+    .cv-fail-item:last-child { margin-bottom: 0; }
+    .cv-fail-item h4 {
+      font-size: .95rem; font-weight: 600; margin: 0 0 .2rem;
+    }
+    .cv-fail-item .cv-fail-when {
+      font-size: .78rem; color: var(--global-text-color-light);
+      font-family: var(--font-mono, monospace); margin-left: .45rem; font-weight: 400;
+    }
+    .cv-fail-item p {
+      font-size: .9rem; line-height: 1.75; margin: 0 0 .5rem;
+      color: var(--global-text-color);
+    }
+    .cv-fail-item p:last-child { margin-bottom: 0; }
+  </style>
+
   <article>
     <div class="cv">
       {% comment %} Determine which CV format to render {% endcomment %}
@@ -323,6 +354,10 @@ layout: default
       {% else %}
         <p>No CV data found. Please configure either RenderCV (cv.yml) or JSONResume (resume.json) data.</p>
       {% endif %}
+
+      {% comment %} cv.md 正文里写的自定义板块（如「Failures」）{% endcomment %}
+      {{ content }}
+
     </div>
   </article>
 </div>
