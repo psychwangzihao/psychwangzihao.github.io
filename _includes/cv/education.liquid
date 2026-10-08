@@ -39,9 +39,11 @@
                   {% endif %}
                 </td>
               </tr>
+              {% comment %} capture 连换行一起收进来，不 strip 就会渲染出只有图标、没有文字的定位针 {% endcomment %}
               {% capture location %}
                 {% if entry.location %}{{ entry.location }}{% endif %}
               {% endcapture %}
+              {% assign location = location | strip %}
               {% if location != '' %}
                 <tr>
                   <td>
@@ -69,17 +71,7 @@
           {% endif %}
 
           {% if entry.institution %}
-            <h6 class="ml-1 ml-md-4 cv-inst" style="font-size: 0.95rem">
-              {%- if entry.logo -%}
-                <img
-                  class="cv-logo {{ entry.logoClass }}"
-                  src="{{ entry.logo | relative_url }}"
-                  alt="{{ entry.institution }} logo"
-                  loading="lazy"
-                >
-              {%- endif -%}
-              <span>{{ entry.institution }}</span>
-            </h6>
+            <h6 class="ml-1 ml-md-4" style="font-size: 0.95rem">{{ entry.institution }}</h6>
           {% endif %}
 
           {% if entry.area %}

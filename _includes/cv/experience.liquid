@@ -37,9 +37,15 @@
                 </td>
               </tr>
               {% endif %}
+              {% comment %}
+                capture 会把标签之间的换行和缩进一起收进去，所以这里必须 strip。
+                少了这一句，没有填写 location 的条目会得到一个「全是空白」的字符串，
+                判断为真 → 渲染出一个**只有图标、没有文字**的定位针（CV 前两条就是这样）。
+              {% endcomment %}
               {% capture location %}
                 {% if entry.location %}{{ entry.location }}{% endif %}
               {% endcapture %}
+              {% assign location = location | strip %}
               {% if location != '' %}
                 <tr>
                   <td>

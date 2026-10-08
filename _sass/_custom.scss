@@ -153,57 +153,45 @@ $measure: 40rem;   // 640px
   --r-small: .9rem;
   --r-tiny: .78rem;
 
-  // ── 蓝色系：全部取自「蓝色系」顶尖高校的标准色 ────────────────────────
+  // ── 全局只有两个颜色：浅色界面用浙大求是蓝，深色界面用剑桥蓝 ──────────
   //
-  //   --r-navy   #002147  Oxford Blue        最深，标题与结构线
-  //   --r-blue   #003F88  浙江大学「求是蓝」   ★ 全站主色
-  //   --r-mid    #2774AE  UCLA Blue          进行中 / 已完成
-  //   --r-light  #4B9CD3  UNC 卡罗来纳蓝      当前 / 需要动作
-  //   --r-pale   #6CACE4  Columbia Blue      浅底 / 悬停
-  //   --r-off    #a8a29a  中性灰             过往 / 未启用
+  //   浙大求是蓝  #003F88   （VI 标准色，Pantone 2728）
+  //   剑桥蓝      #A3C1AD   （Cambridge Blue，偏灰绿）
   //
-  // 亮度即语义：越亮越「活」。所以主色是最沉的那个蓝，往下依次提亮。
-  // 深浅两套界面的文字与背景都是黑白，彩色只留给这一条蓝色阶梯。
-  --r-navy:  #002147;
-  --r-blue:  #003f88;
-  --r-mid:   #2774ae;
-  --r-light: #4b9cd3;
-  --r-pale:  #6cace4;
-  --r-off:   #a8a29a;
+  // 每一套里只取同一个色相的三档明度，加上一个中性灰：
+  //   默认（结构、说明块、链接）= base
+  //   进行中 / 已完成            = 提亮一档
+  //   当前 / 需要动作            = 对比最强的一档（浅色里最深，深色里最亮）
+  //   过往 / 未启用              = 灰
+  --r-info: #003f88;
+  --r-on:   #2a67a8;
+  --r-now:  #00254f;
+  --r-soft: #eaf0f8;
+  --r-off:  #a8a29a;
 
-  // 语义别名 —— 页面里只用这三个名字，换配色时不必动页面。
-  //   默认（结构、说明块）= UCLA 中蓝
-  //   进行中 / 已完成      = 浙大求是蓝（更沉，更「定」）
-  //   当前 / 需要动作      = 牛津蓝（最深，浅底上最抓眼）
-  --r-info: var(--r-mid);
-  --r-on:   var(--r-blue);
-  --r-now:  var(--r-navy);
+  --r-ink: #1a1a1a;
 
-  // 蓝色 chip 上的字。浅色主题配白字，深色主题整套蓝都提亮了，得配深字，
-  // 否则白字压浅蓝，对比度掉到读不出来。
+  // 蓝色 chip 上的字：浅色主题配白字
   --r-chip-ink: #ffffff;
 
-  --r-ink:   #1a1a1a;
-
-  // 全站链接也跟着走主色（al-folio 默认是紫色）
-  --global-theme-color: var(--r-blue);
-  --global-hover-color: var(--r-blue);
+  // 全站链接跟着主色走（al-folio 默认是紫色）
+  --global-theme-color: var(--r-info);
+  --global-hover-color: var(--r-info);
 }
 
 html[data-theme="dark"] {
-  // 深蓝在深色底上等于看不见，所以这一套整体提亮，色相关系保持不变。
-  --r-navy:  #cfe0f5;
-  --r-blue:  #7fb0e8;
-  --r-mid:   #93c0ea;
-  --r-light: #aad3f2;
-  --r-pale:  #c3e0f7;
-  --r-off:   #6e6a64;
+  // 深色界面整套换成剑桥蓝。明度关系翻转：背景是暗的，所以越亮越抓眼。
+  --r-info: #a3c1ad;
+  --r-on:   #bcd6c6;
+  --r-now:  #e4f1e8;
+  --r-soft: #2b3733;
+  --r-off:  #6e6a64;
 
-  --r-ink:   #e8e6e2;
+  --r-ink: #e8e6e2;
   --r-chip-ink: #10161d;
 
-  --global-theme-color: var(--r-blue);
-  --global-hover-color: var(--r-blue);
+  --global-theme-color: var(--r-info);
+  --global-hover-color: var(--r-info);
 }
 
 .r-body {
@@ -677,13 +665,13 @@ html[data-theme="dark"] .home-line:hover { background: rgba(140, 165, 200, .1); 
 .dm-sec {
   margin-bottom: 2.5rem;
 
-  &--presentation { --c-accent: var(--r-blue); --c-tint: rgba(0, 63, 136, .05); }
-  &--experiment   { --c-accent: var(--r-mid); --c-tint: rgba(39, 116, 174, .06); }
+  &--presentation { --c-accent: var(--r-info); --c-tint: rgba(0, 63, 136, .05); }
+  &--experiment   { --c-accent: var(--r-on);   --c-tint: rgba(42, 103, 168, .06); }
 }
 
 html[data-theme="dark"] {
-  .dm-sec--presentation { --c-accent: var(--r-blue); }
-  .dm-sec--experiment   { --c-accent: var(--r-mid); }
+  .dm-sec--presentation { --c-accent: var(--r-info); }
+  .dm-sec--experiment   { --c-accent: var(--r-on); }
 }
 
 .dm-head {

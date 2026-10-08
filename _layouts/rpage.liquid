@@ -102,10 +102,21 @@
            走出子树（比如「← Research」）就不拦，正常跳转，全屏随之退出——
            这正是「除非退出 Consciousness 否则不退出全屏」。
            ──────────────────────────────────────────────────────────────── */
-        var ROOT = '/research/consciousness';
+        /* 全屏范围的页面清单，交给 Jekyll 生成 —— 凡是用了 rpage 这套版式的
+           页面，都是 Consciousness 板块里的，一个不漏。
+           之前这里是写死的 '/research/consciousness'，但几个项目页的地址是
+           /research/imagination/、/research/inner-speech/ 这种，并不在那条
+           前缀底下 —— 结果从英文页点进中文项目页就退出了全屏。
+           以后再加研究页，只要用 rpage 就自动进来，不用改这里。 */
+        var TREE = [
+          {%- for p in site.pages -%}
+            {%- if p.layout == 'rpage' -%}'{{ p.url }}',{%- endif -%}
+          {%- endfor -%}
+        ];
 
         function inTree(path) {
-          return path === ROOT || path === ROOT + '/' || path.indexOf(ROOT + '/') === 0;
+          if (path.charAt(path.length - 1) !== '/') path += '/';
+          return TREE.indexOf(path) !== -1;
         }
         function isFs() {
           return !!(document.fullscreenElement || document.webkitFullscreenElement);
