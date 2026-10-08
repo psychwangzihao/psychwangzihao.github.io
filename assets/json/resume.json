@@ -19,7 +19,13 @@
       "studyType": "B.Sc.",
       "area": "Psychology",
       "startDate": "2025-09-01",
-      "endDate": "2029-06-01"
+      "endDate": "2029-06-01",
+      "courses": [
+        "Methods and statistics: Experimental Design and Statistics in Psychology; Research Techniques in Psychology; Structural Equation Modeling and Its Applications",
+        "Computing: Psychology Experiment Programming; Lab and Fundamentals of Programming",
+        "Mathematics and logic: Probability and Mathematical Statistics; Linear Algebra (H); Calculus (H); Logics (H); Philosophical Logic; University Physics and Experiment",
+        "Foundations: General Psychology; Language, Mind and Brain; Theory and Practice in Psychology; Ethics and Philosophy of Artificial Intelligence"
+      ]
     },
     {
       "institution": "Oxford Prospects Winter Visit",
