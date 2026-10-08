@@ -153,10 +153,10 @@ $measure: 40rem;   // 640px
   --r-small: .9rem;
   --r-tiny: .78rem;
 
-  // ── 全局只有两个颜色：浅色界面用浙大求是蓝，深色界面用剑桥蓝 ──────────
+  // ── 全站只有一条蓝：浙江大学「求是蓝」#003F88（VI 标准色，Pantone 2728）
   //
-  //   浙大求是蓝  #003F88   （VI 标准色，Pantone 2728）
-  //   剑桥蓝      #A3C1AD   （Cambridge Blue，偏灰绿）
+  // 浅色和深色界面用的是**同一个色相**，只是明度不同。需要区分语义时
+  // （进行中 / 当前 / 过往），就在这条蓝上取不同的明度档，不引入第二个色相。
   //
   // 每一套里只取同一个色相的三档明度，加上一个中性灰：
   //   默认（结构、说明块、链接）= base
@@ -180,18 +180,31 @@ $measure: 40rem;   // 640px
 }
 
 html[data-theme="dark"] {
-  // 深色界面整套换成剑桥蓝。明度关系翻转：背景是暗的，所以越亮越抓眼。
-  --r-info: #a3c1ad;
-  --r-on:   #bcd6c6;
-  --r-now:  #e4f1e8;
-  --r-soft: #2b3733;
-  --r-off:  #6e6a64;
+  // 深色界面还是这条浙大蓝，只是整体提亮 —— 否则 #003F88 压在深底上等于看不见。
+  // 明度关系跟着翻转：背景是暗的，越亮越抓眼，所以「当前」用最亮的一档。
+  --r-info: #5f92c9;
+  --r-on:   #82aede;
+  --r-now:  #bcd6f2;
+  --r-soft: #223047;
+  --r-off:  #6b7484;
 
-  --r-ink: #e8e6e2;
-  --r-chip-ink: #10161d;
+  --r-ink: #e6ebf3;
+  // 提亮后的蓝是浅的，芯片上的字得反过来用深色
+  --r-chip-ink: #0e141d;
 
   --global-theme-color: var(--r-info);
   --global-hover-color: var(--r-info);
+
+  /* ── 底色抬起来，不要纯黑 ─────────────────────────────────────────────
+     al-folio 深色主题的底是 #1c1c1d —— 中性近黑。浙大蓝是深蓝，压在中性
+     近黑上发闷、发脏。把底色换成带蓝调的深灰，蓝就有了落脚点，整页也
+     从「黑底」变成「深蓝底」，和主色是一家人。 */
+  --global-bg-color: #171d28;
+  --global-card-bg-color: #1f2735;
+  --global-text-color: #e6ebf3;
+  --global-text-color-light: #94a0b4;
+  --global-divider-color: #2f3a4b;
+  --global-code-bg-color: #1f2735;
 }
 
 .r-body {
