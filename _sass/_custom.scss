@@ -742,3 +742,24 @@ html[data-theme="dark"] {
 }
 
 .card table.table-cv { background-color: transparent !important; }
+
+/*******************************************************************************
+ * CV — entries without a date
+ *
+ * The LaTeX CV already does this: an entry with no date spans the full width,
+ * because a reserved-but-empty date column pushes the text to a position with
+ * no visible reason (it reads as "hanging"). The web version kept the column,
+ * so the two CVs disagreed. Now they match.
+ ******************************************************************************/
+.cv .is-undated .date-column { display: none; }
+
+.cv .is-undated > [class*="col-"] {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
+// 原来日期栏右侧那点缩进也一起去掉，真正顶格
+.cv .is-undated .ml-1,
+.cv .is-undated .ml-md-4 {
+  margin-left: 0 !important;
+}

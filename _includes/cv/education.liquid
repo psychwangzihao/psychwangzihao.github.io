@@ -8,7 +8,11 @@
 <ul class="card-text font-weight-light list-group list-group-flush">
   {% for entry in entries %}
     <li class="list-group-item">
-      <div class="row">
+      {%- assign raw_start = entry.start_date | default: entry.startDate | strip -%}
+      {%- assign raw_end = entry.end_date | default: entry.endDate | strip -%}
+      {%- assign has_date = false -%}
+      {%- if raw_start != '' or raw_end != '' -%}{%- assign has_date = true -%}{%- endif -%}
+      <div class="row{% unless has_date %} is-undated{% endunless %}">
         <div class="col-xs-2 col-sm-2 col-md-2 text-center date-column">
           {% capture start_date %}
             {% if entry.start_date %}{{ entry.start_date }}{% elsif entry.startDate %}{{ entry.startDate }}{% endif %}
