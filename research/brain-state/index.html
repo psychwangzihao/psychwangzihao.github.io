@@ -5,18 +5,40 @@
         var btn = document.getElementById('rfs');
         var root = document.documentElement;
 
+        /* ────────────────────────────────────────────────────────────────
+           Consciousness 子树：进去就全屏，在里面怎么点都不会掉出来。
+
+           两件事浏览器各有各的限制，所以要分开处理：
+
+           ① 「自动全屏」——规范要求 requestFullscreen() 必须发生在用户手势里，
+              而点击链接之后的那个新手势属于**上一页**，所以页面一加载就调用
+              会被拒绝。做法是：先试一次（有的浏览器会放行），失败就挂一个
+              一次性监听，用户下一次按键或点击时补上。翻页笔的第一下就能进去。
+
+           ② 「翻页不退出全屏」——全屏在页面导航时必然被浏览器清掉。所以子树
+              内部的链接不走导航：fetch 回来把 .r-wrap 原地替换 + pushState。
+              没有文档加载，全屏自然保持。
+
+           走出子树（比如「← Research」）就不拦，正常跳转，全屏随之退出——
+           这正是「除非退出 Consciousness 否则不退出全屏」。
+           ──────────────────────────────────────────────────────────────── */
+        var ROOT = '/research/consciousness';
+
+        function inTree(path) {
+          return path === ROOT || path === ROOT + '/' || path.indexOf(ROOT + '/') === 0;
+        }
         function isFs() {
           return !!(document.fullscreenElement || document.webkitFullscreenElement);
         }
-        function toggle() {
-          if (isFs()) {
-            (document.exitFullscreen || document.webkitExitFullscreen).call(document);
-          } else {
-            var req = root.requestFullscreen || root.webkitRequestFullscreen;
-            // 有些浏览器不接受 Promise（Safari 老版），所以不直接 .catch
-            if (req) { var p = req.call(root); if (p && p.catch) p.catch(function () {}); }
-          }
+        function reqFs() {
+          var req = root.requestFullscreen || root.webkitRequestFullscreen;
+          // Safari 老版不返回 Promise，所以不直接 .catch
+          if (req) { try { var p = req.call(root); if (p && p.catch) p.catch(function () {}); } catch (e) {} }
         }
+        function exitFs() {
+          if (isFs()) (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+        }
+        function toggle() { isFs() ? exitFs() : reqFs(); }
 
         btn.addEventListener('click', toggle);
 
@@ -30,6 +52,56 @@
           if (e.metaKey || e.ctrlKey || e.altKey) return;
           if (e.key === 'f' || e.key === 'F') { e.preventDefault(); toggle(); }
         });
+
+        /* ── 子树内的原地导航 ─────────────────────────────────────────── */
+        function swap(path, push) {
+          fetch(path, { credentials: 'same-origin' })
+            .then(function (r) { return r.ok ? r.text() : Promise.reject(); })
+            .then(function (html) {
+              var doc = new DOMParser().parseFromString(html, 'text/html');
+              var nw = doc.querySelector('.r-wrap');
+              var ow = document.querySelector('.r-wrap');
+              if (!nw || !ow) { location.href = path; return; }   // 结构变了就老实跳转
+              ow.innerHTML = nw.innerHTML;
+              document.title = doc.title;
+              if (push) history.pushState({ rp: 1 }, '', path);
+              window.scrollTo(0, 0);
+              armAuto();
+            })
+            .catch(function () { location.href = path; });
+        }
+
+        document.addEventListener('click', function (e) {
+          if (e.defaultPrevented || e.button !== 0) return;
+          if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+          var a = e.target.closest ? e.target.closest('a') : null;
+          if (!a || (a.target && a.target !== '_self')) return;
+          var url;
+          try { url = new URL(a.href, location.href); } catch (err) { return; }
+          if (url.origin !== location.origin) return;   // 外链不管
+          if (!inTree(url.pathname)) return;            // 走出子树 → 正常跳转
+          e.preventDefault();
+          swap(url.pathname + url.search, true);
+        });
+
+        window.addEventListener('popstate', function () {
+          if (inTree(location.pathname)) swap(location.pathname + location.search, false);
+        });
+
+        /* ── 自动全屏 ─────────────────────────────────────────────────── */
+        function armAuto() {
+          if (!inTree(location.pathname) || isFs()) return;
+          reqFs();                                   // 有机会就先进去
+          var once = function () {
+            document.removeEventListener('pointerdown', once, true);
+            document.removeEventListener('keydown', once, true);
+            if (!isFs()) reqFs();                    // 借这一次手势补上
+          };
+          document.addEventListener('pointerdown', once, true);
+          document.addEventListener('keydown', once, true);
+        }
+
+        if (inTree(location.pathname)) armAuto();
 
         // 全屏且鼠标静止 2.5 秒后隐藏光标（退出全屏立刻恢复）
         var t;
