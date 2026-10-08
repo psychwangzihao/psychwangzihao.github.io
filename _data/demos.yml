@@ -1,12 +1,12 @@
 # Demos
 #
-# Two categories, rendered as two blocks on /demos/ with their own colour:
+# Two categories, rendered as two blocks on /demos/ with their own color:
 #   presentation — talks and interactive visuals. Blue. Links straight to the demo.
 #   experiment   — psychological experiments you can run. Orange. Has a detail page
 #                  that explains the paradigm before the visitor starts.
 #
 # Fields:
-#   type:        presentation | experiment (decides the block and the colour)
+#   type:        presentation | experiment (decides the block and the color)
 #   title:       display title
 #   title_en:    (optional) secondary title, shown as "· <title_en>"
 #   slug:        URL-safe slug; experiments use it for /demos/<slug>/
@@ -72,9 +72,9 @@
   status: active
   summary: >
     Look at a natural scene, then judge whether a short Chinese description matches
-    it. Text length climbs from 1 to 10 characters, so the measure is where reading
-    breaks down. Four rhythmic conditions (4 / 2 / 1 / 0.5 Hz) test whether a steady
-    beat moves that curve.
+    it. Text length increases from 1 to 10 characters, so the quantity of interest is
+    where reading breaks down. Four rhythmic conditions (4 / 2 / 1 / 0.5 Hz) test
+    whether a steady beat shifts that threshold.
   contacts:
     - Zihao Wang
   run_url: /assets/demos/coconnect/

@@ -17,8 +17,8 @@
   status: active
   summary: >
     What consciousness is made of and what state a brain is in when it has any
-    content at all. The first is measured behaviourally and with stimulation; the
-    second is modelled from resting-state imaging.
+    content at all. The first is measured behaviorally and with stimulation; the
+    second is modeled from resting-state imaging.
   url: /research/consciousness/
   go: Enter →
 
@@ -36,11 +36,11 @@
 - id: state
   parent: consciousness
   title: State
-  note: What state of brain is having it
+  note: What state the brain is in when it has it
   status: active
   summary: >
-    Consciousness has contents, and it also has a level and a mode. This line
-    builds measurement tools for that second thing out of resting-state imaging.
+    Consciousness has contents, and it also has a level and a mode. This project
+    builds measurement tools for that second thing from resting-state imaging.
   url: /research/consciousness/state/
   go: Enter →
 
@@ -51,9 +51,9 @@
   note: Mental Imagery and Aphantasia · first round complete
   status: active
   summary: >
-    Roughly 5% of people cannot picture anything. Their visual cortex responds
+    Roughly 2–4% of people cannot picture anything. Their visual cortex responds
     normally to imagery; what is missing is the coupling that would make the signal
-    reachable. A first behavioural round is complete, and the question now is where
+    reachable. A first behavioral round is complete, and the question now is where
     in that chain the failure sits.
   url: /research/imagination/
   go: Open the timeline →
@@ -85,11 +85,11 @@
 - id: brainstate
   parent: state
   title: A brain-state measurement toolkit
-  title_en: from resting-state fMRI
-  note: Following up the Gao lab's line · to 11/25
+  title_en: for resting-state fMRI
+  note: Following up on the Gao lab's work · to 11/25
   status: active
   summary: >
-    Building a toolkit that measures brain state out of resting-state fMRI, by
+    Building a toolkit that measures brain state from resting-state fMRI, by
     combining several metrics into one computational model.
   url: /research/brain-state/
   go: Open →

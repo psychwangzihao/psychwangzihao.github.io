@@ -5,7 +5,7 @@
     "institution": "Zhejiang University",
     "email": "psychwangzihao@zju.edu.cn",
     "phone": "+86 139-5729-1709",
-    "summary": "B.Sc. candidate in Psychology (Qiushi Honor's Program) at Zhejiang University, with research interests in consciousness, mental imagery, and aphantasia.",
+    "summary": "B.Sc. candidate in Psychology (Qiushi Honors Program) at Zhejiang University, with research interests in consciousness, mental imagery, and aphantasia.",
     "location": {
       "address": "866 Yuhangtang Road, Hangzhou 310058, China",
       "city": "Hangzhou",
@@ -15,7 +15,7 @@
   },
   "education": [
     {
-      "institution": "Zhejiang University, Qiushi Honor's Program",
+      "institution": "Zhejiang University, Qiushi Honors Program",
       "studyType": "B.Sc.",
       "area": "Psychology",
       "startDate": "2025-09-01",
@@ -39,20 +39,20 @@
   "research": [
     {
       "name": "Department of Psychology and Behavioral Sciences, Zhejiang University",
-      "position": "Research Mentee (Advisor: Dr. Yuzheng Hu)"
+      "position": "Undergraduate Research Assistant (Advisor: Dr. Yuzheng Hu)"
     },
     {
       "name": "State Key Laboratory of Brain-Machine Intelligence, Zhejiang University",
       "position": "Member, Navigating Talent Program, Dr. Dian Lyu"
     },
     {
-      "name": "Zhejiang University, in collaboration with Dr. Jianghao Liu (Paris Brain Institute, ICM)",
+      "name": "Zhejiang University, in collaboration with Dr. Jianghao Liu (Paris Brain Institute (ICM))",
       "position": "Visual Mental Imagery and Aphantasia",
       "startDate": "2026-09-01",
       "highlights": [
         "Research question: whether imagery signals in aphantasia fail to be generated, or are generated but fail to reach conscious access.",
         "Design and methods: a near-threshold perceptual detection task paired with an imagery task, plus electrophysiological and neuromodulation measures of visual-cortical and prefrontal involvement.",
-        "Role: project lead, with Dr. Jianghao Liu as collaborator; built the experimental platform at Zhejiang University, and responsible for participant recruitment, data collection and quality control."
+        "Role: project lead, with Dr. Jianghao Liu as collaborator; built the experimental platform at Zhejiang University and was responsible for participant recruitment, data collection, and quality control."
       ]
     }
   ],
@@ -63,7 +63,7 @@
       "awarder": "Faculty of Psychology, Beijing Normal University"
     },
     {
-      "title": "Excellent Poster Award, Psychology (Honor's Program) Research Exhibition",
+      "title": "Excellent Poster Award, Psychology (Honors Program) Research Exhibition",
       "date": "2026-03-01",
       "awarder": "Department of Psychology and Behavioral Sciences, Zhejiang University"
     },
@@ -82,17 +82,17 @@
     {
       "position": "Peer Mentor, Talented Youth Initiative",
       "organization": "School of Psychological and Cognitive Sciences, Peking University",
-      "date": "2026 – 2027"
+      "date": "2026–2027"
     },
     {
       "position": "Class Monitor",
-      "organization": "Psychology (Qiushi Honor's Program) 2501, Chu Kochen Honors College, Zhejiang University",
+      "organization": "Psychology (Qiushi Honors Program) 2501, Chu Kochen Honors College, Zhejiang University",
       "date": "2026 – Present"
     },
     {
       "position": "Peer Mentor Group Leader",
-      "organization": "Psychology (Qiushi Honor's Program) & Brain-Machine Intelligence Class, Zhejiang University",
-      "date": "2026 – 2027"
+      "organization": "Psychology (Qiushi Honors Program) & Brain-Machine Intelligence Class, Zhejiang University",
+      "date": "2026–2027"
     },
     {
       "position": "Member, Science Popularization Center",
@@ -141,7 +141,7 @@
       "name": "Consciousness (self-model, absence)"
     },
     {
-      "name": "Cognitive Neuroscience"
+      "name": "cognitive neuroscience"
     }
   ]
 }

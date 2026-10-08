@@ -12,8 +12,8 @@ nav_order: 4
 <!-- 加了第一篇论文之后：删掉下面这一段占位文字，并把 front matter 的 nav 改成 true -->
 
 <p class="pub-empty">
-  Nothing here yet. The first manuscript is in preparation; this page fills in
-  as it is submitted.
+  Nothing here yet. The first manuscript is in preparation; this page will fill in
+  as work is published.
 </p>
 
 {% include bib_search.liquid %}

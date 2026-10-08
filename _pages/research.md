@@ -2,7 +2,7 @@
 layout: page
 title: research
 permalink: /research/
-description: What I am working on, and where each line currently stands.
+description: What I am working on, and where each project currently stands.
 nav: true
 nav_order: 1
 ---

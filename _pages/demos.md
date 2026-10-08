@@ -2,7 +2,7 @@
 layout: page
 title: demos
 permalink: /demos/
-description: Talks I have given and experiments I have written, both openable in a browser.
+description: Talks I have given and experiments I have written, both of which run in a browser.
 nav: true
 nav_order: 3
 ---
