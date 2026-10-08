@@ -153,30 +153,49 @@ $measure: 40rem;   // 640px
   --r-small: .9rem;
   --r-tiny: .78rem;
 
-  // ── Four roles, four hues ───────────────────────────────────────────────
-  // Every one of these used to be a hard-coded hex in the page body, which
-  // meant none of them adapted to dark mode and none could be changed once.
+  // ── 蓝色系：全部取自「蓝色系」顶尖高校的标准色 ────────────────────────
   //
-  //   --r-on    绿  进行中 / 已完成
-  //   --r-now   橙  现在要做的（ddl、当前任务、时间轴上的「此刻」）
-  //   --r-info  蓝  中性的、结构性的（默认卡片、说明块、并行线、收尾阶段）
-  //   --r-off   灰  过往 / 未启用
+  //   --r-navy   #002147  Oxford Blue        最深，标题与结构线
+  //   --r-blue   #003F88  浙江大学「求是蓝」   ★ 全站主色
+  //   --r-mid    #2774AE  UCLA Blue          进行中 / 已完成
+  //   --r-light  #4B9CD3  UNC 卡罗来纳蓝      当前 / 需要动作
+  //   --r-pale   #6CACE4  Columbia Blue      浅底 / 悬停
+  //   --r-off    #a8a29a  中性灰             过往 / 未启用
   //
-  // 绿和橙上一版偏黄，和蓝灰放在一起发闷；这一版把三个色相拉开，
-  // 并且**取消了两个灰**——「过往」只有一个意思，就用一个灰。
-  --r-on:   #2f8f5b;
-  --r-now:  #c96a00;
-  --r-info: #4c78b0;
-  --r-off:  #a8a29a;
-  --r-ink:  #3c3a36;
+  // 亮度即语义：越亮越「活」。所以主色是最沉的那个蓝，往下依次提亮。
+  // 深浅两套界面的文字与背景都是黑白，彩色只留给这一条蓝色阶梯。
+  --r-navy:  #002147;
+  --r-blue:  #003f88;
+  --r-mid:   #2774ae;
+  --r-light: #4b9cd3;
+  --r-pale:  #6cace4;
+  --r-off:   #a8a29a;
+
+  // 语义别名 —— 页面里只用这三个名字，换配色时不必动页面。
+  --r-info: var(--r-blue);
+  --r-on:   var(--r-mid);
+  --r-now:  var(--r-light);
+
+  --r-ink:   #1a1a1a;
+
+  // 全站链接也跟着走主色（al-folio 默认是紫色）
+  --global-theme-color: var(--r-blue);
+  --global-hover-color: var(--r-blue);
 }
 
 html[data-theme="dark"] {
-  --r-on:   #58c98d;
-  --r-now:  #e8a33d;
-  --r-info: #7ba6dd;
-  --r-off:  #6e6a64;
-  --r-ink:  #d8d5cf;
+  // 深蓝在深色底上等于看不见，所以这一套整体提亮，色相关系保持不变。
+  --r-navy:  #cfe0f5;
+  --r-blue:  #7fb0e8;
+  --r-mid:   #93c0ea;
+  --r-light: #aad3f2;
+  --r-pale:  #c3e0f7;
+  --r-off:   #6e6a64;
+
+  --r-ink:   #e8e6e2;
+
+  --global-theme-color: var(--r-blue);
+  --global-hover-color: var(--r-blue);
 }
 
 .r-body {
@@ -650,13 +669,13 @@ html[data-theme="dark"] .home-line:hover { background: rgba(140, 165, 200, .1); 
 .dm-sec {
   margin-bottom: 2.5rem;
 
-  &--presentation { --c-accent: #0076df; --c-tint: rgba(0, 118, 223, .06); }
-  &--experiment   { --c-accent: #d97a00; --c-tint: rgba(217, 122, 0, .07); }
+  &--presentation { --c-accent: var(--r-blue); --c-tint: rgba(0, 63, 136, .05); }
+  &--experiment   { --c-accent: var(--r-mid); --c-tint: rgba(39, 116, 174, .06); }
 }
 
 html[data-theme="dark"] {
-  .dm-sec--presentation { --c-accent: #58a6ff; }
-  .dm-sec--experiment   { --c-accent: #f0a44a; }
+  .dm-sec--presentation { --c-accent: var(--r-blue); }
+  .dm-sec--experiment   { --c-accent: var(--r-mid); }
 }
 
 .dm-head {
@@ -668,3 +687,30 @@ html[data-theme="dark"] {
   .dm-h     { font-size: 1.15rem; font-weight: 600; margin: 0; color: var(--c-accent); }
   .dm-count { font-size: .8rem; color: var(--global-text-color-light); margin-left: auto; }
 }
+
+
+/*******************************************************************************
+ * Homepage portrait — make the text wrap around it
+ *
+ * al-folio emits `profile float-right`, but Bootstrap 5 renamed that utility to
+ * `float-end`; the theme's own `.float-right` rule only sets a left margin. So
+ * the portrait has never actually floated — it sat in its own column and the
+ * text never flowed underneath it. One declaration puts it back.
+ ******************************************************************************/
+.profile.float-right {
+  float: right;
+  width: auto;
+
+  @media (min-width: 576px) { width: 240px; }
+}
+
+.profile.float-left {
+  float: left;
+  width: auto;
+
+  @media (min-width: 576px) { width: 240px; }
+}
+
+// A float only wraps if its container lets the text run the full width.
+.post article { overflow: visible; }
+.post article .clearfix::after { content: ''; display: table; clear: both; }
