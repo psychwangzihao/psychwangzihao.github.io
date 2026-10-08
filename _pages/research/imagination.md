@@ -1,75 +1,55 @@
 ---
 layout: rpage
-title: Imagination
+title: 心盲症视觉想象的意识通达机制
 permalink: /research/imagination/
 nav: false
 ---
 
 <a href="/research/consciousness/content/" style="font-size: .875rem; color: var(--global-theme-color);">← Content</a>
 
-<h1 style="margin-top: 1rem;">心盲症视觉想象的意识通达机制</h1>
-
-<div style="margin-bottom: 1.6rem;">
-  <span style="font-size: .72rem; background: #3d9970; color: #fff; padding: .15rem .5rem; border-radius: 12px;">Active</span>
-  <span style="font-size: .72rem; background: #d97a00; color: #fff; padding: .15rem .5rem; border-radius: 12px; margin-left: .35rem;">Current</span>
-</div>
-
-<h2>科学问题</h2>
-
-<p style="font-size: .93rem; line-height: 1.75; max-width: 52rem;">
-  心盲症（aphantasia）指清醒状态下缺乏视觉心理意象的体验。过往研究发现：<strong>想象任务中视觉皮层的激活强度与对照组没有差异</strong>；
-  但<strong>想象与感知的神经表征相关缺失</strong>（对照组显著为正）；且<strong>左侧前额叶与视觉皮层的功能连接显著降低</strong>，
-  右侧腹侧注意网络功能连接反而增强。弥散张量成像进一步显示钩状束各向异性降低、内侧颞叶皮层增厚。
-</p>
-
-<p style="font-size: .93rem; line-height: 1.75; max-width: 52rem;">
-  据此，我们提出<strong>「生成—整合—放大」三步模型</strong>：视觉想象先在视觉皮层生成基础特征，继而整合为物体水平的表征，
-  最终经前额叶通路放大并进入全局工作空间、形成有意识的体验。
-</p>
-
-<div style="margin: 1.6rem 0; overflow-x: auto;">
-<table style="width: 100%; max-width: 52rem; border-collapse: collapse; font-size: .88rem;">
-  <thead>
-    <tr style="border-bottom: 2px solid var(--global-divider-color);">
-      <th style="text-align: left; padding: .5rem .6rem;">假设</th>
-      <th style="text-align: left; padding: .5rem .6rem;">机制</th>
-      <th style="text-align: left; padding: .5rem .6rem;">行为预测</th>
-      <th style="text-align: left; padding: .5rem .6rem;">RIFT / EEG 预测</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr style="border-bottom: 1px solid var(--global-divider-color);">
-      <td style="padding: .55rem .6rem;"><strong>H1 无信号</strong></td>
-      <td style="padding: .55rem .6rem;">生成或整合失败</td>
-      <td style="padding: .55rem .6rem;">无一致—不一致效应</td>
-      <td style="padding: .55rem .6rem;">RIFT 无想象调制；baseline 可能正常</td>
-    </tr>
-    <tr style="border-bottom: 1px solid var(--global-divider-color);">
-      <td style="padding: .55rem .6rem;"><strong>H2 通达失败</strong></td>
-      <td style="padding: .55rem .6rem;">信号在，但左前额叶放大失败</td>
-      <td style="padding: .55rem .6rem;">无行为效应</td>
-      <td style="padding: .55rem .6rem;">RIFT 信号与正常人相同</td>
-    </tr>
-    <tr>
-      <td style="padding: .55rem .6rem;"><strong>H3 增益不足</strong></td>
-      <td style="padding: .55rem .6rem;">信号偏弱</td>
-      <td style="padding: .55rem .6rem;">效应弱</td>
-      <td style="padding: .55rem .6rem;">调制弱、幅度降低</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-<p style="font-size: .93rem; line-height: 1.75; max-width: 52rem;">
-  关键在「视觉皮层激活强度大体正常」——那说明生成环节大体完好；而「想象与感知表征相关缺失」与「额—视觉连接降低」
-  共同指向<strong>表征整合</strong>与<strong>视觉—前额叶耦合</strong>。
-  本研究的目标是在行为与脑电层面把「表征未整合」和「整合后未能通达」这两种可能分开。
-</p>
-
-<h2>时间轴</h2>
-
 <style>
-  .tl { position: relative; margin: 1.6rem 0 1rem; padding-left: 1.6rem; max-width: 54rem; }
+  /* Consciousness 板块统一版式：只用这几个类，不再到处写 inline style。 */
+  .im-tags { margin: .6rem 0 1.5rem; }
+  .im-tag { font-size: .72rem; padding: .15rem .55rem; border-radius: 12px; color: #fff; }
+  .im-tag + .im-tag { margin-left: .35rem; }
+  .im-tag--on { background: #3d9970; }
+  .im-tag--now { background: #d97a00; }
+  .im-tag--off { background: #b9b3aa; }
+
+  .r-body h2.im-h2 { margin: 1.6em 0 .5em; }
+
+  .im-p {
+    font-size: .95rem; line-height: 1.8; max-width: 52rem;
+    color: var(--global-text-color); margin: 0 0 .55rem;
+  }
+  .im-p:last-child { margin-bottom: 0; }
+  .im-p--lead { font-size: 1rem; }
+
+  /* 进展 / 任务卡片 */
+  .im-box {
+    border: 1px solid var(--global-divider-color);
+    border-left: 3px solid var(--im-c, #6a7f9c);
+    border-radius: 8px; background: var(--global-card-bg-color);
+    padding: 1rem 1.15rem; max-width: 52rem; margin: .9rem 0 1.2rem;
+  }
+  .im-box--done { --im-c: #3d9970; }
+  .im-box--now  { --im-c: #d97a00; }
+  .im-box h3 {
+    font-size: .95rem; font-weight: 600; margin: 0 0 .55rem;
+    color: var(--global-text-color);
+  }
+  .im-box h3 .im-when {
+    font-family: var(--font-mono, monospace); font-size: .78rem; font-weight: 400;
+    color: var(--global-text-color-light); margin-left: .5rem;
+  }
+  .im-box ul { margin: 0; padding-left: 1.15rem; font-size: .9rem; line-height: 1.75; }
+  .im-box li { margin-bottom: .28rem; }
+  .im-box li:last-child { margin-bottom: 0; }
+  .im-box p { font-size: .9rem; line-height: 1.75; margin: 0; }
+  .im-box p + p { margin-top: .5rem; }
+
+  /* 时间轴 */
+  .tl { position: relative; margin: 1.2rem 0 1rem; padding-left: 1.6rem; max-width: 54rem; }
   .tl::before {
     content: ''; position: absolute; left: .34rem; top: .5rem; bottom: .5rem;
     width: 2px; background: var(--global-divider-color);
@@ -81,9 +61,10 @@ nav: false
     background: var(--tl-c, #6a7f9c); border: 2px solid var(--global-bg-color, #fff);
     box-sizing: content-box;
   }
-  .tl-item[data-t="done"]  { --tl-c: #cfcabf; }   /* 已完成 */
-  .tl-item[data-t="rift"]  { --tl-c: #3d9970; }   /* 并行的那条 */
-  .tl-item[data-t="end"]   { --tl-c: #d97a00; }   /* 收口 */
+  .tl-item[data-t="done"]  { --tl-c: #cfcabf; }
+  .tl-item[data-t="rift"]  { --tl-c: #3d9970; }
+  .tl-item[data-t="now"]   { --tl-c: #d97a00; }
+  .tl-item[data-t="end"]   { --tl-c: #d97a00; }
   html[data-theme="dark"] .tl-item::before { border-color: var(--global-bg-color, #1c1c1c); }
 
   .tl details {
@@ -123,10 +104,50 @@ nav: false
   .tl-detail li { margin-bottom: .35rem; }
   .tl-detail li:last-child { margin-bottom: 0; }
   .tl-detail p { margin: 0; }
-  /* 并行的那条：往右缩进，视觉上表示它和主线并排跑 */
   .tl-item[data-t="rift"] { margin-left: 1.6rem; }
   .tl-item[data-t="rift"]::before { left: -3.2rem; }
 </style>
+
+<div class="im-tags">
+  <span class="im-tag im-tag--on">Active</span>
+  <span class="im-tag im-tag--now">第一轮完成</span>
+</div>
+
+<h2 class="im-h2">科学问题</h2>
+
+<p class="im-p im-p--lead">
+  心盲症（aphantasia）指清醒状态下缺乏视觉心理意象的体验。<strong>想象任务中视觉皮层的激活强度与对照组并无差异</strong>，
+  但<strong>想象与感知的神经表征相关缺失</strong>，且<strong>左侧前额叶与视觉皮层的功能连接降低</strong>。
+</p>
+
+<p class="im-p">
+  据此我们提出<strong>「生成—整合—放大」三步模型</strong>：视觉想象先在视觉皮层生成基础特征，继而整合为物体水平的表征，
+  最终经前额叶通路放大、进入全局工作空间，形成有意识的体验。
+  本项目要回答的是：心盲者的缺失发生在哪一步——是<strong>表征未被整合</strong>，还是<strong>整合之后未能通达</strong>。
+</p>
+
+<h2 class="im-h2">进展</h2>
+
+<div class="im-box im-box--done">
+  <h3>第一轮行为实验完成<span class="im-when">2026-10</span></h3>
+  <ul>
+    <li>采用 Gabor 想象—感知交互范式：先提示想象某一朝向，再判断随后是否出现光栅、是哪一个。</li>
+    <li>33 人完成，30 人可用（排除判据在看数据之前即已确定，且与假设方向无关）。</li>
+    <li>对照组中，想象与感知之间存在稳健的一致性效应。</li>
+    <li>心盲组已入组 2 人；核心对比（心盲者是否缺失该效应）有赖于样本继续补齐。</li>
+  </ul>
+</div>
+
+<div class="im-box im-box--now">
+  <h3>准备科研汇报<span class="im-when">10/12 – 10/26</span></h3>
+  <p>
+    结合一项最新的颅内脑电研究——Zhao 等用高密度 ECoG 刻画了想象与出声言语在运动动力学上的
+    「共享规划 + 模态特异表征」层级组织（<em>Nature Neuroscience</em>, 2026）——报告本项目第一轮的设计、结果与反思。
+    该项目的研究问题尚未得到回答，但过程中的方法学收获值得汇报。
+  </p>
+</div>
+
+<h2 class="im-h2">时间轴</h2>
 
 <div class="tl">
 
@@ -139,38 +160,37 @@ nav: false
 </summary>
 <div class="tl-detail">
   <ul>
-    <li>提出假设</li>
-    <li>确定 Gabor 感知—想象交互范式、480 Hz 显示器、逐帧掉帧监测且掉帧率 &lt;5%、MATLAB + Psychtoolbox、眼动控制</li>
+    <li>提出假设，确定 Gabor 感知—想象交互范式</li>
     <li>完成伦理申请</li>
   </ul>
 </div>
 </details>
 </div>
 
-<div class="tl-item">
+<div class="tl-item" data-t="done">
 <details>
 <summary>
-  <span class="tl-when">9/21 – 9/24</span>
-  <span class="tl-h">调试行为实验</span>
+  <span class="tl-when">9/21 – 10/8</span>
+  <span class="tl-h">行为实验第一轮</span>
+  <span class="tl-flag">已完成</span>
 </summary>
 <div class="tl-detail">
-  <p>全流程跑通，完成小样本预实验。</p>
+  <ul>
+    <li>程序调试与预实验，随后正式采集</li>
+    <li>33 人完成，30 人可用；已完成全量分析</li>
+  </ul>
 </div>
 </details>
 </div>
 
-<div class="tl-item">
+<div class="tl-item" data-t="now">
 <details>
 <summary>
-  <span class="tl-when">9/25 – 10/11</span>
-  <span class="tl-h">采集正常被试行为数据 + 学习并确认 TMS 靶点</span>
+  <span class="tl-when">10/12 – 10/26</span>
+  <span class="tl-h">准备科研汇报</span>
 </summary>
 <div class="tl-detail">
-  <ul>
-    <li>正常被试行为数据开始采集</li>
-    <li>学习 TMS 操作，确认定位方案并跑通</li>
-    <li>准备招募心盲被试</li>
-  </ul>
+  <p>见上方「准备科研汇报」。</p>
 </div>
 </details>
 </div>
@@ -198,7 +218,7 @@ nav: false
 </summary>
 <div class="tl-detail">
   <ul>
-    <li>进行 TMS、行为数据的数据分析</li>
+    <li>TMS 与行为数据分析</li>
     <li>参加中国认知科学学会意识科学分会 2026 学术年会</li>
   </ul>
 </div>
@@ -224,12 +244,12 @@ nav: false
 <details>
 <summary>
   <span class="tl-when">11/30 – 12/27</span>
-  <span class="tl-h">行为 / TMS 论文写作 + 后续研究</span>
+  <span class="tl-h">论文写作与后续研究</span>
 </summary>
 <div class="tl-detail">
   <ul>
     <li>论文写作与投稿</li>
-    <li>后续研究方案确定以及对应预实验完成，并根据情况制定寒假研究计划</li>
+    <li>后续研究方案确定与对应预实验，据此制定寒假研究计划</li>
   </ul>
 </div>
 </details>
@@ -237,14 +257,15 @@ nav: false
 
 </div>
 
-<h2>参考文献</h2>
+<h2 class="im-h2">参考文献</h2>
 
 <div style="font-size: .87rem; line-height: 1.9; max-width: 52rem;">
 
 <p style="margin-bottom: .8rem;">
-  Çelik, Ü. G., Arora, K., Kenemans, J. L., Van der Stigchel, S., Gayet, S., &amp; Chota, S. (2025).
-  Tracking attention using RIFT with a consumer-monitor setup. <em>bioRxiv</em>.
-  <a href="https://doi.org/10.1101/2025.10.03.680199">10.1101/2025.10.03.680199</a>
+  Zhao, Z., Wang, Z., Liu, Y., Qian, Y., Yin, Y., Gao, X., Yuan, B., Tong, S. X., Tian, X., Chen, G.,
+  Li, Y., Lu, J., &amp; Wu, J. (2026). A neural architecture for imagined and overt speech motor dynamics.
+  <em>Nature Neuroscience</em>.
+  <a href="https://doi.org/10.1038/s41593-026-02456-0">10.1038/s41593-026-02456-0</a>
 </p>
 
 <p style="margin-bottom: .8rem;">

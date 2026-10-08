@@ -48,14 +48,13 @@
 - id: imagination
   parent: content
   title: Imagination
-  note: Mental Imagery and Aphantasia
+  note: Mental Imagery and Aphantasia · first round complete
   status: active
   summary: >
     Roughly 5% of people cannot picture anything. Their visual cortex responds
     normally to imagery; what is missing is the coupling that would make the signal
-    reachable. The question is where in that chain the failure sits — and the answer
-    requires a paradigm that can read an imagery signal without the participant
-    ever seeing one.
+    reachable. A first behavioural round is complete, and the question now is where
+    in that chain the failure sits.
   url: /research/imagination/
   go: Open the timeline →
 
