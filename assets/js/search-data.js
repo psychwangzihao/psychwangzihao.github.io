@@ -30,13 +30,6 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/demos/";
           },
-        },{id: "nav-publications",
-          title: "publications",
-          description: "Peer-reviewed publications and preprints.",
-          section: "Navigation",
-          handler: () => {
-            window.location.href = "/publications/";
-          },
         },{id: "nav-cv",
           title: "CV",
           description: "",
@@ -53,8 +46,8 @@ ninja.data = [{
           section: "News",},{id: "news-gave-a-psychology-outreach-talk-at-hangzhou-no-2-high-school-on-how-psychology-and-brain-science-are-actually-done",
           title: 'Gave a psychology outreach talk at Hangzhou No. 2 High School on how...',
           description: "",
-          section: "News",},{id: "news-lead-organizer-and-initiator-of-the-psychology-outreach-series-at-the-2050-2026-global-youth-gathering",
-          title: 'Lead organizer and initiator of the Psychology Outreach Series at the 2050@2026 Global...',
+          section: "News",},{id: "news-organized-the-psychology-outreach-series-at-the-2050-2026-global-youth-gathering",
+          title: 'Organized the Psychology Outreach Series at the 2050@2026 Global Youth Gathering.',
           description: "",
           section: "News",},{id: "news-launched-consciousness-observers-co-lab-an-interdisciplinary-platform-for-consciousness-research-based-at-zhejiang-university",
           title: 'Launched Consciousness Observers (CO-LAB), an interdisciplinary platform for consciousness research based at Zhejiang...',
@@ -62,7 +55,7 @@ ninja.data = [{
           section: "News",},{id: "news-invited-by-westlake-university-and-the-joint-academy-on-future-humanity-to-participate-in-the-future-civilization-sandbox-as-a-theme-advocate-leading-the-discussion-topic-decoding-social-interaction-what-ai-can-and-cannot-replace",
           title: 'Invited by Westlake University and the Joint Academy on Future Humanity to participate...',
           description: "",
-          section: "News",},{id: "news-won-first-prize-at-the-mind-science-and-intelligent-future-international-summer-school-for-top-students-in-psychology-faculty-of-psychology-beijing-normal-university-as-an-outstanding-student-representative",
+          section: "News",},{id: "news-won-first-prize-at-the-mind-science-and-intelligent-future-international-summer-school-for-top-students-in-psychology-faculty-of-psychology-beijing-normal-university",
           title: 'Won First Prize at the “Mind Science and Intelligent Future” International Summer School...',
           description: "",
           section: "News",},{id: "news-volunteered-at-the-sino-european-international-conference-on-human-cognition-and-artificial-intelligence-aug-31-sep-4-2026",
@@ -77,7 +70,7 @@ ninja.data = [{
           section: "News",},{id: "news-selected-as-a-peer-mentor-for-the-2026-cohort-of-the-talented-youth-initiative-school-of-psychological-and-cognitive-sciences-peking-university",
           title: 'Selected as a Peer Mentor for the 2026 cohort of the Talented Youth...',
           description: "",
-          section: "News",},{id: "news-gave-a-talk-at-the-2050-roundtable-the-form-and-substance-of-future-perception-2050-museum-yunqi-town-hangzhou-18-september-2026-presenting-the-mind-s-eye-perception-as-construction-imagination-as-that-same-machinery-running-without-input-and-what-the-2-4-of-people-who-cannot-picture-anything-reveal-about-how-the-rest-of-us-see-reported-in-the-2050-coverage",
+          section: "News",},{id: "news-gave-a-talk-at-the-2050-roundtable-the-form-and-substance-of-future-perception-hangzhou-18-september-2026-presenting-the-mind-s-eye-perception-as-construction-imagination-as-the-same-machinery-running-without-input-2050-coverage",
           title: 'Gave a talk at the 2050 roundtable The Form and Substance of Future...',
           description: "",
           section: "News",},{id: "news-admitted-to-the-college-of-arts-and-sciences-exchange-program-at-cornell-university-for-the-spring-2027-term",
