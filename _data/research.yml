@@ -61,8 +61,8 @@
 - id: reading
   parent: content
   title: Inner speech in reading
-  note: A single case of acquired inner-speech loss
-  status: active
+  note: A single case of acquired inner-speech loss · past project
+  status: done
   summary: >
     A rare case in which silent reading comprehension broke down after speed-reading
     training: text became understandable only when read aloud or followed to an
@@ -70,16 +70,6 @@
     chain the loss sits.
   url: /research/inner-speech/
   go: Open →
-
-- id: sensation
-  parent: content
-  title: Sensation
-  note: Sensory reconstruction through brain plasticity
-  status: inactive
-  summary: >
-    Not yet started.
-  url: /research/sensory-reconstruction/
-  go: Read more →
 
 # ---------- 第三级：意识状态 ----------
 - id: brainstate

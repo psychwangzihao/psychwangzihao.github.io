@@ -28,19 +28,4 @@ I founded <a href='https://consciousness-observers.github.io'>Consciousness Obse
 
 Currently I do research with **Dr. Yuzheng Hu** in the <a href='http://www.psych.zju.edu.cn/psychen/main.htm'>Department of Psychology and Behavioral Sciences</a> at Zhejiang University. I am also a member of the <a href='https://jianghao-liu.github.io/irca/'>Interdisciplinary Reading Club of Aphantasia (IRCA)</a>.
 
-<div class="home-lines">
-  <a class="home-line" href="/research/imagination/" style="--hl: var(--r-on);">
-    <span class="home-line-t">Imagination</span>
-    <span class="home-line-n">Mental imagery and its absence in aphantasia</span>
-  </a>
-  <a class="home-line" href="/research/inner-speech/" style="--hl: var(--r-info);">
-    <span class="home-line-t">Inner speech</span>
-    <span class="home-line-n">A single case of acquired inner-speech loss in reading</span>
-  </a>
-  <a class="home-line" href="/research/brain-state/" style="--hl: var(--r-now);">
-    <span class="home-line-t">Brain state</span>
-    <span class="home-line-n">Measuring brain state from resting-state fMRI</span>
-  </a>
-</div>
-
 See my <a href='/cv/'>CV</a> for more details. I'm always open to collaboration and discussion.

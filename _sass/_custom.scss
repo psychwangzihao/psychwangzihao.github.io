@@ -153,23 +153,30 @@ $measure: 40rem;   // 640px
   --r-small: .9rem;
   --r-tiny: .78rem;
 
-  // Accents. Every one of these used to be a hard-coded hex in the page body,
-  // which meant they neither adapted to dark mode nor could be changed once.
-  --r-on: #3d9970;      // active / completed
-  --r-now: #d97a00;     // in progress, needs attention
-  --r-off: #b9b3aa;     // dormant
-  --r-info: #6a7f9c;    // neutral structural
-  --r-done: #cfcabf;    // finished, receding
-  --r-ink: #3c3a36;
+  // ── Four roles, four hues ───────────────────────────────────────────────
+  // Every one of these used to be a hard-coded hex in the page body, which
+  // meant none of them adapted to dark mode and none could be changed once.
+  //
+  //   --r-on    绿  进行中 / 已完成
+  //   --r-now   橙  现在要做的（ddl、当前任务、时间轴上的「此刻」）
+  //   --r-info  蓝  中性的、结构性的（默认卡片、说明块、并行线、收尾阶段）
+  //   --r-off   灰  过往 / 未启用
+  //
+  // 绿和橙上一版偏黄，和蓝灰放在一起发闷；这一版把三个色相拉开，
+  // 并且**取消了两个灰**——「过往」只有一个意思，就用一个灰。
+  --r-on:   #2f8f5b;
+  --r-now:  #c96a00;
+  --r-info: #4c78b0;
+  --r-off:  #a8a29a;
+  --r-ink:  #3c3a36;
 }
 
 html[data-theme="dark"] {
-  --r-on: #57c08d;
-  --r-now: #e0a13c;
-  --r-off: #6e6a64;
-  --r-info: #8ca5c8;
-  --r-done: #575450;
-  --r-ink: #d8d5cf;
+  --r-on:   #58c98d;
+  --r-now:  #e8a33d;
+  --r-info: #7ba6dd;
+  --r-off:  #6e6a64;
+  --r-ink:  #d8d5cf;
 }
 
 .r-body {
@@ -284,10 +291,10 @@ html[data-theme="dark"] {
     box-sizing: content-box;
   }
 
-  &[data-t="done"] { --tl-c: var(--r-done); }
-  &[data-t="rift"] { --tl-c: var(--r-on); }
+  &[data-t="done"] { --tl-c: var(--r-off); }
+  &[data-t="rift"] { --tl-c: var(--r-info); }
   &[data-t="now"]  { --tl-c: var(--r-now); }
-  &[data-t="end"]  { --tl-c: var(--r-now); }
+  &[data-t="end"]  { --tl-c: var(--r-info); }
 
   // The parallel track sits indented, so it reads as running alongside.
   &[data-t="rift"] {

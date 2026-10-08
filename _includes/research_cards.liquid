@@ -21,7 +21,7 @@
 {% for item in items %}
   {%- assign accent = 'var(--r-on)' -%}
   {%- if item.status == 'inactive' -%}{%- assign accent = 'var(--r-off)' -%}
-  {%- elsif item.status == 'done' -%}{%- assign accent = 'var(--r-done)' -%}{%- endif -%}
+  {%- elsif item.status == 'done' -%}{%- assign accent = 'var(--r-off)' -%}{%- endif -%}
 <a class="c-card" href="{{ item.url | relative_url }}" style="--c-accent: {{ accent }};">
   <p class="c-title">
     <span class="c-dot is-{{ item.status | default: 'active' }}"></span>{{ item.title }}

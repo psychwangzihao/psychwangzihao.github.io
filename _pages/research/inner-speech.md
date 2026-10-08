@@ -9,7 +9,7 @@ rnode: reading
 <a class="r-back" href="/research/consciousness/content/">← Content</a>
 
 <div class="r-tags">
-  <span class="r-tag is-on">已完成</span>
+  <span class="r-tag is-off">过往项目</span>
   <span class="r-tag">单例个案</span>
 </div>
 
