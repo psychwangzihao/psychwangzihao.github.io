@@ -9,7 +9,7 @@ nav: false
 
 <div class="r-tags">
   <span class="r-tag is-on">Active</span>
-  <span class="r-tag is-now">第一轮完成</span>
+  <span class="r-tag">第一轮完成</span>
 </div>
 
 <h2>科学问题</h2>

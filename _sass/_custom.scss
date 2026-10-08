@@ -172,9 +172,16 @@ $measure: 40rem;   // 640px
   --r-off:   #a8a29a;
 
   // 语义别名 —— 页面里只用这三个名字，换配色时不必动页面。
-  --r-info: var(--r-blue);
-  --r-on:   var(--r-mid);
-  --r-now:  var(--r-light);
+  //   默认（结构、说明块）= UCLA 中蓝
+  //   进行中 / 已完成      = 浙大求是蓝（更沉，更「定」）
+  //   当前 / 需要动作      = 牛津蓝（最深，浅底上最抓眼）
+  --r-info: var(--r-mid);
+  --r-on:   var(--r-blue);
+  --r-now:  var(--r-navy);
+
+  // 蓝色 chip 上的字。浅色主题配白字，深色主题整套蓝都提亮了，得配深字，
+  // 否则白字压浅蓝，对比度掉到读不出来。
+  --r-chip-ink: #ffffff;
 
   --r-ink:   #1a1a1a;
 
@@ -193,6 +200,7 @@ html[data-theme="dark"] {
   --r-off:   #6e6a64;
 
   --r-ink:   #e8e6e2;
+  --r-chip-ink: #10161d;
 
   --global-theme-color: var(--r-blue);
   --global-hover-color: var(--r-blue);
@@ -222,7 +230,7 @@ html[data-theme="dark"] {
   font-size: .72rem;
   padding: .15rem .55rem;
   border-radius: 12px;
-  color: #fff;
+  color: var(--r-chip-ink, #fff);
   background: var(--r-info);
 
   & + .r-tag { margin-left: .35rem; }
@@ -444,7 +452,7 @@ html[data-theme="dark"] {
   font-size: .72rem;
   font-family: var(--font-mono, monospace);
   background: var(--r-now);
-  color: #fff;
+  color: var(--r-chip-ink, #fff);
   padding: .15rem .55rem;
   border-radius: 12px;
   margin-left: .6rem;
@@ -641,7 +649,7 @@ html[data-theme="dark"] .home-line:hover { background: rgba(140, 165, 200, .1); 
   margin-left: .5rem;
   vertical-align: middle;
   white-space: nowrap;
-  color: #fff;
+  color: var(--r-chip-ink, #fff);
   background: var(--c-accent, var(--r-info));
 
   &.is-soft {
@@ -714,3 +722,22 @@ html[data-theme="dark"] {
 // A float only wraps if its container lets the text run the full width.
 .post article { overflow: visible; }
 .post article .clearfix::after { content: ''; display: table; clear: both; }
+
+/*******************************************************************************
+ * CV contact table
+ *
+ * `table table-cv table-sm table-borderless` renders fine in light mode and
+ * completely empty in dark mode — the one table on the site that does. The
+ * cause is a Bootstrap utility whose purged/partial rule leaves the cells with
+ * no colour of their own, so they inherit something that matches the card.
+ * Setting the colour explicitly fixes it in both themes.
+ ******************************************************************************/
+.table-cv,
+.table-cv td,
+.table-cv th,
+.table.table-cv td,
+.table.table-cv th {
+  color: var(--global-text-color) !important;
+}
+
+.card table.table-cv { background-color: transparent !important; }
