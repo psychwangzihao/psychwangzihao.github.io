@@ -43,21 +43,16 @@
                   {% endif %}
                 </td>
               </tr>
-              {% comment %} capture 连换行一起收进来，不 strip 就会渲染出只有图标、没有文字的定位针 {% endcomment %}
+              {% comment %}
+                capture 连换行一起收进来，不 strip 就会渲染出只有图标、没有文字的定位针。
+                地点**不再放在这一栏**：日期栏是 col-2，扣掉内边距只剩几十像素，
+                「Hangzhou, China」怎么缩都放不下、必然折成两行。挪到右边宽栏、
+                跟在机构名后面（和 LaTeX CV 的「Institution (location)」一致）。
+              {% endcomment %}
               {% capture location %}
                 {% if entry.location %}{{ entry.location }}{% endif %}
               {% endcapture %}
               {% assign location = location | strip %}
-              {% if location != '' %}
-                <tr>
-                  <td>
-                    <p class="location">
-                      <i class="fa-solid fa-location-dot iconlocation"></i>
-                      {{ location }}
-                    </p>
-                  </td>
-                </tr>
-              {% endif %}
             </tbody>
           </table>
         </div>
@@ -75,7 +70,11 @@
           {% endif %}
 
           {% if entry.institution %}
-            <h6 class="ml-1 ml-md-4" style="font-size: 0.95rem">{{ entry.institution }}</h6>
+            <h6 class="ml-1 ml-md-4" style="font-size: 0.95rem">
+              {{ entry.institution }}{% if location != '' %} ({{ location }}){% endif %}
+            </h6>
+          {% elsif location != '' %}
+            <h6 class="ml-1 ml-md-4" style="font-size: 0.95rem">{{ location }}</h6>
           {% endif %}
 
           {% if entry.area %}

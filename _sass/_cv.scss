@@ -43,9 +43,10 @@ a.btncv:hover {
  *****************************/
 
 p.location {
+  // 原版是 nowrap：地名短的时候看不出来，一旦长起来它不换行，直接顶出
+  // 日期栏撞到右边的机构名上。现在地点已经挪到右边的宽栏（见 cv/education.liquid），
+  // 这条留作兜底 —— 换个地方再渲染 location 时不会重蹈覆辙。
   font-size: 0.7rem;
-  // 原版是 nowrap：地名短的时候看不出来，一旦出现「Oxford, United Kingdom」
-  // 这种长的，它不换行，直接顶出日期栏撞到右边的机构名上。改成允许换行。
   white-space: normal;
   overflow-wrap: break-word;
   line-height: 1.3;
