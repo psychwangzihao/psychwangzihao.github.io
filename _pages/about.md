@@ -7,6 +7,9 @@ profile:
   align: right
   image: prof_pic.jpg
   image_circular: false
+  # 两栏版式：正文一栏、照片一栏，互不干扰（原来的 float 会让文字半包围照片）
+  columns: true
+  more_info: In pursuit of understanding
 
 selected_papers: false
 social: true

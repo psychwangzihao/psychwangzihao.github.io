@@ -725,6 +725,62 @@ html[data-theme="dark"] {
 .post article .clearfix::after { content: ''; display: table; clear: both; }
 
 /*******************************************************************************
+ * Homepage portrait — two columns instead of a float
+ *
+ * 由 front matter 的 `profile.columns: true` 打开（见 _layouts/about.liquid 给
+ * <article> 加的那个类）。原来的 float 让正文半包围照片；改成两栏之后正文自己
+ * 占一栏、照片占一栏，互不干扰。
+ *
+ * .profile 和 .clearfix 本来就是 <article> 下的兄弟节点，所以只要把 article
+ * 变成 flex 容器就够了 —— 不用动 DOM，也不用复制一份版式。
+ ******************************************************************************/
+.post article.profile-columns {
+  display: flex;
+  align-items: flex-start;
+  gap: 2.5rem;
+
+  .profile {
+    order: 2;
+    float: none;
+    width: auto;
+    flex: 0 0 230px;
+    max-width: 230px;
+    margin: 0;
+  }
+
+  .clearfix {
+    order: 1;
+    flex: 1 1 auto;
+    min-width: 0; // 没有它，长 URL / 代码块会把左栏撑破
+  }
+
+  // 照片下面的那句话
+  .more-info {
+    margin: .75rem 0 0;
+    text-align: center;
+    font-family: inherit;
+    font-style: italic;
+    font-size: .92rem;
+    line-height: 1.45;
+    color: var(--global-text-color-light);
+  }
+}
+
+// 窄屏：照片回到上面，正文在下面
+@media (max-width: 767px) {
+  .post article.profile-columns {
+    display: block;
+
+    .profile {
+      order: 0;
+      flex: none;
+      max-width: 230px;
+      margin: 0 auto 1.75rem;
+    }
+  }
+}
+
+/*******************************************************************************
  * CV contact table
  *
  * `table table-cv table-sm table-borderless` renders fine in light mode and
