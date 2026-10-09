@@ -16,8 +16,7 @@
   "education": [
     {
       "institution": "Zhejiang University, Qiushi Honor’s Program",
-      "studyType": "B.Sc.",
-      "area": "Psychology",
+      "studyType": "B.Sc. in Psychology",
       "location": "Hangzhou, China",
       "startDate": "2025-09-01",
       "endDate": "2029-06-01",
@@ -34,7 +33,7 @@
     {
       "studyType": "Oxford Prospects Winter Visit",
       "institution": "University of Oxford",
-      "location": "Oxford, United Kingdom",
+      "location": "Oxford, UK",
       "area": "Psychology: Interdisciplinary Frontiers of Behaviour and Mind in the Age of AI (grade A+)",
       "startDate": "2026-01-01",
       "endDate": "2026-02-01",
@@ -144,10 +143,16 @@
   ],
   "interests": [
     {
-      "name": "Consciousness"
+      "name": "Consciousness",
+      "keywords": [
+        "its contents, and the states the brain is in when it has them"
+      ]
     },
     {
-      "name": "Mental imagery"
+      "name": "Mental imagery",
+      "keywords": [
+        "visual and auditory; especially its absence (aphantasia)"
+      ]
     }
   ]
 }
