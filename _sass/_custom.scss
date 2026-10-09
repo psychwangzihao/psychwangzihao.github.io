@@ -699,12 +699,14 @@ html[data-theme="dark"] {
 
 
 /*******************************************************************************
- * Homepage portrait — make the text wrap around it
+ * Homepage portrait —— 浮动在右上，正文绕它走
  *
- * al-folio emits `profile float-right`, but Bootstrap 5 renamed that utility to
- * `float-end`; the theme's own `.float-right` rule only sets a left margin. So
- * the portrait has never actually floated — it sat in its own column and the
- * text never flowed underneath it. One declaration puts it back.
+ * ⚠️ 真正让它浮动的是 **Bootstrap 4** 的 `.float-right{float:right!important}`
+ * （主题加载的是 bootstrap.min.css，不是 BS5——al-folio 的 scss 只是没跟上）。
+ * 之前我只看 al-folio 自己的 `_sass`，那里 `.float-right` 只有一条 margin-left，
+ * 于是得出"头像从未浮动"的错误结论，去掉了 float、又加了两栏版式。
+ * 现在知道 float 一直在，这里只负责钉住宽度：不钉的话照片会拿到主题的百分比宽度，
+ * 大小随视口变。
  ******************************************************************************/
 .profile.float-right {
   float: right;
@@ -720,65 +722,18 @@ html[data-theme="dark"] {
   @media (min-width: 576px) { width: 240px; }
 }
 
-// A float only wraps if its container lets the text run the full width.
+// 照片下面那句话（座右铭）。原版是等宽字体、贴左，一句话放进去太像代码。
+.profile .more-info {
+  margin: .7rem 0 0;
+  font-family: inherit;
+  font-style: italic;
+  font-size: .92rem;
+  line-height: 1.4;
+  color: var(--global-text-color-light);
+}
+
 .post article { overflow: visible; }
 .post article .clearfix::after { content: ''; display: table; clear: both; }
-
-/*******************************************************************************
- * Homepage portrait — two columns instead of a float
- *
- * 由 front matter 的 `profile.columns: true` 打开（见 _layouts/about.liquid 给
- * <article> 加的那个类）。原来的 float 让正文半包围照片；改成两栏之后正文自己
- * 占一栏、照片占一栏，互不干扰。
- *
- * .profile 和 .clearfix 本来就是 <article> 下的兄弟节点，所以只要把 article
- * 变成 flex 容器就够了 —— 不用动 DOM，也不用复制一份版式。
- ******************************************************************************/
-.post article.profile-columns {
-  display: flex;
-  align-items: flex-start;
-  gap: 2.5rem;
-
-  .profile {
-    order: 2;
-    float: none;
-    width: auto;
-    flex: 0 0 230px;
-    max-width: 230px;
-    margin: 0;
-  }
-
-  .clearfix {
-    order: 1;
-    flex: 1 1 auto;
-    min-width: 0; // 没有它，长 URL / 代码块会把左栏撑破
-  }
-
-  // 照片下面的那句话
-  .more-info {
-    margin: .75rem 0 0;
-    text-align: center;
-    font-family: inherit;
-    font-style: italic;
-    font-size: .92rem;
-    line-height: 1.45;
-    color: var(--global-text-color-light);
-  }
-}
-
-// 窄屏：照片回到上面，正文在下面
-@media (max-width: 767px) {
-  .post article.profile-columns {
-    display: block;
-
-    .profile {
-      order: 0;
-      flex: none;
-      max-width: 230px;
-      margin: 0 auto 1.75rem;
-    }
-  }
-}
 
 /*******************************************************************************
  * CV contact table
