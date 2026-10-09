@@ -76,7 +76,7 @@
   parent: state
   title: A brain-state measurement toolkit
   title_en: for resting-state fMRI
-  note: Following up on the Gao lab's work · to 11/25
+  note: Following up on the Gao lab's work
   status: active
   summary: >
     Building a toolkit that measures brain state from resting-state fMRI, by

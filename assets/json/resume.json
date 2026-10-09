@@ -5,7 +5,7 @@
     "institution": "Zhejiang University",
     "email": "psychwangzihao@zju.edu.cn",
     "phone": "+86 139-5729-1709",
-    "summary": "B.Sc. candidate in Psychology (Qiushi Honors Program) at Zhejiang University, with research interests in consciousness, mental imagery, and aphantasia.",
+    "summary": "B.Sc. candidate in Psychology (Qiushi Honor’s Program) at Zhejiang University, with research interests in consciousness and mental imagery.",
     "location": {
       "address": "866 Yuhangtang Road, Hangzhou 310058, China",
       "city": "Hangzhou",
@@ -15,29 +15,38 @@
   },
   "education": [
     {
-      "institution": "Zhejiang University, Qiushi Honors Program",
+      "institution": "Zhejiang University, Qiushi Honor’s Program",
       "studyType": "B.Sc.",
       "area": "Psychology",
+      "location": "Hangzhou, China",
       "startDate": "2025-09-01",
       "endDate": "2029-06-01",
+      "highlights": [
+        "Expected June 2029. GPA 3.93/4.3."
+      ],
       "courses": [
-        "Methods and statistics: Experimental Design and Statistics in Psychology; Research Techniques in Psychology; Structural Equation Modeling and Its Applications",
+        "Methods and statistics: Experimental Design and Statistics in Psychology; Structural Equation Modeling and Its Applications; Research Techniques in Psychology",
         "Computing: Psychology Experiment Programming; Lab and Fundamentals of Programming",
-        "Mathematics and logic: Probability and Mathematical Statistics; Linear Algebra (H); Calculus (H); Logics (H); Philosophical Logic; University Physics and Experiment",
+        "Mathematics, logic and physics: Probability and Mathematical Statistics; Linear Algebra (H); Calculus (H); Logics (H); Philosophical Logic; University Physics and Experiment",
         "Foundations: General Psychology; Language, Mind and Brain; Theory and Practice in Psychology; Ethics and Philosophy of Artificial Intelligence"
       ]
     },
     {
-      "institution": "Oxford Prospects Winter Visit",
-      "studyType": "Winter Short-term Program (Jan–Feb 2026)",
-      "area": "Psychology: Interdisciplinary Frontiers of Behaviour and Mind in the Age of AI",
+      "studyType": "Oxford Prospects Winter Visit",
+      "institution": "University of Oxford",
+      "location": "Oxford, United Kingdom",
+      "area": "Psychology: Interdisciplinary Frontiers of Behaviour and Mind in the Age of AI (grade A+)",
       "startDate": "2026-01-01",
-      "endDate": "2026-02-01"
+      "endDate": "2026-02-01",
+      "highlights": [
+        "Received the Best Presentation Award and the Best Film Award."
+      ]
     },
     {
       "institution": "Cornell University, College of Arts and Sciences",
       "studyType": "Exchange Program (Spring 2027)",
-      "area": "Cognitive Science",
+      "area": "Undergraduate coursework in Cognitive Science",
+      "location": "Ithaca, NY, USA",
       "startDate": "2027-01-01",
       "endDate": "2027-06-01"
     }
@@ -52,13 +61,13 @@
       "position": "Member, Navigating Talent Program, Dr. Dian Lyu"
     },
     {
-      "name": "Zhejiang University, in collaboration with Dr. Jianghao Liu (Paris Brain Institute (ICM))",
+      "name": "Zhejiang University, in collaboration with Dr. Jianghao Liu, Paris Brain Institute (ICM)",
       "position": "Visual Mental Imagery and Aphantasia",
       "startDate": "2026-09-01",
       "highlights": [
-        "Research question: whether imagery signals in aphantasia fail to be generated, or are generated but fail to reach conscious access.",
-        "Design and methods: a near-threshold perceptual detection task paired with an imagery task, plus electrophysiological and neuromodulation measures of visual-cortical and prefrontal involvement.",
-        "Role: project lead, with Dr. Jianghao Liu as collaborator; built the experimental platform at Zhejiang University and was responsible for participant recruitment, data collection, and quality control."
+        "Research content: using signal detection theory to study how imagination affects perception.",
+        "Design and methods: the protocol pairs a near-threshold perceptual detection task with an imagery task, plus electrophysiological and neuromodulation measures of visual-cortical and prefrontal involvement.",
+        "Role: project lead, with Dr. Jianghao Liu as collaborator; built the experimental platform at Zhejiang University and was responsible for participant recruitment, data collection and analysis, and quality control."
       ]
     }
   ],
@@ -69,14 +78,9 @@
       "awarder": "Faculty of Psychology, Beijing Normal University"
     },
     {
-      "title": "Excellent Poster Award, Psychology (Qiushi Honors Program) Research Exhibition",
+      "title": "Excellent Poster Award, Psychology (Qiushi Honor’s Program) Research Exhibition",
       "date": "2026-03-01",
       "awarder": "Department of Psychology and Behavioral Sciences, Zhejiang University"
-    },
-    {
-      "title": "Best Presentation Award & Best Film Award",
-      "date": "2026-01-01",
-      "awarder": "Oxford Prospects Winter Visit"
     },
     {
       "title": "Best Debater & Best Team, Design Intelligence Award Debate Competition",
@@ -92,12 +96,12 @@
     },
     {
       "position": "Class Monitor",
-      "organization": "Psychology (Qiushi Honors Program) 2501, Chu Kochen Honors College, Zhejiang University",
+      "organization": "Psychology (Qiushi Honor’s Program) 2501, Chu Kochen Honors College, Zhejiang University",
       "date": "2026 – Present"
     },
     {
       "position": "Peer Mentor Group Leader",
-      "organization": "Psychology (Qiushi Honors Program) & Brain-Machine Intelligence Class, Zhejiang University",
+      "organization": "Psychology (Qiushi Honor’s Program) & Brain-Machine Intelligence Class, Zhejiang University",
       "date": "2026–2027"
     },
     {
@@ -113,12 +117,9 @@
   ],
   "skills": [
     {
-      "name": "Neuroimaging Methods",
+      "name": "Behavioural & neuroimaging",
       "keywords": [
-        "fMRI",
-        "EEG",
-        "fNIRS",
-        "eye-tracking"
+        "Hands-on practice in behavioural experiments, fMRI, EEG and eye-tracking"
       ]
     },
     {
@@ -127,27 +128,26 @@
         "Python",
         "C",
         "MATLAB",
-        "SPM",
         "PsychoPy"
       ]
+    }
+  ],
+  "languages": [
+    {
+      "language": "Chinese",
+      "fluency": "Native"
     },
     {
-      "name": "Languages",
-      "keywords": [
-        "Mandarin (Native)",
-        "English (IELTS 8.0)"
-      ]
+      "language": "English",
+      "fluency": "IELTS 8.0"
     }
   ],
   "interests": [
     {
-      "name": "Mental Imagery & Aphantasia"
+      "name": "Consciousness"
     },
     {
-      "name": "Consciousness (self-model, absence)"
-    },
-    {
-      "name": "cognitive neuroscience"
+      "name": "Mental imagery"
     }
   ]
 }
