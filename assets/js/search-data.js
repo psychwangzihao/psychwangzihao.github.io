@@ -73,8 +73,11 @@ ninja.data = [{
           section: "News",},{id: "news-gave-a-talk-at-the-2050-roundtable-the-form-and-substance-of-future-perception-hangzhou-18-september-2026-presenting-the-mind-s-eye-perception-as-construction-imagination-as-the-same-machinery-running-without-input-2050-coverage",
           title: 'Gave a talk at the 2050 roundtable The Form and Substance of Future...',
           description: "",
-          section: "News",},{id: "news-admitted-to-the-college-of-arts-and-sciences-exchange-program-at-cornell-university-for-the-spring-2027-term",
-          title: 'Admitted to the College of Arts and Sciences Exchange Program at Cornell University,...',
+          section: "News",},{id: "news-admitted-to-the-college-of-arts-and-sciences-exchange-program-at-cornell-university-for-the-spring-2027-term-first-in-the-interview-ranking-and-the-first-sophomore-and-the-first-psychology-student-selected-in-the-past-three-years-during-which-the-programme-has-become-zhejiang-university-s-most-competitive-exchange",
+          title: 'Admitted to the College of Arts and Sciences Exchange Program at Cornell University...',
+          description: "",
+          section: "News",},{id: "news-awarded-outstanding-student-academic-excellence-pacesetter-and-international-exchange-pacesetter-by-zhejiang-university",
+          title: 'Awarded Outstanding Student, Academic Excellence Pacesetter, and International Exchange Pacesetter by Zhejiang University....',
           description: "",
           section: "News",},{
         id: 'social-cv',
