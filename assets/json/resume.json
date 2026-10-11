@@ -21,7 +21,7 @@
       "startDate": "2025-09-01",
       "endDate": "2029-06-01",
       "highlights": [
-        "Expected June 2029. GPA 3.93/4.3."
+        "Expected June 2029. GPA 3.93/4.3 (87.28/100)."
       ],
       "courses": [
         "Methods and statistics: Experimental Design and Statistics in Psychology; Structural Equation Modeling and Its Applications; Research Techniques in Psychology",
@@ -72,6 +72,11 @@
   ],
   "awards": [
     {
+      "title": "Outstanding Student; Academic Excellence Pacesetter; International Exchange Pacesetter",
+      "date": "2026-10-10",
+      "awarder": "Zhejiang University"
+    },
+    {
       "title": "First Prize, \"Mind Science and Intelligent Future\" International Summer School for Top Students in Psychology",
       "date": "2026-08-01",
       "awarder": "Faculty of Psychology, Beijing Normal University"
@@ -88,6 +93,11 @@
     }
   ],
   "service": [
+    {
+      "position": "Founder, Concepts and Approaches in Psychology Reading Group",
+      "organization": "Department of Psychology and Behavioral Sciences, Zhejiang University",
+      "date": "2026 – Present"
+    },
     {
       "position": "Peer Mentor, Talented Youth Initiative",
       "organization": "School of Psychological and Cognitive Sciences, Peking University",
