@@ -72,7 +72,12 @@
   ],
   "awards": [
     {
-      "title": "Outstanding Student; Academic Excellence Pacesetter; International Exchange Pacesetter",
+      "title": "Outstanding Student",
+      "date": "2026-10-10",
+      "awarder": "Zhejiang University"
+    },
+    {
+      "title": "Academic Excellence Pacesetter & International Exchange Pacesetter",
       "date": "2026-10-10",
       "awarder": "Zhejiang University"
     },
