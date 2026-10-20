@@ -66,7 +66,18 @@
       "highlights": [
         "Research content: using signal detection theory to study how imagination affects perception.",
         "Design and methods: the protocol pairs a near-threshold perceptual detection task with an imagery task, plus electrophysiological and neuromodulation measures of visual-cortical and prefrontal involvement.",
-        "Role: project lead, with Dr. Jianghao Liu as collaborator; built the experimental platform at Zhejiang University and was responsible for participant recruitment, data collection and analysis, and quality control."
+        "Role: project lead, with Dr. Jianghao Liu as collaborator; built the experimental platform at Zhejiang University and was responsible for participant recruitment, data collection and analysis, and quality control.",
+        "Imaging studies are in preparation: a simultaneous fMRI–EEG study of where and when imagery enters perception, and a TMS–EEG study of whether the visual-cortical node is necessary."
+      ]
+    },
+    {
+      "name": "Zhejiang University",
+      "position": "Acquired Silent Reading Disorder: A Single-Case Study",
+      "startDate": "2026-01-01",
+      "endDate": "2026-08-27",
+      "highlights": [
+        "The first project I led. Identified a single participant with an acquired silent reading disorder and characterised the phenomenon in detail over repeated sessions.",
+        "The participant later underwent treatment and recovered; the treatment plan matched what the case had led us to expect."
       ]
     }
   ],
