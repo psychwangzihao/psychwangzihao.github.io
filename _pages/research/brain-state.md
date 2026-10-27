@@ -1,12 +1,11 @@
 ---
-layout: rpage
-title: 脑状态测量
+layout: page
+title: BrainState
+description: Measuring brain state from resting-state fMRI — a toolkit built on the Gao lab's published work
 permalink: /research/brain-state/
 nav: false
 rnode: brainstate
 ---
-
-<a class="r-back" href="/research/consciousness/state/">← State</a>
 
 <div class="r-meta">
   <p class="r-desc">通过多指标计算建模，开发基于静息态功能磁共振影像数据的脑状态测量工具</p>
@@ -34,7 +33,7 @@ rnode: brainstate
   与高老师初步讨论并明确了学习目标。
 </p>
 
-<h2>当前工作（第一阶段）<span class="r-ddl">ddl 10/12</span></h2>
+<h2>当前工作（第一阶段）</h2>
 
 <p class="r-note" style="margin-bottom: .3rem;">
   精读高老师指定的 6 篇核心文章，聚焦以下三篇：
