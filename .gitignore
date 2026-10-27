@@ -1,6 +1,7 @@
 _site
 .bundle
-.DS_store
+.DS_Store
+**/.DS_Store
 .idea
 .jekyll-cache
 .jekyll-metadata
