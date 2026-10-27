@@ -8,7 +8,11 @@
 <ul class="card-text font-weight-light list-group list-group-flush">
   {% for entry in entries %}
     <li class="list-group-item">
-      <div class="row">
+      {%- assign raw_start = entry.start_date | default: entry.startDate | strip -%}
+      {%- assign raw_end = entry.end_date | default: entry.endDate | strip -%}
+      {%- assign has_date = false -%}
+      {%- if raw_start != '' or raw_end != '' -%}{%- assign has_date = true -%}{%- endif -%}
+      <div class="row{% unless has_date %} is-undated{% endunless %}">
         <div class="col-xs-2 col-sm-2 col-md-2 text-center date-column">
           {% capture start_date %}
             {% if entry.start_date %}{{ entry.start_date }}{% elsif entry.startDate %}{{ entry.startDate }}{% endif %}
@@ -23,7 +27,12 @@
             {% comment %} Extract year only from dates like "1933-01-01" or just use "1933" as is {% endcomment %}
             {% assign startDate = start_date | split: '-' | first %}
             {% assign endDate = end_date | split: '-' | first | default: 'Present' %}
-            {% assign date = startDate | append: ' - ' | append: endDate %}
+            {% comment %} 起止同年就只显示一个年份，别写成「2026 - 2026」 {% endcomment %}
+            {% if startDate == endDate %}
+              {% assign date = startDate %}
+            {% else %}
+              {% assign date = startDate | append: ' - ' | append: endDate %}
+            {% endif %}
           {% else %}
             {% assign date = '' %}
           {% endif %}
@@ -37,19 +46,16 @@
                 </td>
               </tr>
               {% endif %}
+              {% comment %}
+                capture 会把标签之间的换行和缩进一起收进去，所以这里必须 strip。
+                少了这一句，没有填写 location 的条目会得到一个「全是空白」的字符串，
+                判断为真 → 渲染出一个**只有图标、没有文字**的定位针（CV 前两条就是这样）。
+                地点**不放这一栏**（太窄，放不下会折行），挪到右边跟在机构名后面。
+              {% endcomment %}
               {% capture location %}
                 {% if entry.location %}{{ entry.location }}{% endif %}
               {% endcapture %}
-              {% if location != '' %}
-                <tr>
-                  <td>
-                    <p class="location">
-                      <i class="fa-solid fa-location-dot iconlocation"></i>
-                      {{ location }}
-                    </p>
-                  </td>
-                </tr>
-              {% endif %}
+              {% assign location = location | strip %}
             </tbody>
           </table>
         </div>
@@ -70,7 +76,11 @@
             {% if entry.name %}{{ entry.name }}{% elsif entry.company %}{{ entry.company }}{% elsif entry.organization %}{{ entry.organization }}{% endif %}
           {% endcapture %}
           {% if company_name != '' %}
-            <h6 class="ml-1 ml-md-4" style="font-size: 0.95rem">{{ company_name }}</h6>
+            <h6 class="ml-1 ml-md-4" style="font-size: 0.95rem">
+              {{ company_name }}{% if location != '' %} ({{ location }}){% endif %}
+            </h6>
+          {% elsif location != '' %}
+            <h6 class="ml-1 ml-md-4" style="font-size: 0.95rem">{{ location }}</h6>
           {% endif %}
 
           {% if entry.summary %}

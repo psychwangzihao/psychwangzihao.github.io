@@ -1,0 +1,183 @@
+/* ============================================================
+ * 场景 2：盲点测试  (id: blindspot · 4 个状态)
+ * 目的：让每个人亲身体验「视野里有一个洞，而你从不看见它」。
+ * 注：这是真实的盲点测试，学生需要靠近/远离屏幕找到那个距离。
+ * ============================================================ */
+PERCEPTION.css('scene-blindspot', `
+/* 底板。绿色是有用的：白底和页面底色太近，看不出这是一块"视野"；
+   换成绿底之后，"消失的位置仍然是绿的"这件事观众才看得见。 */
+#bsBoard{
+  --bs-bg:#FFFFFF;
+  background:var(--bs-bg);
+  /* 撑满左右：.stack 是 shrink-to-fit 且居中，底板一旦比它宽，
+     浏览器就自动把底板居中到视口 —— 左右各溢出等量，正好满幅。
+     ⚠️ 别再补一句 margin-left:calc(50% - 50vw)，那会多减一份，
+        底板整体左移，十字会被切在屏幕外。 */
+  width:100vw;
+  padding:var(--space-md);
+  height:32vh;min-height:200px;
+  position:relative;overflow:hidden;
+}
+/* 交互态：十字**钉死在左边**，只有蓝点动。
+   原来用的是 flex + gap，改 gap 会把两个一起推着走 —— 十字跟着跑了。 */
+#bsFix,#bsDot{
+  position:absolute;top:50%;line-height:1;user-select:none;
+  transform:translateY(-50%);
+}
+#bsFix{left:10%;font-size:var(--fs-hero);font-weight:var(--fw-bold);}
+#bsDot{font-size:var(--fs-hero);color:var(--accent-blue);left:88%;}
+#bsDot.blink{animation:softPulse 2s var(--ease-in-out) infinite;}
+
+/* 揭晓态：板子缩回正常大小，两点靠近，回到普通横排 */
+#bsBoard.board{
+  display:flex;align-items:center;justify-content:center;
+  gap:12vw;width:auto;height:auto;
+  margin-left:0;padding:var(--space-md) var(--space-lg);
+  border-radius:var(--radius-xl);box-shadow:var(--shadow-md);
+}
+#bsBoard.board #bsFix,
+#bsBoard.board #bsDot{
+  position:static;transform:none;font-size:var(--fs-title);
+}
+
+#bsSteps{display:flex;gap:var(--space-md);margin-top:var(--space-lg);}
+/* 字号必须给：不给就退回浏览器默认的 16px，投影到后排根本看不清 */
+#bsSteps .card{width:15vw;min-width:150px;text-align:center;
+               font-size:var(--fs-small);line-height:1.5;}
+#bsWarn{margin-top:var(--space-sm);font-size:var(--fs-tiny);color:var(--text-tertiary);letter-spacing:.1em;}
+
+/* 不用屏幕的那条路（后排同学用） */
+#bsHands{
+  margin-top:var(--space-md);max-width:52vw;text-align:left;
+  display:flex;flex-direction:column;gap:var(--space-2xs);
+}
+#bsHands b{font-size:var(--fs-small);color:var(--accent-blue);}
+#bsHands span{font-size:var(--fs-small);color:var(--text-secondary);line-height:1.5;}
+
+#bsSlider{margin-top:var(--space-md);display:flex;align-items:center;gap:var(--space-sm);
+          font-size:var(--fs-tiny);color:var(--text-tertiary);}
+#bsSlider input{width:22vw;min-width:180px;accent-color:var(--accent-blue);}
+
+/* 倒计时环 */
+#ringWrap{position:relative;width:5vw;height:5vw;min-width:64px;min-height:64px;margin-top:var(--space-md);}
+#ringWrap svg{transform:rotate(-90deg);width:100%;height:100%;}
+#ringBg{fill:none;stroke:var(--border-subtle);stroke-width:5;}
+#ringFg{fill:none;stroke:var(--accent-blue);stroke-width:5;stroke-linecap:round;
+        transition:stroke-dashoffset 20s linear;}
+#ringNum{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:var(--fs-subtitle);font-weight:var(--fw-bold);color:var(--accent-blue);
+  font-family:var(--font-mono);
+}
+
+/* 揭晓态：左图右文 */
+#bsReveal{display:flex;align-items:center;justify-content:center;gap:var(--space-xl);width:100%;}
+#bsReveal .board{flex:none;transform:scale(.82);transform-origin:center;}
+#bsCard{width:35vw;min-width:280px;}
+#bsCard p{font-size:var(--fs-body);line-height:1.7;margin-bottom:var(--space-sm);}
+#bsCard p:last-child{margin-bottom:0;}
+
+/* 放大镜 */
+#magnifier{
+  position:absolute;top:50%;left:6%;width:7vw;height:7vw;min-width:74px;min-height:74px;
+  margin-top:-3.5vw;border:3px solid var(--accent-orange);border-radius:50%;
+  opacity:0;transition:left 1s var(--ease-out),opacity var(--dur-slow) var(--ease-out);
+  pointer-events:none;box-shadow:0 0 0 3px rgba(232,131,74,.12);
+}
+#magnifier.on{opacity:1;left:46%;}
+#bsSpot{
+  position:absolute;top:50%;left:50%;width:6vw;height:6vw;margin-top:-3vw;margin-left:1vw;
+  border-radius:50%;background:radial-gradient(circle,rgba(232,131,74,.30) 0%,rgba(232,131,74,0) 70%);
+  opacity:0;transition:opacity var(--dur-slower) var(--ease-out);pointer-events:none;
+}
+#bsSpot.on{opacity:1;animation:softPulse 2.4s var(--ease-in-out) infinite;}
+`);
+
+/* 三种底色共用一个蓝点位置：换底色时它不动，
+   观众还盯着十字，底下的颜色就换了。 */
+/* 初始在**最远**：讲者再按现场的房间往里收 */
+var _bsPos = 100;
+
+function bsStage(ctx, color) {
+  ctx.set(`
+    <div class="stack">
+      <div id="bsBoard" class="anim" style="--d:0s;background:` + color + `">
+        <span id="bsFix">+</span>
+        <span id="bsDot">●</span>
+        <div id="magnifier"></div>
+        <div id="bsSpot"></div>
+      </div>
+
+      <div id="bsSteps">
+        <div class="card tight anim" style="--d:.15s">左眼闭合</div>
+        <div class="card tight anim" style="--d:.3s">右眼注视 +</div>
+        <div class="card tight anim" style="--d:.45s">移动至 ● 消失</div>
+      </div>
+
+      <div id="bsSlider">
+        <span>两点间距</span>
+        <input type="range" id="bsRange" min="0" max="100" value="100">
+      </div>
+    </div>
+  `);
+
+  var dot = ctx.q('#bsDot'), range = ctx.q('#bsRange');
+  range.value = _bsPos;
+  /* 只改蓝点的位置，十字不动。0–100 映射到 26%–80%。 */
+  function apply() {
+    _bsPos = +range.value;
+    dot.style.left = (30 + _bsPos * 0.58) + '%';
+  }
+  ctx.on(range, 'input', apply);
+  apply();
+}
+
+PERCEPTION.scene({
+  id: 'blindspot',
+  label: '盲点',
+  part: '人如何感',
+  noClick: true,          /* 学生正在做测试，误点不该翻页 */
+  states: [
+
+    /* ---- 2.0 滑动：先把盲点做出来（白底）---- */
+    function (ctx) { bsStage(ctx, '#FFFFFF'); },
+
+    /* ---- 2.1 揭晓：先把这个悖论说清楚 ---- */
+    function (ctx) {
+      ctx.set(`
+        <div id="bsReveal">
+          <div id="bsBoard" class="board">
+            <span id="bsFix">+</span>
+            <span id="bsDot">●</span>
+            <div id="magnifier"></div>
+            <div id="bsSpot"></div>
+          </div>
+
+          <div id="bsCard" class="card anim" style="--d:.1s">
+            <p class="anim fade" style="--d:.3s"><b>「盲点」真的「盲」吗？</b></p>
+            <p class="step muted">缺口没有出现。</p>
+            <p class="step">而那个位置，确实没有感光细胞。</p>
+            <p class="step"><b class="c-blue">没有感光细胞的地方，为什么能看见东西？</b></p>
+          </div>
+
+          <div class="quote step" style="max-width:34vw;margin-top:var(--space-md)">
+            “Instead of reality being passively recorded by the brain,<br>
+            it is actively constructed by it.”
+            <span class="attr">David Eagleman, <i>Incognito</i></span>
+          </div>
+        </div>
+      `);
+
+      /* 放大镜移动 → 目标位置高亮 */
+      ctx.soon(function () { ctx.q('#magnifier').classList.add('on'); }, 500);
+      ctx.after(1500, function () { ctx.q('#bsSpot').classList.add('on'); });
+      ctx.steps();
+    },
+
+    /* ---- 2.2–2.3 三色体验：讲完之后，换底色给观众看 ----
+       蓝点位置跨屏保持，翻页笔按一下换一种，不会跳回原点。 */
+    function (ctx) { bsStage(ctx, '#2FA84F'); },
+    function (ctx) { bsStage(ctx, '#F5C518'); },
+
+  ],
+});

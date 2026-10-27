@@ -8,7 +8,11 @@
 <ul class="card-text font-weight-light list-group list-group-flush">
   {% for entry in entries %}
     <li class="list-group-item">
-      <div class="row">
+      {%- assign raw_start = entry.start_date | default: entry.startDate | strip -%}
+      {%- assign raw_end = entry.end_date | default: entry.endDate | strip -%}
+      {%- assign has_date = false -%}
+      {%- if raw_start != '' or raw_end != '' -%}{%- assign has_date = true -%}{%- endif -%}
+      <div class="row{% unless has_date %} is-undated{% endunless %}">
         <div class="col-xs-2 col-sm-2 col-md-2 text-center date-column">
           {% capture start_date %}
             {% if entry.start_date %}{{ entry.start_date }}{% elsif entry.startDate %}{{ entry.startDate }}{% endif %}
@@ -39,19 +43,16 @@
                   {% endif %}
                 </td>
               </tr>
+              {% comment %}
+                capture 连换行一起收进来，不 strip 就会渲染出只有图标、没有文字的定位针。
+                地点**不再放在这一栏**：日期栏是 col-2，扣掉内边距只剩几十像素，
+                「Hangzhou, China」怎么缩都放不下、必然折成两行。挪到右边宽栏、
+                跟在机构名后面（和 LaTeX CV 的「Institution (location)」一致）。
+              {% endcomment %}
               {% capture location %}
                 {% if entry.location %}{{ entry.location }}{% endif %}
               {% endcapture %}
-              {% if location != '' %}
-                <tr>
-                  <td>
-                    <p class="location">
-                      <i class="fa-solid fa-location-dot iconlocation"></i>
-                      {{ location }}
-                    </p>
-                  </td>
-                </tr>
-              {% endif %}
+              {% assign location = location | strip %}
             </tbody>
           </table>
         </div>
@@ -69,7 +70,11 @@
           {% endif %}
 
           {% if entry.institution %}
-            <h6 class="ml-1 ml-md-4" style="font-size: 0.95rem">{{ entry.institution }}</h6>
+            <h6 class="ml-1 ml-md-4" style="font-size: 0.95rem">
+              {{ entry.institution }}{% if location != '' %} ({{ location }}){% endif %}
+            </h6>
+          {% elsif location != '' %}
+            <h6 class="ml-1 ml-md-4" style="font-size: 0.95rem">{{ location }}</h6>
           {% endif %}
 
           {% if entry.area %}

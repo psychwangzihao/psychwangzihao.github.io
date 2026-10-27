@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="{{ site.lang }}">
+  <head>
+    {% include head.liquid %}
+  </head>
+
+  <!-- 组会/答辩用的全屏页：没有顶部那条导航、没有页脚，内容占满视口并垂直居中。
+       返回上一层的入口只有正文里的「← xxx」链接 —— 这是刻意的，全屏时
+       屏幕上的每个字都应该是内容。 -->
+  <body class="r-body-page">
+    <style>
+      /* ⚠️ 关键就在这一行：抬的是**根字号**，不是某个容器。
+         页面正文里的字号全是 rem，跟着根字号一起放大 —— 只调容器的话
+         那些 rem 还是按 16px 算，一点都不会变大。 */
+      html { font-size: clamp(15px, 1.30vw, 26px); }
+
+      body.r-body-page {
+        background: var(--global-bg-color);
+        margin: 0;
+      }
+      .r-wrap {
+        min-height: 100vh;
+        box-sizing: border-box;
+        display: flex; flex-direction: column; justify-content: center;
+        padding: 3vh clamp(1.5rem, 4.5vw, 4.5rem);
+        max-width: 1580px;
+        margin: 0 auto;
+      }
+      .r-head { margin-bottom: .6rem; }
+      .r-title {
+        font-weight: 600; line-height: 1.2;
+        margin: 0 0 .4em; color: var(--global-text-color);
+      }
+      .r-desc { line-height: 1.6; margin: 0; color: var(--global-text-color-light); }
+      /* 正文里写死的段宽也跟着根字号走，不用改页面 */
+      .r-body p, .r-body li { line-height: 1.75; }
+      .r-body h2 { margin: 1.5em 0 .55em; }
+      /* 页脚那条（Copyright / Powered by）全屏时不要 */
+      footer.fixed-bottom, .fixed-bottom { display: none; }
+
+      /* 右上角「真·全屏」按钮：平时很淡，鼠标移上去才实。投影时
+         不会抢内容，但伸手就能按到。 */
+      .r-fs {
+        position: fixed; top: .7rem; right: .9rem; z-index: 60;
+        display: flex; padding: .35rem; border: 0; border-radius: .35rem;
+        background: transparent; color: var(--global-text-color-light);
+        opacity: .22; cursor: pointer;
+        transition: opacity .18s, background .18s;
+      }
+      .r-fs:hover, .r-fs:focus-visible { opacity: 1; background: rgba(128,128,128,.14); }
+      .r-fs svg { width: 1.15rem; height: 1.15rem; display: block; }
+      .r-fs .ic-out { display: none; }
+      body.r-fs-on .r-fs .ic-in  { display: none; }
+      body.r-fs-on .r-fs .ic-out { display: block; }
+
+      /* 全屏演示时鼠标不动就藏起来，免得停在标题上 */
+      body.r-fs-on.r-idle { cursor: none; }
+      body.r-fs-on.r-idle .r-fs { opacity: 0; }
+      body.r-fs-on #back-to-top, body.r-fs-on .back-to-top { display: none !important; }
+    </style>
+
+    <div class="r-wrap">
+      <header class="r-head">
+        <h1 class="r-title">{{ page.title }}</h1>
+        {% if page.description %}<p class="r-desc">{{ page.description }}</p>{% endif %}
+      </header>
+      <article class="r-body">
+        {{ content }}
+      </article>
+    </div>
+
+    <button id="rfs" class="r-fs" title="全屏 / 退出全屏（F）" aria-label="全屏">
+      <svg class="ic-in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/>
+      </svg>
+      <svg class="ic-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 8h3a2 2 0 0 0 2-2V3M21 8h-3a2 2 0 0 1-2-2V3M3 16h3a2 2 0 0 1 2 2v3M21 16h-3a2 2 0 0 0-2 2v3"/>
+      </svg>
+    </button>
+
+    <script>
+      (function () {
+        var btn = document.getElementById('rfs');
+        var root = document.documentElement;
+
+        /* ────────────────────────────────────────────────────────────────
+           Consciousness 子树：进去就全屏，在里面怎么点都不会掉出来。
+
+           两件事浏览器各有各的限制，所以要分开处理：
+
+           ① 「自动全屏」——规范要求 requestFullscreen() 必须发生在用户手势里，
+              而点击链接之后的那个新手势属于**上一页**，所以页面一加载就调用
+              会被拒绝。做法是：先试一次（有的浏览器会放行），失败就挂一个
+              一次性监听，用户下一次按键或点击时补上。翻页笔的第一下就能进去。
+
+           ② 「翻页不退出全屏」——全屏在页面导航时必然被浏览器清掉。所以子树
+              内部的链接不走导航：fetch 回来把 .r-wrap 原地替换 + pushState。
+              没有文档加载，全屏自然保持。
+
+           走出子树（比如「← Research」）就不拦，正常跳转，全屏随之退出——
+           这正是「除非退出 Consciousness 否则不退出全屏」。
+           ──────────────────────────────────────────────────────────────── */
+        /* 全屏范围的页面清单，交给 Jekyll 生成 —— 凡是用了 rpage 这套版式的
+           页面，都是 Consciousness 板块里的，一个不漏。
+           之前这里是写死的 '/research/consciousness'，但几个项目页的地址是
+           /research/imagination/、/research/inner-speech/ 这种，并不在那条
+           前缀底下 —— 结果从英文页点进中文项目页就退出了全屏。
+           以后再加研究页，只要用 rpage 就自动进来，不用改这里。 */
+        var TREE = [
+          {%- for p in site.pages -%}
+            {%- if p.layout == 'rpage' -%}'{{ p.url }}',{%- endif -%}
+          {%- endfor -%}
+        ];
+
+        function inTree(path) {
+          if (path.charAt(path.length - 1) !== '/') path += '/';
+          return TREE.indexOf(path) !== -1;
+        }
+        function isFs() {
+          return !!(document.fullscreenElement || document.webkitFullscreenElement);
+        }
+        function reqFs() {
+          var req = root.requestFullscreen || root.webkitRequestFullscreen;
+          // Safari 老版不返回 Promise，所以不直接 .catch
+          if (req) { try { var p = req.call(root); if (p && p.catch) p.catch(function () {}); } catch (e) {} }
+        }
+        function exitFs() {
+          if (isFs()) (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+        }
+        function toggle() { isFs() ? exitFs() : reqFs(); }
+
+        btn.addEventListener('click', toggle);
+
+        ['fullscreenchange', 'webkitfullscreenchange'].forEach(function (ev) {
+          document.addEventListener(ev, function () {
+            document.body.classList.toggle('r-fs-on', isFs());
+          });
+        });
+
+        document.addEventListener('keydown', function (e) {
+          if (e.metaKey || e.ctrlKey || e.altKey) return;
+          if (e.key === 'f' || e.key === 'F') { e.preventDefault(); toggle(); }
+        });
+
+        /* ── 子树内的原地导航 ─────────────────────────────────────────── */
+        function swap(path, push) {
+          fetch(path, { credentials: 'same-origin' })
+            .then(function (r) { return r.ok ? r.text() : Promise.reject(); })
+            .then(function (html) {
+              var doc = new DOMParser().parseFromString(html, 'text/html');
+              var nw = doc.querySelector('.r-wrap');
+              var ow = document.querySelector('.r-wrap');
+              if (!nw || !ow) { location.href = path; return; }   // 结构变了就老实跳转
+              ow.innerHTML = nw.innerHTML;
+              document.title = doc.title;
+              if (push) history.pushState({ rp: 1 }, '', path);
+              window.scrollTo(0, 0);
+              armAuto();
+            })
+            .catch(function () { location.href = path; });
+        }
+
+        document.addEventListener('click', function (e) {
+          if (e.defaultPrevented || e.button !== 0) return;
+          if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+          var a = e.target.closest ? e.target.closest('a') : null;
+          if (!a || (a.target && a.target !== '_self')) return;
+          var url;
+          try { url = new URL(a.href, location.href); } catch (err) { return; }
+          if (url.origin !== location.origin) return;   // 外链不管
+          if (!inTree(url.pathname)) return;            // 走出子树 → 正常跳转
+          e.preventDefault();
+          swap(url.pathname + url.search, true);
+        });
+
+        window.addEventListener('popstate', function () {
+          if (inTree(location.pathname)) swap(location.pathname + location.search, false);
+        });
+
+        /* ── 自动全屏 ─────────────────────────────────────────────────── */
+        function armAuto() {
+          if (!inTree(location.pathname) || isFs()) return;
+          reqFs();                                   // 有机会就先进去
+          var once = function () {
+            document.removeEventListener('pointerdown', once, true);
+            document.removeEventListener('keydown', once, true);
+            if (!isFs()) reqFs();                    // 借这一次手势补上
+          };
+          document.addEventListener('pointerdown', once, true);
+          document.addEventListener('keydown', once, true);
+        }
+
+        if (inTree(location.pathname)) armAuto();
+
+        // 全屏且鼠标静止 2.5 秒后隐藏光标（退出全屏立刻恢复）
+        var t;
+        function wake() {
+          document.body.classList.remove('r-idle');
+          clearTimeout(t);
+          t = setTimeout(function () {
+            if (isFs()) document.body.classList.add('r-idle');
+          }, 2500);
+        }
+        ['mousemove', 'mousedown', 'keydown'].forEach(function (ev) {
+          document.addEventListener(ev, wake, { passive: true });
+        });
+      })();
+    </script>
+
+    {% include scripts.liquid %}
+  </body>
+</html>

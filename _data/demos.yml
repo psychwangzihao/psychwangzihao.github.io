@@ -1,0 +1,83 @@
+# Demos
+#
+# Two categories, rendered as two blocks on /demos/ with their own color:
+#   presentation — talks and interactive visuals. Blue. Links straight to the demo.
+#   experiment   — psychological experiments you can run. Orange. Has a detail page
+#                  that explains the paradigm before the visitor starts.
+#
+# Fields:
+#   type:        presentation | experiment (decides the block and the color)
+#   title:       display title
+#   title_en:    (optional) secondary title, shown as "· <title_en>"
+#   slug:        URL-safe slug; experiments use it for /demos/<slug>/
+#   audience:    (presentation) who the talk was for
+#   category:    (experiment) research area, shown on the detail page
+#   status:      (experiment) in development | active | archived
+#   summary:     one or two sentences for the card; keep it short
+#   contacts:    who to ask about it
+#   run_url:     path to the runnable version; leave empty to link to the detail page
+#   detail_url:  (optional) detail page
+#   date_added:  YYYY-MM-DD
+#   updated:     (optional) YYYY-MM-DD
+#
+# NOTE: keep this file in English — nothing Chinese is shown on the site itself.
+# The demos themselves (inside assets/demos/) are separate and stay in Chinese.
+
+# ---------------- Presentations ----------------
+- type: presentation
+  title: Connecting the Dots
+  slug: dots
+  audience: Incoming psychology undergraduates
+  summary: >
+    An interactive talk told as a star map. Each star is a connection between a
+    person and a thing — Zhejiang University, psychology, the 2050 Gathering,
+    Oxford, CO-LAB. Click a star to open its chapter.
+  run_url: /assets/demos/dots/
+  date_added: 2026-09-08
+
+- type: presentation
+  title: Is Seeing Believing?
+  slug: perception
+  audience: High school students
+  summary: >
+    A fourteen-scene psychology outreach lecture, built to be driven live from the
+    lectern. It opens with a tree falling in an empty forest and closes on brain
+    interfaces, taking in the blind spot, aphantasia and EEG. The argument: the
+    world is real, but it reaches you only through the brain's translation of it.
+  run_url: /assets/demos/perception/
+  date_added: 2026-09-14
+
+- type: presentation
+  title: The Mind's Eye
+  slug: minds-eye
+  audience: Artists, designers, technologists
+  summary: >
+    A talk given at the 2050 roundtable "The Form and Substance of Future Perception"
+    (Hangzhou, 18 September 2026). It separates sensation from knowledge — sensation
+    being a translation, not a recording — and follows that seam all the way into
+    aesthetics: how narrow each sense's window is, what happens when a channel is
+    replaced, what is left when there is sensation and no knowledge, and how knowledge
+    can run backwards to generate sensation. That last one is imagination, and it is
+    where the talk ends: on the question of where in that chain aesthetic experience
+    actually happens.
+  run_url: /assets/demos/perception-2050/
+  date_added: 2026-09-18
+
+# ---------------- Experiments ----------------
+- type: experiment
+  title: COCOnnect
+  title_en: Picture–Text Matching
+  slug: coconnect
+  category: Reading & Language
+  status: active
+  summary: >
+    Look at a natural scene, then judge whether a short Chinese description matches
+    it. Text length increases from 1 to 10 characters, so the quantity of interest is
+    where reading breaks down. Four rhythmic conditions (4 / 2 / 1 / 0.5 Hz) test
+    whether a steady beat shifts that threshold.
+  contacts:
+    - Zihao Wang
+  run_url: /assets/demos/coconnect/
+  detail_url: /demos/coconnect/
+  date_added: 2026-08-08
+  updated: 2026-09-16

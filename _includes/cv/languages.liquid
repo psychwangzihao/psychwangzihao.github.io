@@ -10,12 +10,19 @@
       {% if entry.icon %}
         <i class="{{ entry.icon }}"></i>
       {% endif %}
+      {% comment %}
+        capture 会把标签之间的换行和缩进一起收进去，所以这里必须 strip。
+        少了这两句，「Chinese」后面会带一串空白，渲染成 "Chinese : Native"
+        —— 冒号前面多一个空格。（和 experience/education 里那个定位针是同一个坑。）
+      {% endcomment %}
       {% capture lang_name %}
         {% if entry.name %}{{ entry.name }}{% elsif entry.language %}{{ entry.language }}{% endif %}
       {% endcapture %}
+      {% assign lang_name = lang_name | strip %}
       {% capture fluency %}
         {% if entry.summary %}{{ entry.summary }}{% elsif entry.fluency %}{{ entry.fluency }}{% endif %}
       {% endcapture %}
+      {% assign fluency = fluency | strip %}
       <strong>{{ lang_name }}:</strong> {{ fluency }}
     </div>
   {% endfor %}

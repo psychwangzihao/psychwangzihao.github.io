@@ -263,6 +263,18 @@ layout: default
           </div>
         {% endif %}
 
+        <!-- Technical Skills -->
+        {% if site.data.resume.skills.size > 0 %}
+          <a class="anchor" id="skills"></a>
+          <div class="card mt-3 p-3">
+            <h3 class="card-title font-weight-medium">Technical Skills</h3>
+            <div>
+              {% assign entries = site.data.resume.skills %}
+              {% include cv/skills.liquid %}
+            </div>
+          </div>
+        {% endif %}
+
         <!-- Research Experience -->
         {% if site.data.resume.research.size > 0 %}
           <a class="anchor" id="research"></a>
@@ -317,6 +329,18 @@ layout: default
                 </li>
               {% endfor %}
             </ul>
+          </div>
+        {% endif %}
+
+        <!-- Languages -->
+        {% if site.data.resume.languages.size > 0 %}
+          <a class="anchor" id="languages"></a>
+          <div class="card mt-3 p-3">
+            <h3 class="card-title font-weight-medium">Languages</h3>
+            <div>
+              {% assign entries = site.data.resume.languages %}
+              {% include cv/languages.liquid %}
+            </div>
           </div>
         {% endif %}
 

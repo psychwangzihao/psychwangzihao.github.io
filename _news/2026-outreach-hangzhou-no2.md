@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Gave a psychology science-outreach talk at <strong>Hangzhou No. 2 High School</strong>, sharing how psychology and brain science are actually done with high-school students.
+Gave a psychology outreach talk at <strong>Hangzhou No. 2 High School</strong> on how psychology and brain science are actually done.

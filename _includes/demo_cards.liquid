@@ -1,0 +1,51 @@
+{% comment %}
+  Demos listing: one block per category — presentations (blue) / experiments (orange).
+  The colour is set once per section as --c-accent; the header and the cards both
+  read from it. Card markup and styling live in _sass/_custom.scss (.c-*), shared
+  with the research listing.
+{% endcomment %}
+{% assign sections = "presentation,Presentations|experiment,Experiments" | split: "|" %}
+{% for section in sections %}
+  {% assign parts = section | split: "," %}
+  {% assign kind = parts[0] %}
+  {% assign heading = parts[1] %}
+  {% assign items = site.data.demos | where: "type", kind %}
+  {% if items.size > 0 %}
+  <section class="dm-sec dm-sec--{{ kind }}">
+    <div class="dm-head">
+      <span class="dm-dot"></span>
+      <h3 class="dm-h" id="{{ kind }}">{{ heading }}</h3>
+      <span class="dm-count">{{ items.size }} item{% if items.size != 1 %}s{% endif %}</span>
+    </div>
+
+    {% for item in items %}
+    {% assign status_label = item.status %}
+    {% if status_label == "in development" %}{% assign status_label = "In development" %}
+    {% elsif status_label == "active" %}{% assign status_label = "Active" %}
+    {% elsif status_label == "archived" %}{% assign status_label = "Archived" %}{% endif %}
+    {% assign href = item.detail_url | default: item.run_url %}
+
+    <a class="c-card" href="{{ href }}">
+      <p class="c-title">
+        {{ item.title }}
+        {% if item.title_en %}<span class="c-en">· {{ item.title_en }}</span>{% endif %}
+        {% if item.audience %}<span class="c-badge is-soft">{{ item.audience }}</span>{% endif %}
+        {% if item.status %}<span class="c-badge">{{ status_label }}</span>{% endif %}
+      </p>
+      {% if item.summary %}<p class="c-summary">{{ item.summary | strip }}</p>{% endif %}
+      {% if item.detail_url %}
+        <span class="c-go">Read more →</span>
+      {% elsif kind == "presentation" %}
+        <span class="c-go">Open presentation →</span>
+      {% else %}
+        <span class="c-go">Run experiment →</span>
+      {% endif %}
+    </a>
+    {% endfor %}
+  </section>
+  {% endif %}
+{% endfor %}
+
+{% if site.data.demos.size == 0 %}
+<p><em>Nothing here yet.</em></p>
+{% endif %}
