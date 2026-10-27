@@ -1,11 +1,10 @@
 ---
-layout: rpage
-title: 心盲症视觉想象的意识通达机制
+layout: page
+title: Mental Imagery
+description: Aphantasia, and where in the chain an image fails to reach awareness
 permalink: /research/imagination/
 nav: false
 ---
-
-<a class="r-back" href="/research/consciousness/content/">← Content</a>
 
 <div class="r-tags">
   <span class="r-tag is-on">Active</span>

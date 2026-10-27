@@ -7,79 +7,32 @@
 #
 #  status: active | inactive | done
 #      —— active 会显示绿点，inactive 灰点，done 空心点
+#
+#  现在只放两个在做的项目，平铺在 /research/ 上（不再做三层树）。
+#  再加项目时：这里加一条 parent: root，再写一个 _pages/research/*.md。
 # ============================================================
 
-# ---------- 顶级：Consciousness ----------
-- id: consciousness
+- id: brainstate
   parent: root
-  title: Consciousness
-  note: As it is, not as it ought to be
+  title: BrainState
+  note: A brain-state measurement toolkit for resting-state fMRI
   status: active
   summary: >
-    What consciousness is made of and what state a brain is in when it has any
-    content at all. The first is measured behaviorally and with stimulation; the
-    second is modeled from resting-state imaging.
-  url: /research/consciousness/
-  go: Enter →
-
-# ---------- 第二级 ----------
-- id: content
-  parent: consciousness
-  title: Content
-  note: What is in consciousness
-  status: active
-  summary: >
-    What a person can feel — and what they cannot.
-  url: /research/consciousness/content/
-  go: Enter →
-
-- id: state
-  parent: consciousness
-  title: State
-  note: What state the brain is in when it has it
-  status: active
-  summary: >
-    Consciousness has contents, and it also has a level and a mode. This project
-    builds measurement tools for that second thing from resting-state imaging.
-  url: /research/consciousness/state/
-  go: Enter →
-
-# ---------- 第三级：意识内容 ----------
-- id: imagination
-  parent: content
-  title: Imagination
-  note: Mental Imagery and Aphantasia · first round complete
-  status: active
-  summary: >
-    Roughly 2–4% of people cannot picture anything. Their visual cortex responds
-    normally to imagery; what is missing is the coupling that would make the signal
-    reachable. A first behavioral round is complete, and the question now is where
-    in that chain the failure sits.
-  url: /research/imagination/
-  go: Open the timeline →
-
-- id: reading
-  parent: content
-  title: Inner speech in reading
-  note: A single case of acquired inner-speech loss · past project
-  status: done
-  summary: >
-    A rare case in which silent reading comprehension broke down after speed-reading
-    training: text became understandable only when read aloud or followed to an
-    external beat. Twelve tasks across three writing systems probe where in the
-    chain the loss sits.
-  url: /research/inner-speech/
+    What state is a brain in when it has any content at all? Several metrics of
+    resting-state fMRI folded into one computational model, so that the question
+    can be answered with numbers rather than adjectives.
+  url: /research/brain-state/
   go: Open →
 
-# ---------- 第三级：意识状态 ----------
-- id: brainstate
-  parent: state
-  title: A brain-state measurement toolkit
-  title_en: for resting-state fMRI
-  note: Following up on the Gao lab's work
+- id: imagination
+  parent: root
+  title: Mental Imagery
+  note: Aphantasia and the route from image to awareness · first round complete
   status: active
   summary: >
-    Building a toolkit that measures brain state from resting-state fMRI, by
-    combining several metrics into one computational model.
-  url: /research/brain-state/
+    Roughly 2–4% of people cannot picture anything, yet their visual cortex
+    responds to imagery much as anyone else's. A first behavioural round (n = 30)
+    is in; the question now is where in the chain an image fails to reach
+    awareness.
+  url: /research/imagination/
   go: Open →
