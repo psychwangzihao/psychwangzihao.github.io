@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Mental Imagery
-description: Aphantasia, and where in the chain an image fails to reach awareness
+description: The cognitive neuroscience of imagination — what it shares with perception, and what aphantasia is missing
 permalink: /research/imagination/
 nav: false
 ---
