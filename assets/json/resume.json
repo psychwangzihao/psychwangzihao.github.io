@@ -4,7 +4,7 @@
     "label": "Undergraduate Student",
     "institution": "Zhejiang University",
     "email": "psychwangzihao@zju.edu.cn",
-    "summary": "Bachelor of Science candidate in Psychology (Qiushi Honor’s Program) at Zhejiang University, with research interests in consciousness and mental imagery.",
+    "summary": "Undergraduate in Psychology (Qiushi Honor’s Program) at Zhejiang University, leading the Imaging & Imagery research programme: the cognitive and neural mechanisms of imagination and its relation to perception, and computational modelling of brain-state dynamics from resting-state fMRI.",
     "location": {
       "address": "866 Yuhangtang Road, Hangzhou 310058, China",
       "city": "Hangzhou",
@@ -52,11 +52,21 @@
   "research": [
     {
       "name": "Department of Psychology and Behavioral Sciences, Zhejiang University",
-      "position": "Undergraduate Research Assistant (Advisor: Dr. Yuzheng Hu)"
+      "position": "Undergraduate Researcher (Advisors: Dr. Yuzheng Hu and Dr. Xiaoqing Gao)"
     },
     {
       "name": "State Key Laboratory of Brain-Machine Intelligence, Zhejiang University",
       "position": "Member, Navigating Talent Program, Dr. Dian Lyu"
+    },
+    {
+      "name": "Zhejiang University",
+      "position": "BrainState: a brain-state measurement toolkit",
+      "startDate": "2026-09-01",
+      "highlights": [
+        "Dynamic brain entropy over sliding windows, clustered by k-means into recurrent brain states, described by occupancy and dwell time.",
+        "The same measures then go to patient groups against matched controls.",
+        "Following up on published brain-state work from Dr. Xiaoqing Gao’s group."
+      ]
     },
     {
       "name": "Zhejiang University, in collaboration with Dr. Jianghao Liu, Paris Brain Institute (ICM)",
@@ -65,7 +75,7 @@
       "highlights": [
         "Research content: using signal detection theory to study how imagination affects perception.",
         "Design and methods: the protocol pairs a near-threshold perceptual detection task with an imagery task, plus electrophysiological and neuromodulation measures of visual-cortical and prefrontal involvement.",
-        "Role: project lead, with Dr. Jianghao Liu as collaborator; built the experimental platform at Zhejiang University and was responsible for participant recruitment, data collection and analysis, and quality control.",
+        "Role: built the experimental platform at Zhejiang University and was responsible for participant recruitment, data collection and analysis, and quality control.",
         "Imaging studies are in preparation: a simultaneous fMRI–EEG study of where and when imagery enters perception, and a TMS–EEG study of whether the visual-cortical node is necessary."
       ]
     },
@@ -75,11 +85,10 @@
       "startDate": "2026-01-01",
       "endDate": "2026-08-27",
       "highlights": [
-        "A single-case study I designed and led independently.",
-        "Case: a participant who lost spontaneous inner speech after practising speed reading — deliberate suppression of inner pronunciation combined with forced acceleration — and could no longer read silently without external support.",
-        "Experiment: a picture–text matching task over one to ten characters, run under five pacing conditions (no aid, and auditory rhythms at 4, 2, 1 and 0.5 Hz), to test whether an external rhythm restores silent reading.",
-        "Hypothesis: inner speech fails to reach conscious access, putatively because the left SMA is suppressed by over-activity of the right SMA, which would impair the efference copy.",
-        "Treatment and outcome: low-frequency TMS over the right SMA; the participant recovered, consistent with the hypothesis."
+        "Case: a 19-year-old who lost spontaneous inner speech after a month of “eye–mind direct” speed-reading practice (forced suppression of subvocalization plus forced acceleration), and could no longer understand text when reading silently without external support.",
+        "Experiments: a remote session (~2.5 h) with interview, YBOCS/VVIQ/BAIS, rapid automatized naming and five jsPsych tasks (three writing systems, RSVP, homophone judgement, manual Stroop, rapid identification); then an in-lab picture–text matching task over one to ten characters under five pacing conditions (no aid; 4, 2, 1 and 0.5 Hz).",
+        "Account I proposed: a learned gating deficit in auditory imagery — the generation is intact, but voluntary initiation is blocked, and external rhythm or movement can drive it.",
+        "Follow-up: he later recovered at a local hospital after low-frequency TMS over the right SMA, consistent with what the account predicts. Wish him well!"
       ]
     }
   ],
@@ -151,7 +160,7 @@
     {
       "name": "Behavioural & neuroimaging",
       "keywords": [
-        "Hands-on practice in behavioural experiments, fMRI, EEG and eye-tracking"
+        "Behavioural experiments, fMRI, EEG (including MR-compatible EEG/ERP), eye-tracking, computational modelling"
       ]
     },
     {
@@ -160,7 +169,8 @@
         "Python",
         "C",
         "MATLAB",
-        "PsychoPy"
+        "PsychoPy",
+        "jsPsych"
       ]
     }
   ],
@@ -178,13 +188,19 @@
     {
       "name": "Consciousness",
       "keywords": [
-        "its contents, and the states the brain is in when it has them"
+        "as the reality we inhabit"
       ]
     },
     {
-      "name": "Mental imagery",
+      "name": "Imagination",
       "keywords": [
-        "visual and auditory; especially its absence (aphantasia)"
+        "its neuro & cognitive mechanisms, its relation to perception, and its absence (aphantasia)"
+      ]
+    },
+    {
+      "name": "Brain-state dynamics",
+      "keywords": [
+        "resting-state fMRI; brain entropy, functional connectivity and EEG; healthy people and patients"
       ]
     }
   ]

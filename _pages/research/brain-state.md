@@ -1,7 +1,7 @@
 ---
 layout: page
 title: BrainState
-description: Measuring brain state from resting-state fMRI — a toolkit built on the Gao lab's published work
+description: Turning "what state is this brain in" into a number — a resting-state toolkit built on dynamic brain entropy
 permalink: /research/brain-state/
 nav: false
 rnode: brainstate
@@ -11,6 +11,12 @@ rnode: brainstate
   <p class="r-desc">通过多指标计算建模，开发基于静息态功能磁共振影像数据的脑状态测量工具</p>
   <span class="r-tag">Active · In prep</span>
 </div>
+
+<p class="r-p r-p--lead">
+  脑状态是意识研究里最容易被含糊处理的一层：我们说「清醒」「睡着」「麻醉」，却很少把这些词
+  换算成可以比较的量。这个项目要做的就是把它们变成数字——一个建立在静息态 fMRI 上的测量工具，
+  给「这个大脑处在什么状态」一个可复现的读数。
+</p>
 
 <h2>当前目标</h2>
 

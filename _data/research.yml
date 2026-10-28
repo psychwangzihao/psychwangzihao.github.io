@@ -15,24 +15,22 @@
 - id: brainstate
   parent: root
   title: BrainState
-  note: A brain-state measurement toolkit for resting-state fMRI
+  note: Brain entropy, connectivity and EEG in one model
   status: active
   summary: >
-    What state is a brain in when it has any content at all? Several metrics of
-    resting-state fMRI folded into one computational model, so that the question
-    can be answered with numbers rather than adjectives.
+    What state is a brain in, and how does it move between states? A resting-state
+    toolkit that measures it, and asks how those states differ between healthy
+    people and patients.
   url: /research/brain-state/
   go: Open →
 
 - id: imagination
   parent: root
   title: Mental Imagery
-  note: Aphantasia and the route from image to awareness · first round complete
+  note: Imagination, and the case where it never arrives · first round complete
   status: active
   summary: >
-    Roughly 2–4% of people cannot picture anything, yet their visual cortex
-    responds to imagery much as anyone else's. A first behavioural round (n = 30)
-    is in; the question now is where in the chain an image fails to reach
-    awareness.
+    What does it take to see something that is not there? Aphantasia is the test
+    case, and a first behavioural round (n = 30) is in.
   url: /research/imagination/
   go: Open →
