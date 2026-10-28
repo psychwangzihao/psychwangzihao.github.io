@@ -25,8 +25,6 @@ I am Zihao Wang, an undergraduate at <a href='https://www.zju.edu.cn/english/'>Z
 
 I lead <a href="/research/">Imaging &amp; Imagery</a> at Zhejiang University, a programme on how imagination and perception together build the world we call “Reality”. Its first strand is the cognitive neuroscience of **imagination**, and of what happens when it is absent, as in **aphantasia**. Its second is **BrainState**, a toolkit that measures brain state from resting-state fMRI: how brain states evolve, and how they differ between healthy people and patients.
 
-I founded <a href='https://consciousness-observers.github.io'>Consciousness Observers (CO-LAB)</a>, an interdisciplinary consciousness-research platform based at Zhejiang University.
-
-Currently I do research with **Dr. Yuzheng Hu** in the <a href='http://www.psych.zju.edu.cn/psychen/main.htm'>Department of Psychology and Behavioral Sciences</a> at Zhejiang University. I am also a member of the <a href='https://jianghao-liu.github.io/irca/'>Interdisciplinary Reading Club of Aphantasia (IRCA)</a>.
+I founded <a href='https://consciousness-observers.github.io'>Consciousness Observers (CO-LAB)</a>, an interdisciplinary consciousness-research platform based at Zhejiang University. I am also a member of the <a href='https://jianghao-liu.github.io/irca/'>Interdisciplinary Reading Club of Aphantasia (IRCA)</a>.
 
 See my <a href='/cv/'>CV</a> for more details. I'm always open to collaboration and discussion.
