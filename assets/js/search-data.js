@@ -85,6 +85,9 @@ ninja.data = [{
           section: "News",},{id: "news-awarded-outstanding-student-academic-excellence-pacesetter-and-international-exchange-pacesetter-by-zhejiang-university",
           title: 'Awarded Outstanding Student, Academic Excellence Pacesetter, and International Exchange Pacesetter by Zhejiang University....',
           description: "",
+          section: "News",},{id: "news-ran-the-5000-m-at-the-zhejiang-university-2026-sports-meet-and-finished-eighth-among-undergraduate-men-the-last-lap-is-mostly-a-decision",
+          title: 'Ran the 5000 m at the Zhejiang University 2026 Sports Meet and finished...',
+          description: "",
           section: "News",},{
         id: 'social-cv',
         title: 'CV',
