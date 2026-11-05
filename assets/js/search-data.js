@@ -88,6 +88,9 @@ ninja.data = [{
           section: "News",},{id: "news-ran-the-5000-m-at-the-zhejiang-university-2026-sports-meet-and-finished-eighth-among-undergraduate-men-the-last-lap-is-mostly-a-decision",
           title: 'Ran the 5000 m at the Zhejiang University 2026 Sports Meet and finished...',
           description: "",
+          section: "News",},{id: "news-launched-the-imaging-amp-amp-imagery-lab-website-the-lab-i-direct-within-the-hlab-at-zhejiang-university",
+          title: 'Launched the Imaging &amp;amp;amp; Imagery Lab website — the lab I direct within...',
+          description: "",
           section: "News",},{
         id: 'social-cv',
         title: 'CV',
