@@ -87,13 +87,13 @@ nav: false
 <details>
 <summary>
   <span class="r-tl-when">10/12 – 11/8</span>
-  <span class="r-tl-h">招募心盲被试 + fMRI-EEG 数据采集</span>
+  <span class="r-tl-h">招募心盲被试 + fMRI 数据采集</span>
 </summary>
 <div class="r-tl-detail">
   <ul>
-    <li>采集常模 fMRI-EEG 数据</li>
-    <li>招募心盲被试并采集其 fMRI-EEG 数据</li>
-    <li>fMRI-EEG 数据预处理</li>
+    <li>采集常模 fMRI 数据</li>
+    <li>招募心盲被试并采集其 fMRI 数据</li>
+    <li>fMRI 数据预处理</li>
   </ul>
 </div>
 </details>
@@ -108,8 +108,8 @@ nav: false
 <div class="r-tl-detail">
   <ul>
     <li>采集常模 TMS-EEG 数据</li>
-    <li>心盲被试 fMRI-EEG 数据采集与预处理</li>
-    <li>fMRI-EEG 数据分析</li>
+    <li>心盲被试 fMRI 数据采集与预处理</li>
+    <li>fMRI 数据分析</li>
     <li>参加中国认知科学学会意识科学分会 2026 学术年会</li>
   </ul>
 </div>

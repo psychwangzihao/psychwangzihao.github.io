@@ -77,7 +77,7 @@
         "Research content: using signal detection theory to study how imagination affects perception.",
         "Design and methods: the protocol pairs a near-threshold perceptual detection task with an imagery task, plus electrophysiological and neuromodulation measures of visual-cortical and prefrontal involvement.",
         "Role: built the experimental platform at Zhejiang University and was responsible for participant recruitment, data collection and analysis, and quality control.",
-        "Imaging studies are in preparation: a simultaneous fMRI–EEG study of where and when imagery enters perception, and a TMS–EEG study of whether the visual-cortical node is necessary."
+        "Imaging studies are in preparation: an fMRI study of where and when imagery enters perception, and a TMS–EEG study of whether the visual-cortical node is necessary."
       ]
     },
     {
@@ -166,7 +166,7 @@
     {
       "name": "Behavioural & neuroimaging",
       "keywords": [
-        "Behavioural experiments, fMRI, EEG (including MR-compatible EEG/ERP), eye-tracking, computational modelling"
+        "Behavioural experiments, fMRI, EEG, eye-tracking, computational modelling"
       ]
     },
     {
