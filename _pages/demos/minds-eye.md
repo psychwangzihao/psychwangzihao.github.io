@@ -30,7 +30,7 @@ Sensation is a translation, not a recording. Receptors turn a physical quantity 
 
 Four steps along that seam. **The window is narrow**: 380–750 nm out of a spectrum running from gamma rays to radio; 20 Hz to 20 kHz out of everything that vibrates; and a blind spot in each eye that nobody notices. **The window is not fixed**: a vest that turns sound into vibration on the torso, an electrode array on the tongue — channels can be added, at ten to seventy-three hours of training. **Sensation can do without knowledge**: suspend the knowing, and what remains is at once entirely real and entirely made. **And knowledge runs backwards**: what you assume about the light in a photograph changes the color you see, though the cones are identical.
 
-Which leads to the question the talk was built around: **where in that chain does aesthetic experience happen?** A landscape asks for sensation alone; a painting with its explanation asks for both; a page of text must pass through knowledge before it can turn back into sensation. All three are genuinely aesthetic — they differ only in how much of each they need.
+Which leads to the question the talk was built around: **where in that chain does aesthetic experience happen?** A landscape asks for sensation alone; a painting with its explanation asks for both; a page of text must pass through knowledge before it can turn back into sensation. They are all aesthetic; they differ in how much of each they need.
 
 Color vision, meanwhile, is not one thing: dichromats lose exactly one dimension; two color-deficient painters gave up color for black and white; about 12% of women carry a fourth cone type, and almost none can use it. And roughly 2–4% of people cannot picture anything at all — they know what an apple looks like, they can draw one, and closing their eyes yields nothing.
 
@@ -40,21 +40,17 @@ An artwork does not deliver an experience. It supplies conditions, and the viewe
 
 The practical consequence: **you cannot control what a viewer sees; you can only control the conditions you give them.** And the range of machinery you are addressing is wider than usually assumed — the audience includes people who will walk through your installation with no inner image at all.
 
-The talk opened a conversation with the School of Intermedia Art, China Academy of Art, and Zhejiang University: using research on imagination to inform how perceptual work is designed, and perceptual work to carry the science back out.
+The talk opened a conversation with the School of Intermedia Art, China Academy of Art, and Zhejiang University: so that research shapes the work and the work carries the research back out.
 
 ## The exhibition
 
 Under discussion with the School of Intermedia Art (China Academy of Art) and Zhejiang University: an exhibition in Hangzhou on consciousness, absent imagination, and first-person experience.
 
-Three lines run through it — the evidence of neuroscience, the suspension of phenomenology, and the translation of art. Visitors would move through rooms that temporarily deprive or confuse vision and hearing, so that the everyday world of someone with aphantasia is something they can feel rather than read about.
+It brings together three things: what neuroscience can show, what phenomenology can suspend, and what art can translate. Visitors would move through rooms that temporarily deprive or confuse vision and hearing, so that the everyday world of someone with aphantasia is something they can feel rather than read about.
 
 ## Get involved
 
-**Participants.** If you cannot picture an apple in your mind, or have never had an inner monologue, you are the person this work most needs. Screening is anonymous, and participants receive a professional cognitive assessment in return.
-
-**Collaborators.** Artists, designers, and programmers drawn to the intersection of neuroscience, phenomenology, and art.
-
-**Supporters.** A public-interest exhibition needs a venue, materials, and funding. If you believe science should arrive in the world through art, this is where to help.
+If you cannot picture an apple in your mind, or have never had an inner monologue, you are the person this work most needs: screening is anonymous, and participants get a professional cognitive assessment in return. We are also looking for artists and programmers who want to work on perception, and for a venue and funding — a public-interest exhibition does not pay for itself.
 
 Write to <a href="mailto:psychwangzihao@zju.edu.cn">psychwangzihao@zju.edu.cn</a>.
 

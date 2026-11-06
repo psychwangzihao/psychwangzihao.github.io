@@ -6,4 +6,4 @@ related_posts: false
 ---
 
 Ran the <strong>5000 m</strong> at the <strong>Zhejiang University 2026 Sports Meet</strong> and
-finished <strong>eighth</strong> among undergraduate men. The last lap is mostly a decision.
+finished <strong>eighth</strong> among undergraduate men.
