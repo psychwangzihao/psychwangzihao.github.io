@@ -20,6 +20,7 @@ nav: false
 <div style="margin: 1.4rem 0 0;">
   <a href="/assets/demos/perception-2050/" style="display: inline-block; padding: 0.65rem 1.8rem; font-size: 0.9375rem; font-weight: 600; background: #d97a00; color: #fff; border-radius: 7px; text-decoration: none;">Open the demo ↗</a>
   <a href="https://consciousness-observers.github.io/projects/imagine/" style="display: inline-block; padding: 0.65rem 1.8rem; font-size: 0.9375rem; font-weight: 600; background: #0076df; color: #fff; border-radius: 7px; text-decoration: none; margin-left: 0.6rem;">The exhibition project →</a>
+  <a href="https://mp.weixin.qq.com/s/dNdI1XblaUYbDGt_tX8t9g" style="display: inline-block; padding: 0.65rem 1.8rem; font-size: 0.9375rem; font-weight: 600; background: #07c160; color: #fff; border-radius: 7px; text-decoration: none; margin-left: 0.6rem;">Press coverage ↗</a>
 </div>
 
 ---

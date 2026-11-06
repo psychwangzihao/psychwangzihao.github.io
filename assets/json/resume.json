@@ -27,7 +27,8 @@
         "Computing: Psychology Experiment Programming; Lab and Fundamentals of Programming",
         "Mathematics, logic and physics: Probability and Mathematical Statistics; Linear Algebra (H); Calculus (H); Logics (H); Philosophical Logic; University Physics and Experiment",
         "Foundations: General Psychology; Language, Mind and Brain; Theory and Practice in Psychology; Ethics and Philosophy of Artificial Intelligence"
-      ]
+      ],
+      "url": "https://www.zju.edu.cn/english/"
     },
     {
       "studyType": "Oxford Prospects Winter Visit",
@@ -38,7 +39,8 @@
       "endDate": "2026-02-01",
       "highlights": [
         "Received the Best Presentation Award and the Best Film Award."
-      ]
+      ],
+      "url": "https://www.ox.ac.uk/"
     },
     {
       "institution": "Cornell University, College of Arts and Sciences",
@@ -46,7 +48,8 @@
       "area": "Undergraduate coursework in Cognitive Science",
       "location": "Ithaca, NY, USA",
       "startDate": "2027-01-01",
-      "endDate": "2027-06-01"
+      "endDate": "2027-06-01",
+      "url": "https://as.cornell.edu/"
     }
   ],
   "research": [
@@ -67,7 +70,8 @@
         "Dynamic brain entropy over sliding windows, clustered by k-means into recurrent brain states, described by occupancy and dwell time.",
         "The same measures then go to patient groups against matched controls.",
         "Following up on published brain-state work from Dr. Xiaoqing Gao’s group."
-      ]
+      ],
+      "url": "/research/brain-state/"
     },
     {
       "name": "Zhejiang University, in collaboration with Dr. Jianghao Liu, Paris Brain Institute (ICM)",
@@ -78,7 +82,8 @@
         "Design and methods: the protocol pairs a near-threshold perceptual detection task with an imagery task, plus electrophysiological and neuromodulation measures of visual-cortical and prefrontal involvement.",
         "Role: built the experimental platform at Zhejiang University and was responsible for participant recruitment, data collection and analysis, and quality control.",
         "Imaging studies are in preparation: an fMRI study of where and when imagery enters perception, and a TMS–EEG study of whether the visual-cortical node is necessary."
-      ]
+      ],
+      "url": "/research/imagination/"
     },
     {
       "name": "Zhejiang University",
@@ -134,7 +139,8 @@
     {
       "position": "Founder, Concepts and Approaches in Psychology Reading Group",
       "organization": "Department of Psychology and Behavioral Sciences, Zhejiang University",
-      "date": "2026 – Present"
+      "date": "2026 – Present",
+      "url": "https://consciousness-observers.github.io/concepts-and-approaches/"
     },
     {
       "position": "Peer Mentor, Talented Youth Initiative",
